@@ -1,0 +1,196 @@
+# iOS 面试 - 性能优化
+
+- [常见的优化方式](# 常见的优化方式)
+- [造成 tableView 卡顿的原因有哪些？](# 造成 tableView 卡顿的原因有哪些？)
+- [优化 tableView 的方式](# 优化 tableView 的方式)
+- [什么是离屏渲染？什么情况下会触发？该如何应对？](# 什么是离屏渲染？什么情况下会触发？该如何应对？)
+- [如何检查内存泄露](# 如何检查内存泄露)
+- [耗电网络优化](# 耗电网络优化)
+- [APP 启动时间应从哪些方面优化？](#APP 启动时间应从哪些方面优化？)
+- [如何有效降低 APP 包的大小？](# 如何有效降低 APP 包的大小？)
+
+#### 常见的优化方式
+```
+1、用 ARC 管理内存：避免内存泄漏
+2、优化 TableView
+3、避免过于庞大的 XIB
+4、不要阻塞主线程
+5、在 ImageViews 中调整图片大小
+6、选择正确的数据结构
+7、重用和延迟加载(lazy load) Views
+8、正确使用缓存
+9、避免反复处理数据
+10、选择正确的数据存储方式：
+NSUserDefaults：小数据
+归档解归档
+数据库：SQLite、CoreData、Realm
+11、启动时间优化
+12、选择是否缓存图片。常见的从 bundle 中加载图片的方式有两种，
+一个是用 imageNamed：会缓存图片，
+二是用 imageWithContentsOfFile，第一种比较常见一点。
+13、避免大量日期格式转换。
+```
+#### 造成 tableView 卡顿的原因有哪些？
+```
+1、cell 没有重用
+2、避免 cell 重写布局
+3、cell 行高不固定
+4、cell 控件过多
+5、透明背景导致
+6、图片下载没有异步处理
+7、动态添加 cell 上的控件 
+8、有其他绘制工作
+```
+#### 优化 tableView 的方式
+```
+本质上是降低 CPU、GPU 的工作，从这两个大的方面去提升性能。
+CPU：对象的创建和销毁、对象属性的调整、布局计算、文本的计算和排版、图片的格式转换和解码、图像的绘制
+GPU：纹理的渲染
+CPU 方面优化：
+1、用轻量级的对象：比如用不到事件处理的地方，可以考虑使用 CALayer 取代 UIView
+2、不要频繁地调用 UIView 的相关属性，比如 frame、bounds、transform 等属性，尽量减少不必要的修改
+3、尽量提前计算好布局，在有需要时一次性调整对应的属性，不要多次修改属性
+4、图片的 size 最好刚好跟 UIImageView 的 size 保持一致
+5、尽量把耗时的操作放到子线程：尺寸计算、绘制、图片下载解码、绘制
+GPU 优化：
+1、尽量避免短时间内大量图片的显示，尽可能将多张图片合成一张进行显示
+2、GPU 能处理的最大纹理尺寸是 4096x4096，一旦超过这个尺寸，就会占用 CPU 资源进行处理，
+所以纹理尽量不要超过这个尺寸
+3、尽量减少视图数量和层次
+4、减少透明的视图（alpha<1），不透明的就设置 opaque 为 YES
+5、尽量避免出现离屏渲染
+其他方面：
+1、正确使用 reuseIdentifier 来重用 cells
+2、缓存行高
+```
+#### 什么是离屏渲染？什么情况下会触发？该如何应对？
+```
+在 OpenGL 中，GPU 有 2 种渲染方式
+On-Screen Rendering：当前屏幕渲染，在当前用于显示的屏幕缓冲区进行渲染操作
+Off-Screen Rendering：离屏渲染，在当前屏幕缓冲区以外新开辟一个缓冲区进行渲染操作
+离屏渲染消耗性能的原因:
+需要创建新的缓冲区
+离屏渲染的整个过程，需要多次切换上下文环境，先是从当前屏幕（On-Screen）切换到离屏（Off-Screen）；
+等到离屏渲染结束以后，将离屏缓冲区的渲染结果显示到屏幕上，又需要将上下文环境从离屏切换到当前屏幕
+哪些操作会触发离屏渲染:
+光栅化，layer.shouldRasterize = YES
+遮罩，layer.mask
+圆角，同时设置 layer.masksToBounds = YES、layer.cornerRadius 大于 0
+阴影，layer.shadowXXX，如果设置了 layer.shadowPath 就不会产生离屏渲染
+圆角离屏渲染解决：考虑通过 CoreGraphics 绘制裁剪圆角，或者叫美工提供圆角图片
+```
+#### 如何检查内存泄露
+```
+系统工具：xcode 的 Instruments 的 Time profiler (程序耗时检测), 
+Core Animation(检测刷新帧率)，Leaks（内存泄漏检测）
+第三方库：MLeaksFinder
+```
+#### 耗电网络优化
+```
+CPU 处理，Processing
+网络，Networking
+定位，Location
+图像，Graphics
+耗电优化:
+1、尽可能降低 CPU、GPU 功耗, 少用定时器
+优化 I/O 操作:
+1、尽量不要频繁写入小数据，最好批量一次性写入
+2、读写大量重要数据时，考虑用 dispatch_io，其提供了基于 GCD 的异步操作文件 I/O 的 API。
+用 dispatch_io 系统会优化磁盘访问
+3、数据量比较大的，建议使用数据库（比如 SQLite、CoreData）
+网络优化:
+1、减少、压缩网络数据
+2、如果多次请求的结果是相同的，尽量使用缓存
+3、使用断点续传，否则网络不稳定时可能多次传输相同的内容
+4、网络不可用时，不要尝试执行网络请求
+5、让用户可以取消长时间运行或者速度很慢的网络操作，设置合适的超时时间
+6、批量传输
+定位优化:
+1、如果只是需要快速确定用户位置，最好用 CLLocationManager 的 requestLocation 方法。
+定位完成后，会自动让定位硬件断电
+2、如果不是导航应用，尽量不要实时更新位置，定位完毕就关掉定位服务
+3、尽量降低定位精度，比如尽量不要使用精度最高的 kCLLocationAccuracyBest
+4、需要后台定位时，尽量设置 pausesLocationUpdatesAutomatically 为 YES，
+5、如果用户不太可能移动的时候系统会自动暂停位置更新
+尽量不要使用 startMonitoringSignificantLocationChanges，优先考虑 startMonitoringForRegion:
+硬件检测优化：
+用户移动、摇晃、倾斜设备时，会产生动作 (motion) 事件，这些事件由加速度计、陀螺仪、磁力计等硬件检测。
+在不需要检测的场合，应该及时关闭这些硬件
+```
+#### APP 启动时间应从哪些方面优化？
+```
+APP 的启动可以分为 2 种
+冷启动（Cold Launch）：从零开始启动 APP
+热启动（Warm Launch）：APP 已经在内存中，在后台存活着，再次点击图标启动 APP
+
+APP 启动时间的优化，主要是针对冷启动进行优化
+
+通过添加环境变量可以打印出 APP 的启动时间分析（Edit scheme -> Run -> Arguments）
+DYLD_PRINT_STATISTICS 设置为 1
+如果需要更详细的信息，那就将 DYLD_PRINT_STATISTICS_DETAILS 设置为 1
+
+dyld（dynamic link editor）：Apple 的动态链接器，可以用来装载 Mach-O 文件（可执行文件、动态库等）
+启动 APP 时，dyld 所做的事情有：
+1、装载 APP 的可执行文件(可执行文件包含代码和动态库依赖信息)，同时会递归加载所有依赖的动态库
+2、当 dyld 把可执行文件、动态库都装载完毕后，会通知 Runtime 进行下一步的处理
+
+启动 APP 时，runtime 所做的事情有：
+调用 map_images 进行可执行文件内容的解析和处理
+在 load_images 中调用 call_load_methods，调用所有 Class 和 Category 的 +load 方法
+进行各种 objc 结构的初始化（注册 Objc 类 、初始化类对象等等）
+调用 C++ 静态初始化器和 attribute((constructor)) 修饰的函数
+到此为止，可执行文件和动态库中所有的符号 (Class，Protocol，Selector，IMP，…) 
+都已经按格式成功加载到内存中，被 runtime 所管理。
+
+总结：
+1、APP 的启动由 dyld 主导，将可执行文件加载到内存，顺便加载所有依赖的动态库
+2、并由 runtime 负责加载成 objc 定义的结构
+3、所有初始化工作结束后，dyld 就会调用 main 函数
+4、接下来就是 UIApplicationMain 函数，AppDelegate 的 application:didFinishLaunchingWithOptions: 方法
+
+启动优化：
+按照不同的阶段
+dyld：
+1、减少动态库、合并一些动态库（定期清理不必要的动态库）
+2、减少 Objc 类、分类的数量、减少 Selector 数量（定期清理不必要的类、分类）, 
+装在可执行文件时候有加载类分类的操作
+3、减少 C++ 虚函数数量
+
+runtime：
+少在 +load 方法里写逻辑代码可以用 +initialize 方法和 dispatch_once 取代
+
+main：
+在不影响用户体验的前提下，尽可能将一些操作延迟，不要全部都放在 finishLaunching 方法中
+按需加载
+其他优化方案：二进制重排，PGO
+```
+[App 启动时间优化  二进制重排和 PGO](https://www.jianshu.com/p/07bb4c99252c)
+[抖音研发实践：基于二进制文件重排的解决方案](https://mp.weixin.qq.com/s?__biz=MzI1MzYzMjE0MQ==&mid=2247485101&idx=1&sn=abbbb6da1aba37a04047fc210363bcc9&scene=21#wechat_redirect)
+
+![启动. png](https://upload-images.jianshu.io/upload_images/969362-88e51fc5083766d0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+#### 如何有效降低 APP 包的大小？
+```
+安装包（IPA）主要由可执行文件 (源代码文件 编译链接生产的)、资源(图片 音视频 stroyboard xib) 组成
+项目编译完生产 app 文件, app 文件压缩后成 IPA 文件
+1、资源（图片、音频、视频等）采取无损压缩
+2、去除没有用到的资源： https://github.com/tinymind/LSUnusedResources
+3、编译器优化
+Deployment Postprocessing 和 Strip Linked Product，两个需要都设置为 YES 才有用。
+原理是打开这两个选项后构建 ipa 会去除掉 symbol 符号，就是类名函数名。
+这样子的影响就是运行时你没法进行线程回溯，符号都没了回溯了也是乱码。但是不会影响正常的崩溃日志生成和解析。
+4、利用 AppCode（https://www.jetbrains.com/objc/）检测未使用的代码：菜单栏 -> Code -> Inspect Code
+5、手动移除代码：
+梳理项目里的第三方代码, 没有直接用的全部删除.
+梳理用到的第三方代码, 如果有功能类似的, 移除一个.
+如果只使用了第三方一部分代码, 可以自己实现这个功能, 移除这个第三方.
+项目里旧的类, 要及时移除, 类里面引用的类也要逐一检查, 看是否可以移除
+6、视频 / 音频 大图片资源不要放到包里, 可以从服务端下载.
+7、图片尽可能放到 Assets.xcassets, 放进去下载安装包只下载 x2 或 x3 图片.
+8、使用 xib/storyboard 来开发视图界面会一定程序增加安装包的大小。
+9、引入第三方库之前要调研导致包增大多少.
+
+LinkMap 分析哪里占用包资源大：
+生成 LinkMap 文件，可以查看可执行文件的具体组成
+可借助第三方工具解析 LinkMap 文件： https://github.com/huanxsd/LinkMap
+```

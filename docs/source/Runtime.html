@@ -1,0 +1,635 @@
+
+<!DOCTYPE HTML>
+<html lang="zh-hans" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>Runtime相关 · iOS开发相关面试题总结</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        <meta name="author" content="Jayxiang">
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="RunLoop.html" />
+    
+    
+    <link rel="prev" href="Block.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="输入并搜索" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="Basic.html">
+            
+                <a href="Basic.html">
+            
+                    
+                    基本概念
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="UIKit.html">
+            
+                <a href="UIKit.html">
+            
+                    
+                    UI相关
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="Block.html">
+            
+                <a href="Block.html">
+            
+                    
+                    Block相关
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.5" data-path="Runtime.html">
+            
+                <a href="Runtime.html">
+            
+                    
+                    Runtime相关
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="RunLoop.html">
+            
+                <a href="RunLoop.html">
+            
+                    
+                    RunLoop相关
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="Thread.html">
+            
+                <a href="Thread.html">
+            
+                    
+                    多线程相关
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" data-path="Memory.html">
+            
+                <a href="Memory.html">
+            
+                    
+                    内存管理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9" data-path="Network.html">
+            
+                <a href="Network.html">
+            
+                    
+                    网络相关
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10" data-path="Design.html">
+            
+                <a href="Design.html">
+            
+                    
+                    设计模式相关
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11" data-path="Performance.html">
+            
+                <a href="Performance.html">
+            
+                    
+                    性能优化相关
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12" data-path="Data.html">
+            
+                <a href="Data.html">
+            
+                    
+                    数据结构与算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13" data-path="Library.html">
+            
+                <a href="Library.html">
+            
+                    
+                    第三方库
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14" data-path="Swift.html">
+            
+                <a href="Swift.html">
+            
+                    
+                    Swift
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            本书使用 GitBook 发布
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >Runtime相关</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="ios-&#x9762;&#x8BD5;---runtime">iOS &#x9762;&#x8BD5; - Runtime</h1>
+<ul>
+<li><a href="#%20&#x4EC0;&#x4E48;&#x662F;%20runtime&#xFF1F;">&#x4EC0;&#x4E48;&#x662F; runtime&#xFF1F;</a></li>
+<li><a href="#%20&#x8BF4;&#x4E00;&#x4E0B;&#x5BF9;%20isa%20&#x6307;&#x9488;&#x7684;&#x7406;&#x89E3;">&#x8BF4;&#x4E00;&#x4E0B;&#x5BF9; isa &#x6307;&#x9488;&#x7684;&#x7406;&#x89E3;</a></li>
+<li><a href="#%20&#x4EC0;&#x4E48;&#x662F;%20method%20swizzling?">&#x4EC0;&#x4E48;&#x662F; method swizzling?</a></li>
+<li><a href="#%20&#x4F7F;&#x7528;%20method%20swizzling%20&#x9700;&#x8981;&#x6CE8;&#x610F;&#x4EC0;&#x4E48;">&#x4F7F;&#x7528; method swizzling &#x9700;&#x8981;&#x6CE8;&#x610F;&#x4EC0;&#x4E48;</a></li>
+<li><a href="#KVC%20&#x5B9E;&#x73B0;&#x539F;&#x7406;">KVC &#x5B9E;&#x73B0;&#x539F;&#x7406;</a></li>
+<li><a href="#KVO%20&#x5B9E;&#x73B0;&#x539F;&#x7406;">KVO &#x5B9E;&#x73B0;&#x539F;&#x7406;</a></li>
+<li><a href="#%20&#x5982;&#x4F55;&#x624B;&#x52A8;&#x5173;&#x95ED;%20KVO&#xFF1F;">&#x5982;&#x4F55;&#x624B;&#x52A8;&#x5173;&#x95ED; KVO&#xFF1F;</a></li>
+<li><a href="#####%20&#x4F20;&#x9012;&#x548C;&#x8F6C;&#x53D1;&#x673A;&#x5236;">&#x6D88;&#x606F;&#x4F20;&#x9012;&#x548C;&#x8F6C;&#x53D1;&#x673A;&#x5236;</a></li>
+<li><a href="#%20&#x7C7B;&#x548C;&#x5143;&#x7C7B;">&#x7C7B;&#x548C;&#x5143;&#x7C7B;</a></li>
+<li><a href="#%20&#x4E3A;&#x4EC0;&#x4E48;&#x8981;&#x8BBE;&#x8BA1;%20metaclass">&#x4E3A;&#x4EC0;&#x4E48;&#x8981;&#x8BBE;&#x8BA1; metaclass</a></li>
+<li><a href="#%20&#x5206;&#x7C7B;&#xFF08;Category&#xFF09;&#x5B9E;&#x73B0;&#x539F;&#x7406;">&#x5206;&#x7C7B;&#xFF08;Category&#xFF09;&#x5B9E;&#x73B0;&#x539F;&#x7406;</a></li>
+<li><a href="#Category%20&#x5728;&#x7F16;&#x8BD1;&#x8FC7;&#x540E;&#xFF0C;&#x662F;&#x5728;&#x4EC0;&#x4E48;&#x65F6;&#x673A;&#x4E0E;&#x539F;&#x6709;&#x7684;&#x7C7B;&#x5408;&#x5E76;&#x5230;&#x4E00;&#x8D77;&#x7684;&#xFF1F;">Category &#x5728;&#x7F16;&#x8BD1;&#x8FC7;&#x540E;&#xFF0C;&#x662F;&#x5728;&#x4EC0;&#x4E48;&#x65F6;&#x673A;&#x4E0E;&#x539F;&#x6709;&#x7684;&#x7C7B;&#x5408;&#x5E76;&#x5230;&#x4E00;&#x8D77;&#x7684;&#xFF1F;</a></li>
+<li><a href="#%20&#x5206;&#x7C7B;&#xFF08;Category&#xFF09;&#x53EF;&#x4EE5;&#x6DFB;&#x52A0;%20weak%20&#x5C5E;&#x6027;&#x5417;">&#x5206;&#x7C7B;&#xFF08;Category&#xFF09;&#x53EF;&#x4EE5;&#x6DFB;&#x52A0; weak &#x5C5E;&#x6027;&#x5417;</a></li>
+<li><a href="#category%20&#x548C;%20extension%20&#x7684;&#x533A;&#x522B;">category &#x548C; extension &#x7684;&#x533A;&#x522B;</a></li>
+<li><a href="#weak%20&#x539F;&#x7406;">weak &#x539F;&#x7406;</a></li>
+<li><a href="#class_copyPropertyList%20&#x4E0E;%20class_copyIvarList%20&#x533A;&#x522B;">class_copyPropertyList &#x4E0E; class_copyIvarList &#x533A;&#x522B;</a></li>
+<li><a href="#class&#x3001;objc_getClass&#x3001;object_getclass%20&#x65B9;&#x6CD5;&#x6709;&#x4EC0;&#x4E48;&#x533A;&#x522B;?">class&#x3001;objc_getClass&#x3001;object_getclass &#x65B9;&#x6CD5;&#x6709;&#x4EC0;&#x4E48;&#x533A;&#x522B;?</a></li>
+</ul>
+<h4 id="&#x4EC0;&#x4E48;&#x662F;-runtime&#xFF1F;">&#x4EC0;&#x4E48;&#x662F; runtime&#xFF1F;</h4>
+<pre><code>Objective-C &#x662F;&#x57FA;&#x4E8E; C &#x7684;&#xFF0C;&#x5B83;&#x4E3A; C &#x6DFB;&#x52A0;&#x4E86;&#x9762;&#x5411;&#x5BF9;&#x8C61;&#x7684;&#x7279;&#x6027;&#xFF0C;
+&#x5B83;&#x5C06;&#x5F88;&#x591A;&#x9759;&#x6001;&#x8BED;&#x8A00;&#x5728;&#x7F16;&#x8BD1;&#x548C;&#x94FE;&#x63A5;&#x65F6;&#x671F;&#x505A;&#x7684;&#x4E8B;&#x653E;&#x5230;&#x4E86; runtime &#x8FD0;&#x884C;&#x65F6;&#x6765;&#x5904;&#x7406;&#x3002;
+Runtime&#xFF08;&#x7B80;&#x79F0;&#x8FD0;&#x884C;&#x65F6;&#xFF09;&#x662F;&#x4E00;&#x5957;&#x7EAF; C&#xFF08;C &#x548C;&#x6C47;&#x7F16;&#x7F16;&#x5199;&#x7684;&#xFF09;API&#xFF0C;&#x800C; OC &#x5C31;&#x662F;&#x8FD0;&#x884C;&#x65F6;&#x673A;&#x5236;&#xFF0C;
+&#x4E5F;&#x5C31;&#x662F;&#x5728;&#x8FD0;&#x884C;&#x65F6;&#x7684;&#x4E00;&#x4E9B;&#x673A;&#x5236;&#xFF0C;&#x5176;&#x4E2D;&#x6700;&#x4E3B;&#x8981;&#x7684;&#x5C31;&#x662F;&#x6D88;&#x606F;&#x673A;&#x5236;&#x3002;
+
+&#x5E94;&#x7528;&#xFF1A;&#x5728;&#x7A0B;&#x5E8F;&#x8FD0;&#x884C;&#x4E2D;&#xFF0C;&#x52A8;&#x6001;&#x521B;&#x5EFA;&#x4E00;&#x4E2A;&#x7C7B;
+&#x7A0B;&#x5E8F;&#x8FD0;&#x884C;&#x4E2D;&#xFF0C;&#x52A8;&#x6001;&#x4FEE;&#x6539;&#x4E00;&#x4E2A;&#x7C7B;&#x7684;&#x5C5E;&#x6027;&#x65B9;&#x6CD5;
+&#x52A8;&#x6001;&#x83B7;&#x53D6;&#x7C7B;&#x7684;&#x5C5E;&#x6027;&#x548C;&#x65B9;&#x6CD5;
+&#x52A8;&#x6001;&#x4EA4;&#x6362;&#x65B9;&#x6CD5;&#xFF0C;&#x4FD7;&#x79F0;&#xFF1A;Method Swizzling
+&#x52A8;&#x6001;&#x6DFB;&#x52A0;&#x5C5E;&#x6027;&#xFF1A;&#x5173;&#x8054;&#x5BF9;&#x8C61;&#xFF08;objective-C Associated objects&#xFF09;&#x7ED9;&#x5206;&#x7C7B;&#x589E;&#x52A0;&#x5C5E;&#x6027;
+json &#x8F6C; model
+
+&#x4F7F;&#x7528;&#xFF1A;&#x5BFC;&#x5165;&#x7684;&#x5934;&#x6587;&#x4EF6; &lt;objc/message.h&gt; &lt;objc/runtime.h&gt;
+</code></pre><h4 id="&#x8BF4;&#x4E00;&#x4E0B;&#x5BF9;-isa-&#x6307;&#x9488;&#x7684;&#x7406;&#x89E3;">&#x8BF4;&#x4E00;&#x4E0B;&#x5BF9; isa &#x6307;&#x9488;&#x7684;&#x7406;&#x89E3;</h4>
+<pre><code>isa &#x7B49;&#x4EF7;&#x4E8E; is kind of
+&#x5B9E;&#x4F8B;&#x5BF9;&#x8C61; isa &#x6307;&#x5411;&#x7C7B;&#x5BF9;&#x8C61;
+&#x7C7B;&#x5BF9;&#x8C61;&#x6307; isa &#x5411;&#x5143;&#x7C7B;&#x5BF9;&#x8C61;
+&#x5143;&#x7C7B;&#x5BF9;&#x8C61;&#x7684; isa &#x6307;&#x5411;&#x5143;&#x7C7B;&#x7684;&#x57FA;&#x7C7B;
+isa &#x6709;&#x4E24;&#x79CD;&#x7C7B;&#x578B;: &#x7EAF;&#x6307;&#x9488;&#xFF0C;&#x6307;&#x5411;&#x5185;&#x5B58;&#x5730;&#x5740;; 
+NON_POINTER_ISA&#xFF0C;&#x9664;&#x4E86;&#x5185;&#x5B58;&#x5730;&#x5740;&#xFF0C;&#x8FD8;&#x5B58;&#x6709;&#x4E00;&#x4E9B;&#x5176;&#x4ED6;&#x4FE1;&#x606F;
+</code></pre><h4 id="&#x4EC0;&#x4E48;&#x662F;-method-swizzling">&#x4EC0;&#x4E48;&#x662F; method swizzling?</h4>
+<pre><code>&#x6982;&#x62EC;&#x6765;&#x8BF4;&#x5C31;&#x662F;&#x65B9;&#x6CD5;&#x4EA4;&#x6362;&#x3002;
+Method Swizzling &#x662F;&#x6539;&#x53D8;&#x4E00;&#x4E2A; selector &#x7684;&#x5B9E;&#x9645;&#x5B9E;&#x73B0;&#x7684;&#x6280;&#x672F;&#x3002;&#x901A;&#x8FC7;&#x8FD9;&#x4E00;&#x6280;&#x672F;&#xFF0C;
+&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x5728;&#x8FD0;&#x884C;&#x65F6;&#x901A;&#x8FC7;&#x4FEE;&#x6539;&#x7C7B;&#x7684;&#x5206;&#x53D1;&#x8868;&#x4E2D; selector &#x5BF9;&#x5E94;&#x7684;&#x51FD;&#x6570;&#xFF0C;&#x6765;&#x4FEE;&#x6539;&#x65B9;&#x6CD5;&#x7684;&#x5B9E;&#x73B0;&#x3002;
+&#x6BCF;&#x4E00;&#x4E2A;&#x7C7B;&#x90FD;&#x6709;&#x4E00;&#x4E2A;&#x65B9;&#x6CD5;&#x5217;&#x8868;&#xFF0C;&#x5B58;&#x653E;&#x7740;&#x65B9;&#x6CD5;&#x7684;&#x540D;&#x5B57;&#x5B9E;&#x73B0;&#x7684;&#x6620;&#x5C04;&#x5173;&#x7CFB;&#xFF0C;selector &#x7684;&#x672C;&#x8D28;&#x5C31;&#x662F;&#x65B9;&#x6CD5;&#x540D;&#xFF0C;
+IMP &#x6709;&#x70B9;&#x7C7B;&#x4F3C;&#x51FD;&#x6570;&#x6307;&#x9488;&#xFF0C;&#x6307;&#x5411;&#x5177;&#x4F53;&#x7684; method &#x5B9E;&#x73B0;&#xFF0C;&#x901A;&#x8FC7; selector &#x5C31;&#x53EF;&#x4EE5;&#x627E;&#x5230;&#x5BF9;&#x5E94;&#x7684; IMP&#x3002;
+&#x4EA4;&#x6362;&#x65B9;&#x6CD5;&#x7684;&#x51E0;&#x79CD;&#x5B9E;&#x73B0;&#x65B9;&#x5F0F;&#xFF1A;
+&#xFF08;1&#xFF09;&#x5229;&#x7528; method_exchangeImplementations &#x4EA4;&#x6362;&#x4E24;&#x4E2A;&#x65B9;&#x6CD5;&#x7684;&#x5B9E;&#x73B0;
+&#xFF08;2&#xFF09;&#x5229;&#x7528; class_replaceMethod &#x66FF;&#x6362;&#x65B9;&#x6CD5;&#x7684;&#x5B9E;&#x73B0;&#x3002;
+&#xFF08;3&#xFF09;&#x5229;&#x7528; method_setImplementation &#x6765;&#x76F4;&#x63A5;&#x8BBE;&#x7F6E;&#x67D0;&#x4E2A;&#x65B9;&#x6CD5;&#x7684; IMP&#x3002;
+&#x5E94;&#x7528;&#xFF1A;&#x66FF;&#x6362; ViewController &#x751F;&#x547D;&#x5468;&#x671F;&#x65B9;&#x6CD5;&#x8FDB;&#x884C;&#x65E0;&#x75D5;&#x57CB;&#x70B9;
+&#x89E3;&#x51B3;&#x83B7;&#x53D6;&#x7D22;&#x5F15;&#x3001;&#x6DFB;&#x52A0;&#x3001;&#x5220;&#x9664;&#x5143;&#x7D20;&#x8D8A;&#x754C;&#x5D29;&#x6E83;&#x95EE;&#x9898;
+&#x9632;&#x6B62;&#x6309;&#x94AE;&#x91CD;&#x590D;&#x66B4;&#x529B;&#x70B9;&#x51FB;
+</code></pre><h4 id="&#x4F7F;&#x7528;-method-swizzling-&#x9700;&#x8981;&#x6CE8;&#x610F;&#x4EC0;&#x4E48;">&#x4F7F;&#x7528; method swizzling &#x9700;&#x8981;&#x6CE8;&#x610F;&#x4EC0;&#x4E48;</h4>
+<pre><code>1. &#x907F;&#x514D;&#x4EA4;&#x6362;&#x7236;&#x7C7B;&#x65B9;&#x6CD5;
+&#x5982;&#x679C;&#x5F53;&#x524D;&#x7C7B;&#x672A;&#x5B9E;&#x73B0;&#x88AB;&#x4EA4;&#x6362;&#x7684;&#x65B9;&#x6CD5;&#x800C;&#x7236;&#x7C7B;&#x5B9E;&#x73B0;&#x4E86;&#x7684;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;&#x6B64;&#x65F6;&#x7236;&#x7C7B;&#x7684;&#x5B9E;&#x73B0;&#x4F1A;&#x88AB;&#x4EA4;&#x6362;&#xFF0C;
+&#x82E5;&#x6B64;&#x7236;&#x7C7B;&#x7684;&#x591A;&#x4E2A;&#x7EE7;&#x627F;&#x8005;&#x90FD;&#x5728;&#x4EA4;&#x6362;&#x65F6;&#x4F1A;&#x5BFC;&#x81F4;&#x65B9;&#x6CD5;&#x88AB;&#x4EA4;&#x6362;&#x591A;&#x6B21;&#x800C;&#x6DF7;&#x4E71;&#xFF0C;&#x540C;&#x65F6;&#x5F53;&#x8C03;&#x7528;&#x7236;&#x7C7B;&#x7684;&#x65B9;&#x6CD5;&#x65F6;&#x4F1A;&#x56E0;&#x4E3A;&#x627E;&#x4E0D;&#x5230;&#x800C;&#x53D1;&#x751F;&#x5D29;&#x6E83;&#x3002;
+2. &#x4EA4;&#x6362;&#x65B9;&#x6CD5;&#x5E94;&#x5728; +load &#x65B9;&#x6CD5;
+&#x65B9;&#x6CD5;&#x4EA4;&#x6362;&#x5E94;&#x5F53;&#x5728;&#x8C03;&#x7528;&#x524D;&#x5B8C;&#x6210;&#x4EA4;&#x6362;&#xFF0C;+load &#x65B9;&#x6CD5;&#x53D1;&#x751F;&#x5728;&#x8FD0;&#x884C;&#x65F6;&#x521D;&#x59CB;&#x5316;&#x8FC7;&#x7A0B;&#x4E2D;&#x7C7B;&#x88AB;&#x52A0;&#x8F7D;&#x7684;&#x65F6;&#x5019;&#x8C03;&#x7528;&#xFF0C;
+&#x4E14;&#x6BCF;&#x4E2A;&#x7C7B;&#x88AB;&#x52A0;&#x8F7D;&#x7684;&#x65F6;&#x5019;&#x53EA;&#x4F1A;&#x8C03;&#x7528;&#x4E00;&#x6B21; load &#x65B9;&#x6CD5;&#xFF0C;&#x8C03;&#x7528;&#x7684;&#x987A;&#x5E8F;&#x662F;&#x7236;&#x7C7B;&#x3001;&#x7C7B;&#x3001;&#x5206;&#x7C7B;&#xFF0C;
+&#x4E14;&#x4ED6;&#x4EEC;&#x4E4B;&#x95F4;&#x662F;&#x76F8;&#x4E92;&#x72EC;&#x7ACB;&#x7684;&#xFF0C;&#x4E0D;&#x4F1A;&#x5B58;&#x5728;&#x8986;&#x76D6;&#x7684;&#x5173;&#x7CFB;&#xFF0C;
+&#x6240;&#x4EE5;&#x653E;&#x5728; +load &#x65B9;&#x6CD5;&#x4E2D;&#x53EF;&#x4EE5;&#x786E;&#x4FDD;&#x5728;&#x4F7F;&#x7528;&#x65F6;&#x5DF2;&#x7ECF;&#x5B8C;&#x6210;&#x4EA4;&#x6362;&#x3002;
+3. &#x4EA4;&#x6362;&#x65B9;&#x6CD5;&#x5E94;&#x8BE5;&#x653E;&#x5230; dispatch_once &#x4E2D;&#x6267;&#x884C;
+&#x5728;&#x7B2C; 2 &#x70B9;&#x5DF2;&#x7ECF;&#x5199;&#x5230;&#xFF0C;+load &#x65B9;&#x6CD5;&#x5728;&#x7C7B;&#x88AB;&#x52A0;&#x8F7D;&#x7684;&#x65F6;&#x5019;&#x8C03;&#x7528;&#xFF0C;&#x4E14;&#x53EA;&#x4F1A;&#x8C03;&#x7528;&#x4E00;&#x6B21;&#xFF0C;&#x90A3;&#x4E3A;&#x4EC0;&#x4E48;&#x8FD8;&#x9700;&#x8981; dispatch_once &#x5462;&#xFF1F;
+&#x8FD9;&#x662F;&#x4E3A;&#x4E86;&#x9632;&#x6B62;&#x624B;&#x52A8;&#x8C03;&#x7528; +load &#x65B9;&#x6CD5;&#x800C;&#x5BFC;&#x81F4;&#x53CD;&#x590D;&#x7684;&#x88AB;&#x4EA4;&#x6362;&#xFF0C;&#x56E0;&#x4E3A;&#x8FD9;&#x662F;&#x5B58;&#x5728;&#x53EF;&#x80FD;&#x7684;&#x3002;
+4. &#x4EA4;&#x6362;&#x7684;&#x5206;&#x7C7B;&#x65B9;&#x6CD5;&#x5E94;&#x8BE5;&#x6DFB;&#x52A0;&#x81EA;&#x5B9A;&#x4E49;&#x524D;&#x7F00;&#xFF0C;&#x907F;&#x514D;&#x51B2;&#x7A81;
+&#x56E0;&#x4E3A;&#x5206;&#x7C7B;&#x7684;&#x65B9;&#x6CD5;&#x4F1A;&#x8986;&#x76D6;&#x7C7B;&#x4E2D;&#x540C;&#x540D;&#x7684;&#x65B9;&#x6CD5;&#xFF0C;&#x8FD9;&#x6837;&#x4F1A;&#x5BFC;&#x81F4;&#x65E0;&#x6CD5;&#x9884;&#x4F30;&#x7684;&#x540E;&#x679C;
+5. &#x4EA4;&#x6362;&#x7684;&#x5206;&#x7C7B;&#x65B9;&#x6CD5;&#x5E94;&#x8C03;&#x7528;&#x539F;&#x5B9E;&#x73B0;
+&#x5F88;&#x591A;&#x60C5;&#x51B5;&#x6211;&#x4EEC;&#x4E0D;&#x6E05;&#x695A;&#x88AB;&#x4EA4;&#x6362;&#x7684;&#x7684;&#x65B9;&#x6CD5;&#x5177;&#x4F53;&#x505A;&#x4E86;&#x4EC0;&#x4E48;&#x5185;&#x90E8;&#x903B;&#x8F91;&#xFF0C;&#x800C;&#x4E14;&#x5F88;&#x591A;&#x88AB;&#x4EA4;&#x6362;&#x7684;&#x65B9;&#x6CD5;&#x90FD;&#x662F;&#x7CFB;&#x7EDF;&#x5C01;&#x88C5;&#x7684;&#x65B9;&#x6CD5;&#xFF0C;
+&#x6240;&#x4EE5;&#x4E3A;&#x4E86;&#x4FDD;&#x8BC1;&#x5176;&#x903B;&#x8F91;&#x6027;&#x90FD;&#x5E94;&#x8BE5;&#x5728;&#x5206;&#x7C7B;&#x7684;&#x4EA4;&#x6362;&#x65B9;&#x6CD5;&#x4E2D;&#x53BB;&#x8C03;&#x7528;&#x539F;&#x88AB;&#x4EA4;&#x6362;&#x65B9;&#x6CD5;&#xFF0C;
+&#x6CE8;&#x610F;&#xFF1A;&#x8C03;&#x7528;&#x65F6;&#x65B9;&#x6CD5;&#x4EA4;&#x6362;&#x5DF2;&#x7ECF;&#x5B8C;&#x6210;&#xFF0C;&#x5728;&#x5206;&#x7C7B;&#x65B9;&#x6CD5;&#x4E2D;&#x5E94;&#x8BE5;&#x8C03;&#x7528;&#x5206;&#x7C7B;&#x65B9;&#x6CD5;&#x672C;&#x8EAB;&#x624D;&#x6B63;&#x786E;&#x3002;
+</code></pre><h4 id="kvc-&#x5B9E;&#x73B0;&#x539F;&#x7406;">KVC &#x5B9E;&#x73B0;&#x539F;&#x7406;</h4>
+<pre><code>setValue &#x673A;&#x5236;&#xFF1A;
+1. &#x7A0B;&#x5E8F;&#x4F18;&#x5148;&#x8C03;&#x7528; set&lt;Key&gt;: &#x6216; _set&lt;Key &gt; &#x5C5E;&#x6027;&#x503C;&#x65B9;&#x6CD5;&#xFF0C;&#x4EE3;&#x7801;&#x901A;&#x8FC7; setter &#x65B9;&#x6CD5;&#x5B8C;&#x6210;&#x8BBE;&#x7F6E;&#x3002;
+&#x6CE8;&#x610F;&#xFF0C;&#x8FD9;&#x91CC;&#x7684; &lt;key&gt; &#x662F;&#x6307;&#x6210;&#x5458;&#x53D8;&#x91CF;&#x540D;&#xFF0C;&#x9996;&#x5B57;&#x6BCD;&#x5927;&#x5C0F;&#x5199;&#x8981;&#x7B26;&#x5408; KVC &#x7684;&#x547D;&#x540D;&#x89C4;&#x5219;
+2. &#x5982;&#x679C;&#x6CA1;&#x6709;&#x627E;&#x5230; setName&#xFF1A;&#x6216; _setName &#x65B9;&#x6CD5;&#xFF0C;KVC &#x673A;&#x5236;
+&#x4F1A;&#x68C0;&#x67E5; + (BOOL)accessInstanceVariablesDirectly &#x65B9;&#x6CD5;&#x6709;&#x6CA1;&#x6709;&#x8FD4;&#x56DE; YES&#xFF0C;&#x9ED8;&#x8BA4;&#x8BE5;&#x65B9;&#x6CD5;&#x4F1A;&#x8FD4;&#x56DE; YES&#xFF0C;
+&#x5982;&#x679C;&#x4F60;&#x91CD;&#x5199;&#x4E86;&#x8BE5;&#x65B9;&#x6CD5;&#x8BA9;&#x5176;&#x8FD4;&#x56DE; NO &#x7684;&#x8BDD;&#xFF0C;&#x90A3;&#x4E48;&#x5728;&#x8FD9;&#x4E00;&#x6B65; KVC &#x4F1A;&#x6267;&#x884C; setValue&#xFF1A;forUndefinedKey&#xFF1A;&#x65B9;&#x6CD5;&#xFF0C;
+&#x4E0D;&#x8FC7;&#x4E00;&#x822C;&#x5F00;&#x53D1;&#x8005;&#x4E0D;&#x4F1A;&#x8FD9;&#x4E48;&#x505A;&#x3002;
+&#x6240;&#x4EE5; KVC &#x673A;&#x5236;&#x4F1A;&#x641C;&#x7D22;&#x8BE5;&#x7C7B;&#x91CC;&#x9762;&#x6709;&#x6CA1;&#x6709;&#x540D;&#x4E3A; &lt; key &gt; &#x7684;&#x6210;&#x5458;&#x53D8;&#x91CF;&#xFF0C;&#x65E0;&#x8BBA;&#x8BE5;&#x53D8;&#x91CF;&#x662F;&#x5728;&#x7C7B;&#x63A5;&#x53E3;&#x5904;&#x5B9A;&#x4E49;&#xFF0C;&#x8FD8;&#x662F;&#x5728;&#x7C7B;&#x5B9E;&#x73B0;&#x5904;&#x5B9A;&#x4E49;&#xFF0C;
+&#x4E5F;&#x65E0;&#x8BBA;&#x7528;&#x4E86;&#x4EC0;&#x4E48;&#x6837;&#x7684;&#x8BBF;&#x95EE;&#x4FEE;&#x9970;&#x7B26;&#xFF0C;&#x53EA;&#x5728;&#x5B58;&#x5728;&#x4EE5; &lt; key &gt; &#x547D;&#x540D;&#x7684;&#x53D8;&#x91CF;&#xFF0C;KVC &#x90FD;&#x53EF;&#x4EE5;&#x5BF9;&#x8BE5;&#x6210;&#x5458;&#x53D8;&#x91CF;&#x8D4B;&#x503C;&#x3002;
+3. &#x5982;&#x679C;&#x8BE5;&#x7C7B;&#x5373;&#x6CA1;&#x6709; set&lt;key&gt;&#xFF1A;&#x65B9;&#x6CD5;&#xFF0C;&#x4E5F;&#x6CA1;&#x6709;_&lt;key &gt; &#x6210;&#x5458;&#x53D8;&#x91CF;&#xFF0C;KVC &#x673A;&#x5236;&#x4F1A;&#x641C;&#x7D22;_is&lt;Key &gt; &#x7684;&#x6210;&#x5458;&#x53D8;&#x91CF;
+4. &#x548C;&#x4E0A;&#x9762;&#x4E00;&#x6837;&#xFF0C;&#x5982;&#x679C;&#x8BE5;&#x7C7B;&#x5373;&#x6CA1;&#x6709; set&lt;Key&gt;&#xFF1A;&#x65B9;&#x6CD5;&#xFF0C;&#x4E5F;&#x6CA1;&#x6709;_&lt;key &gt; &#x548C;_is&lt;Key &gt; &#x6210;&#x5458;&#x53D8;&#x91CF;&#xFF0C;
+KVC &#x673A;&#x5236;&#x518D;&#x4F1A;&#x7EE7;&#x7EED;&#x641C;&#x7D22; &lt; key &gt; &#x548C; is&lt;Key &gt; &#x7684;&#x6210;&#x5458;&#x53D8;&#x91CF;&#x3002;&#x518D;&#x7ED9;&#x5B83;&#x4EEC;&#x8D4B;&#x503C;&#x3002;
+5. &#x5982;&#x679C;&#x4E0A;&#x9762;&#x5217;&#x51FA;&#x7684;&#x65B9;&#x6CD5;&#x6216;&#x8005;&#x6210;&#x5458;&#x53D8;&#x91CF;&#x90FD;&#x4E0D;&#x5B58;&#x5728;&#xFF0C;&#x7CFB;&#x7EDF;&#x5C06;&#x4F1A;&#x6267;&#x884C;
+&#x8BE5;&#x5BF9;&#x8C61;&#x7684; setValue&#xFF1A;forUndefinedKey&#xFF1A;&#x65B9;&#x6CD5;&#xFF0C;&#x9ED8;&#x8BA4;&#x662F;&#x629B;&#x51FA;&#x5F02;&#x5E38;&#x3002;
+
+&#x603B;&#x4E4B;&#xFF1A;&#x5982;&#x679C;&#x6CA1;&#x6709;&#x627E;&#x5230; set&lt;Key&gt; &#x6216; _set&lt;Key&gt; &#x65B9;&#x6CD5;&#x7684;&#x8BDD;&#xFF0C;
+&#x4F1A;&#x6309;&#x7167;_key&#xFF0C;_iskey&#xFF0C;key&#xFF0C;iskey &#x7684;&#x987A;&#x5E8F;&#x641C;&#x7D22;&#x6210;&#x5458;&#x5E76;&#x8FDB;&#x884C;&#x8D4B;&#x503C;&#x64CD;&#x4F5C;&#x3002;
+
+valueForKey &#x673A;&#x5236;&#xFF1A;
+1. &#x9996;&#x5148;&#x6309; get&lt;Key&gt;,&lt;key&gt;,is&lt;Key&gt;,_&lt;Key &gt; &#x7684;&#x987A;&#x5E8F;&#x65B9;&#x6CD5;&#x67E5;&#x627E; getter &#x65B9;&#x6CD5;&#xFF0C;&#x627E;&#x5230;&#x7684;&#x8BDD;&#x4F1A;&#x76F4;&#x63A5;&#x8C03;&#x7528;&#x3002;
+&#x5982;&#x679C;&#x662F; BOOL &#x6216;&#x8005; Int &#x7B49;&#x503C;&#x7C7B;&#x578B;&#xFF0C; &#x4F1A;&#x5C06;&#x5176;&#x5305;&#x88C5;&#x6210;&#x4E00;&#x4E2A; NSNumber &#x5BF9;&#x8C61;&#x3002;
+2. &#x5982;&#x679C;&#x4E0A;&#x9762;&#x7684; getter &#x6CA1;&#x6709;&#x627E;&#x5230;&#xFF0C;KVC &#x5219;&#x4F1A;&#x67E5;&#x627E; countOf&lt;Key&gt;,objectIn&lt;Key&gt;AtIndex 
+&#x6216; &lt; Key&gt;AtIndexes &#x683C;&#x5F0F;&#x7684;&#x65B9;&#x6CD5;&#x3002;
+&#x5982;&#x679C; countOf&lt;Key &gt; &#x65B9;&#x6CD5;&#x548C;&#x53E6;&#x5916;&#x4E24;&#x4E2A;&#x65B9;&#x6CD5;&#x4E2D;&#x7684;&#x4E00;&#x4E2A;&#x88AB;&#x627E;&#x5230;&#xFF0C;&#x90A3;&#x4E48;&#x5C31;&#x4F1A;&#x8FD4;&#x56DE;&#x4E00;&#x4E2A;
+&#x53EF;&#x4EE5;&#x54CD;&#x5E94; NSArray &#x6240;&#x6709;&#x65B9;&#x6CD5;&#x7684;&#x4EE3;&#x7406;&#x96C6;&#x5408;(&#x5B83;&#x662F; NSKeyValueArray&#xFF0C;&#x662F; NSArray &#x7684;&#x5B50;&#x7C7B;)&#xFF0C;
+&#x8C03;&#x7528;&#x8FD9;&#x4E2A;&#x4EE3;&#x7406;&#x96C6;&#x5408;&#x7684;&#x65B9;&#x6CD5;&#xFF0C;&#x6216;&#x8005;&#x8BF4;&#x7ED9;&#x8FD9;&#x4E2A;&#x4EE3;&#x7406;&#x96C6;&#x5408;&#x53D1;&#x9001;&#x5C5E;&#x4E8E; NSArray &#x7684;&#x65B9;&#x6CD5;&#xFF0C;
+&#x5C31;&#x4F1A;&#x4EE5; countOf&lt;Key&gt;,objectIn&lt;Key&gt;AtIndex &#x6216; &lt; Key&gt;AtIndexes &#x8FD9;&#x51E0;&#x4E2A;&#x65B9;&#x6CD5;&#x7EC4;&#x5408;&#x7684;&#x5F62;&#x5F0F;&#x8C03;&#x7528;&#x3002;
+&#x8FD8;&#x6709;&#x4E00;&#x4E2A;&#x53EF;&#x9009;&#x7684; get&lt;Key&gt;:range: &#x65B9;&#x6CD5;&#x3002;&#x6240;&#x4EE5;&#x4F60;&#x60F3;&#x91CD;&#x65B0;&#x5B9A;&#x4E49; KVC &#x7684;&#x4E00;&#x4E9B;&#x529F;&#x80FD;&#xFF0C;
+&#x4F60;&#x53EF;&#x4EE5;&#x6DFB;&#x52A0;&#x8FD9;&#x4E9B;&#x65B9;&#x6CD5;&#xFF0C;&#x9700;&#x8981;&#x6CE8;&#x610F;&#x7684;&#x662F;&#x4F60;&#x7684;&#x65B9;&#x6CD5;&#x540D;&#x8981;&#x7B26;&#x5408; KVC &#x7684;&#x6807;&#x51C6;&#x547D;&#x540D;&#x65B9;&#x6CD5;&#xFF0C;&#x5305;&#x62EC;&#x65B9;&#x6CD5;&#x7B7E;&#x540D;&#x3002;
+3. &#x5982;&#x679C;&#x4E0A;&#x9762;&#x7684;&#x65B9;&#x6CD5;&#x6CA1;&#x6709;&#x627E;&#x5230;&#xFF0C;&#x90A3;&#x4E48;&#x4F1A;&#x540C;&#x65F6;&#x67E5;&#x627E; countOf&lt;Key&gt;&#xFF0C;enumeratorOf&lt;Key&gt;,memberOf&lt;Key &gt; &#x683C;&#x5F0F;&#x7684;&#x65B9;&#x6CD5;&#x3002;
+&#x5982;&#x679C;&#x8FD9;&#x4E09;&#x4E2A;&#x65B9;&#x6CD5;&#x90FD;&#x627E;&#x5230;&#xFF0C;&#x90A3;&#x4E48;&#x5C31;&#x8FD4;&#x56DE;&#x4E00;&#x4E2A;&#x53EF;&#x4EE5;&#x54CD;&#x5E94; NSSet &#x6240;&#x7684;&#x65B9;&#x6CD5;&#x7684;&#x4EE3;&#x7406;&#x96C6;&#x5408;&#xFF0C;
+&#x548C;&#x4E0A;&#x9762;&#x4E00;&#x6837;&#xFF0C;&#x7ED9;&#x8FD9;&#x4E2A;&#x4EE3;&#x7406;&#x96C6;&#x5408;&#x53D1; NSSet &#x7684;&#x6D88;&#x606F;&#xFF0C;&#x5C31;&#x4F1A;&#x4EE5; countOf&lt;Key&gt;&#xFF0C;enumeratorOf&lt;Key&gt;,memberOf&lt;Key &gt; &#x7EC4;&#x5408;&#x7684;&#x5F62;&#x5F0F;&#x8C03;&#x7528;&#x3002;
+4. &#x5982;&#x679C;&#x6CA1;&#x6709;&#x53D1;&#x73B0;&#x7B80;&#x5355; getter &#x65B9;&#x6CD5;&#xFF0C;&#x6216;&#x96C6;&#x5408;&#x5B58;&#x53D6;&#x65B9;&#x6CD5;&#x7EC4;&#xFF0C;
+&#x4EE5;&#x53CA;&#x63A5;&#x6536;&#x7C7B;&#x65B9;&#x6CD5; accessInstanceVariablesDirectly &#x662F;&#x8FD4;&#x56DE; YES &#x7684;&#x3002;
+&#x641C;&#x7D22;&#x4E00;&#x4E2A;&#x540D;&#x4E3A;_&lt;key&gt;&#x3001;_is&lt;Key&gt;&#x3001;&lt;key&gt;&#x3001;is&lt;Key &gt; &#x7684;&#x5B9E;&#x4F8B;&#xFF0C;&#x6839;&#x636E;&#x4ED6;&#x4EEC;&#x7684;&#x987A;&#x5E8F;&#x3002;
+&#x5982;&#x679C;&#x53D1;&#x73B0;&#x5BF9;&#x5E94;&#x7684;&#x5B9E;&#x4F8B;&#xFF0C;&#x5219;&#x7ACB;&#x523B;&#x83B7;&#x5F97;&#x5B9E;&#x4F8B;&#x53EF;&#x7528;&#x7684;&#x503C;
+&#x603B;&#x7ED3;&#xFF1A;&#x4ED6;&#x4F1A;&#x6309;&#x7167; _&lt;key&gt;,_is&lt;Key&gt;,&lt;key&gt;,is&lt;Key &gt; &#x7684;&#x987A;&#x5E8F;&#x641C;&#x7D22;&#x6210;&#x5458;&#x53D8;&#x91CF;&#x540D;&#xFF0C;
+&#x5982;&#x679C;(BOOL)accessInstanceVariablesDirectly &#x8FD4;&#x56DE; NO &#x7684;&#x8BDD;&#xFF0C;
+&#x90A3;&#x4E48;&#x4F1A;&#x76F4;&#x63A5;&#x8C03;&#x7528; valueForUndefinedKey: &#x65B9;&#x6CD5;&#xFF0C;&#x9ED8;&#x8BA4;&#x662F;&#x629B;&#x51FA;&#x5F02;&#x5E38;&#x3002;
+</code></pre><h4 id="kvo-&#x5B9E;&#x73B0;&#x539F;&#x7406;">KVO &#x5B9E;&#x73B0;&#x539F;&#x7406;</h4>
+<pre><code>KVO &#x7684;&#x5B9E;&#x73B0;&#x4F9D;&#x8D56;&#x4E8E; Objective-C &#x5F3A;&#x5927;&#x7684; Runtime&#xFF0C;&#x5F53;&#x89C2;&#x5BDF;&#x67D0;&#x5BF9;&#x8C61; A &#x65F6;&#xFF0C;
+KVO &#x673A;&#x5236;&#x52A8;&#x6001;&#x521B;&#x5EFA;&#x4E00;&#x4E2A;&#x5BF9;&#x8C61; A &#x5F53;&#x524D;&#x7C7B;&#x7684;&#x5B50;&#x7C7B;&#xFF0C;
+&#x5E76;&#x4E3A;&#x8FD9;&#x4E2A;&#x65B0;&#x7684;&#x5B50;&#x7C7B;&#x91CD;&#x5199;&#x4E86;&#x88AB;&#x89C2;&#x5BDF;&#x5C5E;&#x6027; keyPath &#x7684; setter &#x65B9;&#x6CD5;&#x3002;setter &#x65B9;&#x6CD5;&#x968F;&#x540E;&#x8D1F;&#x8D23;&#x901A;&#x77E5;&#x89C2;&#x5BDF;&#x5BF9;&#x8C61;&#x5C5E;&#x6027;&#x7684;&#x6539;&#x53D8;&#x72B6;&#x51B5;&#x3002;
+Apple &#x4F7F;&#x7528;&#x4E86; isa-swizzling &#x6765;&#x5B9E;&#x73B0; KVO &#x3002;&#x5F53;&#x89C2;&#x5BDF;&#x5BF9;&#x8C61; A &#x65F6;&#xFF0C;
+KVO &#x673A;&#x5236;&#x52A8;&#x6001;&#x521B;&#x5EFA;&#x4E00;&#x4E2A;&#x65B0;&#x7684;&#x540D;&#x4E3A;&#xFF1A;NSKVONotifying_A &#x7684;&#x65B0;&#x7C7B;&#xFF0C;&#x8BE5;&#x7C7B;&#x7EE7;&#x627F;&#x81EA;&#x5BF9;&#x8C61; A &#x7684;&#x672C;&#x7C7B;&#xFF0C;
+&#x4E14; KVO &#x4E3A; NSKVONotifying_A &#x91CD;&#x5199;&#x89C2;&#x5BDF;&#x5C5E;&#x6027;&#x7684; setter &#x65B9;&#x6CD5;&#xFF0C;
+setter &#x65B9;&#x6CD5;&#x4F1A;&#x8D1F;&#x8D23;&#x5728;&#x8C03;&#x7528;&#x539F; setter &#x65B9;&#x6CD5;&#x4E4B;&#x524D;&#x548C;&#x4E4B;&#x540E;&#xFF0C;&#x901A;&#x77E5;&#x6240;&#x6709;&#x89C2;&#x5BDF;&#x5BF9;&#x8C61;&#x5C5E;&#x6027;&#x503C;&#x7684;&#x66F4;&#x6539;&#x60C5;&#x51B5;&#x3002;
+KVO &#x7684;&#x952E;&#x503C;&#x89C2;&#x5BDF;&#x901A;&#x77E5;&#x4F9D;&#x8D56;&#x4E8E; NSObject &#x7684;&#x4E24;&#x4E2A;&#x65B9;&#x6CD5;: willChangeValueForKey: &#x548C; 
+didChangeValueForKey: &#xFF0C;&#x5728;&#x5B58;&#x53D6;&#x6570;&#x503C;&#x7684;&#x524D;&#x540E;&#x5206;&#x522B;&#x8C03;&#x7528; 2 &#x4E2A;&#x65B9;&#x6CD5;&#xFF1A;
+&#x88AB;&#x89C2;&#x5BDF;&#x5C5E;&#x6027;&#x53D1;&#x751F;&#x6539;&#x53D8;&#x4E4B;&#x524D;&#xFF0C;willChangeValueForKey: &#x88AB;&#x8C03;&#x7528;&#xFF0C;&#x901A;&#x77E5;&#x7CFB;&#x7EDF;&#x8BE5; keyPath &#x7684;&#x5C5E;&#x6027;&#x503C;&#x5373;&#x5C06;&#x53D8;&#x66F4;&#xFF1B;
+&#x5F53;&#x6539;&#x53D8;&#x53D1;&#x751F;&#x540E;&#xFF0C;didChangeValueForKey: &#x88AB;&#x8C03;&#x7528;&#xFF0C;&#x901A;&#x77E5;&#x7CFB;&#x7EDF;&#x8BE5; keyPath &#x7684;&#x5C5E;&#x6027;&#x503C;&#x5DF2;&#x7ECF;&#x53D8;&#x66F4;&#xFF1B;
+&#x4E4B;&#x540E;&#xFF0C; observeValueForKey:ofObject:change:context: &#x4E5F;&#x4F1A;&#x88AB;&#x8C03;&#x7528;&#x3002;
+&#x4E14;&#x91CD;&#x5199;&#x89C2;&#x5BDF;&#x5C5E;&#x6027;&#x7684; setter &#x65B9;&#x6CD5;&#x8FD9;&#x79CD;&#x7EE7;&#x627F;&#x65B9;&#x5F0F;&#x7684;&#x6CE8;&#x5165;&#x662F;&#x5728;&#x8FD0;&#x884C;&#x65F6;&#x800C;&#x4E0D;&#x662F;&#x7F16;&#x8BD1;&#x65F6;&#x5B9E;&#x73B0;&#x7684;&#x3002;
+</code></pre><h4 id="&#x5982;&#x4F55;&#x624B;&#x52A8;&#x5173;&#x95ED;-kvo&#xFF1F;">&#x5982;&#x4F55;&#x624B;&#x52A8;&#x5173;&#x95ED; KVO&#xFF1F;</h4>
+<pre><code>&#x91CD;&#x5199;&#x88AB;&#x89C2;&#x5BDF;&#x5BF9;&#x8C61;&#x7684; automaticallyNotifiesObserversForKey &#x65B9;&#x6CD5;&#xFF0C;&#x8FD4;&#x56DE; NO
+&#x91CD;&#x5199; automaticallyNotifiesObserversOf&lt;key&gt;&#xFF0C;&#x8FD4;&#x56DE; NO
+&#x6CE8;&#x610F;&#xFF1A;&#x5173;&#x95ED; KVO &#x540E;&#xFF0C;&#x9700;&#x8981;&#x624B;&#x52A8;&#x5728;&#x8D4B;&#x503C;&#x524D;&#x540E;&#x6DFB;&#x52A0; willChangeValueForKey &#x548C; didChangeValueForKey&#xFF0C;
+&#x624D;&#x53EF;&#x4EE5;&#x6536;&#x5230;&#x89C2;&#x5BDF;&#x901A;&#x77E5;&#x3002;
+</code></pre><h4 id="&#x6D88;&#x606F;&#x4F20;&#x9012;&#x548C;&#x8F6C;&#x53D1;&#x673A;&#x5236;">&#x6D88;&#x606F;&#x4F20;&#x9012;&#x548C;&#x8F6C;&#x53D1;&#x673A;&#x5236;</h4>
+<pre><code>&#x6D88;&#x606F;&#x673A;&#x5236;&#x539F;&#x7406;&#xFF1A;&#x5BF9;&#x8C61;&#x6839;&#x636E;&#x65B9;&#x6CD5;&#x7F16;&#x53F7; SEL &#x53BB;&#x6620;&#x5C04;&#x8868;&#x67E5;&#x627E;&#x5BF9;&#x5E94;&#x7684;&#x65B9;&#x6CD5;&#x5B9E;&#x73B0; IMP&#x3002;
+&#x4E00;&#x4E2A;&#x5BF9;&#x8C61;&#x7684;&#x65B9;&#x6CD5;[obj foo]&#xFF0C;&#x7F16;&#x8BD1;&#x5668;&#x8F6C;&#x4E3A;&#x6D88;&#x606F;&#x53D1;&#x9001; objc_msgSend(obj,foo),Runtime &#x65F6;&#x6267;&#x884C;&#x7684;&#x6D41;&#x7A0B;&#x5982;&#x4E0B;&#xFF1A;
+&#xFF08;1&#xFF09;&#x901A;&#x8FC7; obj &#x7684; isa &#x6307;&#x9488;&#x627E;&#x5230;&#x5B83;&#x7684; class
+&#xFF08;2&#xFF09;&#x5148;&#x5728;&#x7F13;&#x5B58; objc_cache &#x4E2D;&#x67E5;&#x627E;&#xFF0C;&#x518D;&#x5728; class &#x7684; method list &#x627E; foo
+&#xFF08;3&#xFF09;&#x5982;&#x679C; class &#x4E2D;&#x6CA1;&#x627E;&#x5230; foo&#xFF0C;&#x7EE7;&#x7EED;&#x5F80;&#x4ED6;&#x7684; superclass rootclass &#x4E2D;&#x627E;
+&#xFF08;4&#xFF09;&#x4E00;&#x65E6;&#x627E;&#x5230; foo &#x8FD9;&#x4E2A;&#x51FD;&#x6570;&#xFF0C;&#x5C31;&#x53BB;&#x6267;&#x884C;&#x5B83;&#x7684;&#x5B9E;&#x73B0; IMP&#xFF0C;&#x6CA1;&#x6709;&#x627E;&#x5230;&#x5219;&#x8FDB;&#x5165;&#x6D88;&#x606F;&#x8F6C;&#x53D1;&#x673A;&#x5236;
+&#x6D88;&#x606F;&#x8F6C;&#x53D1;&#xFF1A;
+1. &#x6240;&#x5C5E;&#x7C7B;&#x7684;&#x52A8;&#x6001;&#x65B9;&#x6CD5;&#x89E3;&#x6790;
+&#x9996;&#x5148;&#xFF0C;&#x5982;&#x679C;&#x6CBF;&#x7740;&#x7EE7;&#x627F;&#x6811;&#x6CA1;&#x6709;&#x641C;&#x7D22;&#x5230;&#x76F8;&#x5173;&#x7684;&#x65B9;&#x6CD5;&#x65F6;&#xFF0C;&#x5219;&#x5C31;&#x4F1A;&#x5411;&#x63A5;&#x53D7;&#x8005;&#x6240;&#x5C5E;&#x7684;&#x7C7B;&#x8FDB;&#x884C;&#x4E00;&#x6B21;&#x8BF7;&#x6C42;&#xFF0C;
+&#x770B;&#x662F;&#x5426;&#x53EF;&#x4EE5;&#x52A8;&#x6001;&#x7684;&#x6DFB;&#x52A0;&#x4E00;&#x4E2A;&#x65B9;&#x6CD5;&#xFF0C;&#x5982;&#x4E0B;&#xFF1A;
++(BOOL)resolveInstanceMethod:(SEL)name
+&#x5982;&#x679C;&#x7B2C;&#x4E00;&#x6B65;&#x4E0D;&#x80FD;&#x5904;&#x7406;&#xFF0C;&#x4F1A;&#x8FDB;&#x884C;&#x5230;&#x7B2C;&#x4E8C;&#x6B65;&#x3002;
+2. &#x8C03;&#x7528; forwardingTargetForSelector &#x628A;&#x4EFB;&#x52A1;&#x8F6C;&#x53D1;&#x7ED9;&#x53E6;&#x4E00;&#x4E2A;&#x5BF9;&#x8C61;&#x3002;
+&#x5982;&#x679C;&#x7B2C;&#x4E8C;&#x6B65;&#x9AA4;&#x4E5F;&#x4E0D;&#x80FD;&#x5904;&#x7406;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x4F1A;&#x4EA4;&#x7ED9;&#x7B2C;&#x4E09;&#x6B65;&#x9AA4;&#x3002;
+3. &#x8C03;&#x7528; forwardInvocation &#x8F6C;&#x53D1;&#x7ED9;&#x5176;&#x4ED6;&#xFF0C;&#x5728;&#x8C03;&#x7528; forwardInvocation: 
+&#x4E4B;&#x524D;&#x4F1A;&#x8C03;&#x7528; methodSignatureForSelector:(SEL)aSelector &#x65B9;&#x6CD5;&#x6765;&#x83B7;&#x53D6;&#x8FD9;&#x4E2A;&#x9009;&#x62E9;&#x5668;&#x7684;&#x65B9;&#x6CD5;&#x7B7E;&#x540D;&#xFF0C;
+&#x7136;&#x540E;&#x5728; -(void)forwardInvocation:(NSInvocation *)anInvocation &#x65B9;&#x6CD5;&#x4E2D;
+&#x4F60;&#x5C31;&#x53EF;&#x4EE5;&#x901A;&#x8FC7; anInvocation &#x62FF;&#x5230;&#x76F8;&#x5E94;&#x4FE1;&#x606F;&#x505A;&#x5904;&#x7406;
+4. &#x90A3;&#x4E48;&#x6700;&#x540E;&#x6D88;&#x606F;&#x672A;&#x80FD;&#x5904;&#x7406;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x8FD8;&#x4F1A;&#x8C03;&#x7528;&#x5230;
+- (void)doesNotRecognizeSelector:(SEL)aSelector &#x8FD9;&#x4E2A;&#x65B9;&#x6CD5;
+</code></pre><h4 id="&#x7C7B;&#x548C;&#x5143;&#x7C7B;">&#x7C7B;&#x548C;&#x5143;&#x7C7B;</h4>
+<pre><code>&#x7C7B;&#x5BF9;&#x8C61;(objc_class)
+Objective-C &#x7C7B;&#x662F;&#x7531; Class &#x7C7B;&#x578B;&#x6765;&#x8868;&#x793A;&#x7684;&#xFF0C;&#x5B83;&#x5B9E;&#x9645;&#x4E0A;&#x6307;&#x7684;&#x662F;&#x4E00;&#x4E2A;&#x6307;&#x5411; objc_class &#x7ED3;&#x6784;&#x4F53;&#x7684;&#x6307;&#x9488;&#x3002;
+struct objc_class &#x7ED3;&#x6784;&#x4F53;&#x5B9A;&#x4E49;&#x4E86;&#x5F88;&#x591A;&#x53D8;&#x91CF;&#xFF0C;&#x901A;&#x8FC7;&#x547D;&#x540D;&#x4E0D;&#x96BE;&#x53D1;&#x73B0;&#xFF1A;
+&#x7ED3;&#x6784;&#x4F53;&#x4FDD;&#x5B58;&#x4E86;&#x6307;&#x5411;&#x7236;&#x7C7B;&#x7684;&#x6307;&#x9488;&#xFF0C;&#x7C7B;&#x7684;&#x540D;&#x5B57;&#xFF0C;&#x7248;&#x672C;&#xFF0C;&#x5B9E;&#x4F8B;&#x5927;&#x5C0F;&#xFF0C;&#x65B9;&#x6CD5;&#x5217;&#x8868;&#xFF0C;&#x7F13;&#x5B58;&#x4EE5;&#x53CA;&#x9075;&#x5B88;&#x7684;&#x534F;&#x8BAE;&#x5217;&#x8868;&#x7B49;&#x3002;
+&#x7C7B;&#x5BF9;&#x8C61;&#x5C31;&#x662F;&#x4E00;&#x4E2A;&#x7ED3;&#x6784;&#x4F53;&#xFF0C;&#x8FD9;&#x4E2A;&#x7ED3;&#x6784;&#x4F53;&#x5B58;&#x653E;&#x7684;&#x6570;&#x636E;&#x79F0;&#x4E3A;&#x5143;&#x6570;&#x636E;&#x3002;
+&#x4ECE; isa &#x6307;&#x9488;&#x6307;&#x5411;&#x7684;&#x7ED3;&#x6784;&#x4F53;&#x521B;&#x5EFA;&#xFF0C;&#x7C7B;&#x5BF9;&#x8C61; isa &#x6307;&#x9488;&#x6307;&#x5411;&#x7684;&#x7C7B;&#x6211;&#x4EEC;&#x79F0;&#x4E3A;&#x5143;&#x7C7B;&#xFF08;metaclass&#xFF09;
+SEL&#xFF08;objc_selector&#xFF09;&#xFF1A;objc_msgSend &#x51FD;&#x6570;&#x7B2C;&#x4E8C;&#x4E2A;&#x53C2;&#x6570;&#x7C7B;&#x578B;&#x4E3A; SEL&#xFF0C;
+&#x5B83;&#x662F; selector &#x5728; Objective-C &#x4E2D;&#x7684;&#x8868;&#x793A;&#x7C7B;&#x578B;&#xFF0C;
+selector &#x662F;&#x65B9;&#x6CD5;&#x9009;&#x62E9;&#x5668;&#xFF0C;&#x53EF;&#x4EE5;&#x7406;&#x89E3;&#x4E3A;&#x533A;&#x5206;&#x65B9;&#x6CD5;&#x7684; ID&#xFF0C;&#x8FD9;&#x4E2A; ID &#x7684;&#x6570;&#x636E;&#x7ED3;&#x6784;&#x4E3A; SEL&#xFF0C;&#x4E5F;&#x79F0;&#x4E3A;&#x65B9;&#x6CD5;&#x540D;&#x79F0; / &#x7F16;&#x53F7;&#xFF1B;
+IMP&#xFF1A;&#x5C31;&#x662F;&#x6307;&#x5411;&#x6700;&#x7EC8;&#x5B9E;&#x73B0;&#x7A0B;&#x5E8F;&#x7684;&#x5185;&#x5B58;&#x5730;&#x5740;&#x7684;&#x6307;&#x9488;&#x3002;
+&#x603B;&#x7ED3;&#xFF1A;&#x7C7B;&#x5BF9;&#x8C61;&#x4E2D;&#x5305;&#x542B;&#x4E86;&#x7C7B;&#x7684;&#x5B9E;&#x4F8B;&#x53D8;&#x91CF;&#xFF0C;&#x5B9E;&#x4F8B;&#x65B9;&#x6CD5;&#x7684;&#x5B9A;&#x4E49;&#xFF0C;&#x800C;&#x5143;&#x7C7B;&#x5BF9;&#x8C61;&#x4E2D;&#x5305;&#x62EC;&#x4E86;
+&#x7C7B;&#x7684;&#x7C7B;&#x65B9;&#x6CD5; (&#x4E5F;&#x5C31;&#x662F; C++ &#x4E2D;&#x7684;&#x9759;&#x6001;&#x65B9;&#x6CD5;) &#x7684;&#x5B9A;&#x4E49;&#x3002;
+</code></pre><p><img src="https://upload-images.jianshu.io/upload_images/969362-6fad9921c3b98995.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="&#x7C7B;. png"></p>
+<h4 id="&#x4E3A;&#x4EC0;&#x4E48;&#x8981;&#x8BBE;&#x8BA1;-metaclass">&#x4E3A;&#x4EC0;&#x4E48;&#x8981;&#x8BBE;&#x8BA1; metaclass</h4>
+<pre><code>&#x5B9E;&#x4F8B;&#x5BF9;&#x8C61;&#x5C31;&#x5E72;&#x5B58;&#x50A8;&#x5C5E;&#x6027;&#x503C;&#x7684;&#x4E8B;&#xFF0C;&#x7C7B;&#x5BF9;&#x8C61;&#x5B58;&#x50A8;&#x5B9E;&#x4F8B;&#x65B9;&#x6CD5;&#x5217;&#x8868;&#xFF0C;&#x5143;&#x7C7B;&#x5BF9;&#x8C61;&#x5B58;&#x50A8;&#x7C7B;&#x65B9;&#x6CD5;&#x5217;&#x8868;&#xFF0C;
+&#x5B8C;&#x7F8E;&#x7684;&#x7B26;&#x5408; 6 &#x5927;&#x8BBE;&#x8BA1;&#x539F;&#x5219;&#x4E2D;&#x7684;&#x5355;&#x4E00;&#x804C;&#x8D23;&#xFF0C;
+&#x800C;&#x4E14;&#x5FFD;&#x7565;&#x4E86;&#x5BF9;&#x5BF9;&#x8C61;&#x7C7B;&#x578B;&#x7684;&#x5224;&#x65AD;&#x548C;&#x65B9;&#x6CD5;&#x7C7B;&#x578B;&#x7684;&#x5224;&#x65AD;&#x53EF;&#x4EE5;&#x5927;&#x5927;&#x7684;&#x63D0;&#x5347;&#x6D88;&#x606F;&#x53D1;&#x9001;&#x7684;&#x6548;&#x7387;&#xFF0C;
+&#x5E76;&#x4E14;&#x5728;&#x4E0D;&#x540C;&#x79CD;&#x7C7B;&#x7684;&#x65B9;&#x6CD5;&#x8D70;&#x7684;&#x90FD;&#x662F;&#x540C;&#x4E00;&#x5957;&#x6D41;&#x7A0B;&#xFF0C;&#x5728;&#x4E4B;&#x540E;&#x7684;&#x7EF4;&#x62A4;&#x4E0A;&#x4E5F;&#x5927;&#x5927;&#x8282;&#x7EA6;&#x4E86;&#x6210;&#x672C;&#x3002;
+</code></pre><h4 id="&#x5206;&#x7C7B;&#xFF08;category&#xFF09;&#x5B9E;&#x73B0;&#x539F;&#x7406;">&#x5206;&#x7C7B;&#xFF08;Category&#xFF09;&#x5B9E;&#x73B0;&#x539F;&#x7406;</h4>
+<pre><code>Category &#x5B9E;&#x9645;&#x4E0A;&#x662F; Category_t &#x7684;&#x7ED3;&#x6784;&#x4F53;&#xFF0C;&#x5728;&#x8FD0;&#x884C;&#x65F6;&#xFF0C;&#x65B0;&#x6DFB;&#x52A0;&#x7684;&#x65B9;&#x6CD5;&#xFF0C;&#x90FD;&#x88AB;&#x4EE5;&#x5012;&#x5E8F;&#x63D2;&#x5165;&#x5230;&#x539F;&#x6709;&#x65B9;&#x6CD5;&#x5217;&#x8868;&#x7684;&#x6700;&#x524D;&#x9762;&#xFF0C;
+&#x6240;&#x4EE5;&#x4E0D;&#x540C;&#x7684; Category&#xFF0C;&#x6DFB;&#x52A0;&#x4E86;&#x540C;&#x4E00;&#x4E2A;&#x65B9;&#x6CD5;&#xFF0C;&#x6267;&#x884C;&#x7684;&#x5B9E;&#x9645;&#x4E0A;&#x662F;&#x6700;&#x540E;&#x4E00;&#x4E2A;&#x3002;
+Category &#x5728;&#x521A;&#x521A;&#x7F16;&#x8BD1;&#x5B8C;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x548C;&#x539F;&#x6765;&#x7684;&#x7C7B;&#x662F;&#x5206;&#x5F00;&#x7684;&#xFF0C;
+&#x53EA;&#x6709;&#x5728;&#x7A0B;&#x5E8F;&#x8FD0;&#x884C;&#x8D77;&#x6765;&#x540E;&#xFF0C;&#x901A;&#x8FC7; Runtime &#xFF0C;Category &#x548C;&#x539F;&#x6765;&#x7684;&#x7C7B;&#x624D;&#x4F1A;&#x5408;&#x5E76;&#x5230;&#x4E00;&#x8D77;&#x3002;
+</code></pre><h4 id="category-&#x5728;&#x7F16;&#x8BD1;&#x8FC7;&#x540E;&#xFF0C;&#x662F;&#x5728;&#x4EC0;&#x4E48;&#x65F6;&#x673A;&#x4E0E;&#x539F;&#x6709;&#x7684;&#x7C7B;&#x5408;&#x5E76;&#x5230;&#x4E00;&#x8D77;&#x7684;&#xFF1F;">Category &#x5728;&#x7F16;&#x8BD1;&#x8FC7;&#x540E;&#xFF0C;&#x662F;&#x5728;&#x4EC0;&#x4E48;&#x65F6;&#x673A;&#x4E0E;&#x539F;&#x6709;&#x7684;&#x7C7B;&#x5408;&#x5E76;&#x5230;&#x4E00;&#x8D77;&#x7684;&#xFF1F;</h4>
+<pre><code>1. &#x7A0B;&#x5E8F;&#x542F;&#x52A8;&#x540E;&#xFF0C;&#x901A;&#x8FC7;&#x7F16;&#x8BD1;&#x4E4B;&#x540E;&#xFF0C;Runtime &#x4F1A;&#x8FDB;&#x884C;&#x521D;&#x59CB;&#x5316;&#xFF0C;&#x8C03;&#x7528; _objc_init&#x3002;
+2. &#x7136;&#x540E;&#x4F1A; map_images&#x3002;
+3. &#x63A5;&#x4E0B;&#x6765;&#x8C03;&#x7528; map_images_nolock&#x3002;
+4. &#x518D;&#x7136;&#x540E;&#x5C31;&#x662F; read_images&#xFF0C;&#x8FD9;&#x4E2A;&#x65B9;&#x6CD5;&#x4F1A;&#x8BFB;&#x53D6;&#x6240;&#x6709;&#x7684;&#x7C7B;&#x7684;&#x76F8;&#x5173;&#x4FE1;&#x606F;&#x3002;
+5. &#x6700;&#x540E;&#x662F;&#x8C03;&#x7528; reMethodizeClass:&#xFF0C;&#x8FD9;&#x4E2A;&#x65B9;&#x6CD5;&#x662F;&#x91CD;&#x65B0;&#x65B9;&#x6CD5;&#x5316;&#x7684;&#x610F;&#x601D;&#x3002;
+6. &#x5728; reMethodizeClass: &#x65B9;&#x6CD5;&#x5185;&#x90E8;&#x4F1A;&#x8C03;&#x7528; attachCategories: &#xFF0C;&#x8FD9;&#x4E2A;&#x65B9;&#x6CD5;&#x4F1A;&#x4F20;&#x5165; Class &#x548C; Category &#xFF0C;
+&#x4F1A;&#x5C06;&#x65B9;&#x6CD5;&#x5217;&#x8868;&#xFF0C;&#x534F;&#x8BAE;&#x5217;&#x8868;&#x7B49;&#x4E0E;&#x539F;&#x6709;&#x7684;&#x7C7B;&#x5408;&#x5E76;&#x3002;&#x6700;&#x540E;&#x52A0;&#x5165;&#x5230; class_rw_t &#x7ED3;&#x6784;&#x4F53;&#x4E2D;&#x3002;
+</code></pre><h4 id="&#x5206;&#x7C7B;&#xFF08;category&#xFF09;&#x53EF;&#x4EE5;&#x6DFB;&#x52A0;-weak-&#x5C5E;&#x6027;&#x5417;">&#x5206;&#x7C7B;&#xFF08;Category&#xFF09;&#x53EF;&#x4EE5;&#x6DFB;&#x52A0; weak &#x5C5E;&#x6027;&#x5417;</h4>
+<pre><code>&#x9ED8;&#x8BA4; runtime &#x53EA;&#x63D0;&#x4F9B;&#x5982;&#x4E0B;&#x51E0;&#x79CD;&#x4FEE;&#x9970;&#x5B9E;&#x73B0;&#xFF1A;
+OBJC_ASSOCIATION_ASSIGN
+OBJC_ASSOCIATION_RETAIN_NONATOMIC
+OBJC_ASSOCIATION_COPY_NONATOMIC
+OBJC_ASSOCIATION_RETAIN
+OBJC_ASSOCIATION_COPY
+1. &#x4F7F;&#x7528; OBJC_ASSOCIATION_COPY &#x5173;&#x8054;&#x7B56;&#x7565;&#x5C06; block copy &#x5230;&#x5806;&#x4E0A;&#xFF0C;&#x5229;&#x7528; block &#x628A;&#x6301;&#x6709;&#x7684; weak &#x5BF9;&#x8C61;&#x8FD4;&#x56DE;&#xFF0C;
+&#x5982;&#x679C;&#x5BF9;&#x8C61;&#x4E0D;&#x5B58;&#x5728;&#x4E86;&#xFF0C;&#x8FD4;&#x56DE;&#x7684;&#x4FBF;&#x662F;&#x7A7A;&#x503C;&#x3002;
+2. &#x5B9E;&#x9645;&#x4E0A;&#x4F7F;&#x7528;&#x652F;&#x6301;&#x5F31;&#x5F15;&#x7528;&#x7684;&#x5BB9;&#x5668;&#x5982; NSHashTable&#x3001;NSMapTable&#x3001;NSPointerArray &#x90FD;&#x662F;&#x53EF;&#x4EE5;&#x5B9E;&#x73B0;&#x7684;&#x3002;
+&#x539F;&#x7406;&#x5F88;&#x7B80;&#x5355;&#xFF0C;&#x4F7F;&#x7528;&#x5BB9;&#x5668;&#x6301;&#x6709;&#x5173;&#x8054;&#x7684;&#x5BF9;&#x8C61;&#xFF0C;&#x5F53;&#x8BE5;&#x5BF9;&#x8C61;&#x4E0D;&#x5B58;&#x5728;&#x65F6;&#xFF0C;
+&#x5BB9;&#x5668;&#x81EA;&#x8EAB;&#x4FBF;&#x6709;&#x81EA;&#x52A8;&#x79FB;&#x9664;&#x5DF2;&#x9500;&#x6BC1;&#x5BF9;&#x8C61;&#x7684;&#x7279;&#x6027;&#xFF0C;&#x8FD9;&#x6837;&#x5C31;&#x5B9E;&#x73B0;&#x4E86; weak &#x5C5E;&#x6027;&#x3002;
+</code></pre><p><a href="https://blog.chenyalun.com/2019/01/20/Weak%20Associated%20Object/" target="_blank">&#x53C2;&#x8003;&#xFF1A;&#x7ED9;&#x5206;&#x7C7B;&#x6DFB;&#x52A0; weak &#x5C5E;&#x6027;&#x7684;&#x51E0;&#x79CD;&#x65B9;&#x6CD5;</a></p>
+<h4 id="category-&#x548C;-extension-&#x7684;&#x533A;&#x522B;">category &#x548C; extension &#x7684;&#x533A;&#x522B;</h4>
+<pre><code>extension &#x53EF;&#x4EE5;&#x6DFB;&#x52A0;&#x5B9E;&#x4F8B;&#x53D8;&#x91CF;&#xFF0C;&#x800C; category &#x662F;&#x65E0;&#x6CD5;&#x6DFB;&#x52A0;&#x5B9E;&#x4F8B;&#x53D8;&#x91CF;&#x7684;&#xFF08;&#x56E0;&#x4E3A;&#x5728;&#x8FD0;&#x884C;&#x671F;&#xFF0C;&#x5BF9;&#x8C61;&#x7684;&#x5185;&#x5B58;&#x5E03;&#x5C40;&#x5DF2;&#x7ECF;&#x786E;&#x5B9A;&#xFF0C;
+&#x5982;&#x679C;&#x6DFB;&#x52A0;&#x5B9E;&#x4F8B;&#x53D8;&#x91CF;&#x5C31;&#x4F1A;&#x7834;&#x574F;&#x7C7B;&#x7684;&#x5185;&#x90E8;&#x5E03;&#x5C40;&#xFF09;&#x3002;
+1&#x3001;extension &#x5728;&#x7F16;&#x8BD1;&#x671F;&#x51B3;&#x8BAE;&#xFF0C;&#x5B83;&#x5C31;&#x662F;&#x7C7B;&#x7684;&#x4E00;&#x90E8;&#x5206;&#xFF0C;&#x4F46;&#x662F; category &#x5219;&#x5B8C;&#x5168;&#x4E0D;&#x4E00;&#x6837;&#xFF0C;&#x5B83;&#x662F;&#x5728;&#x8FD0;&#x884C;&#x671F;&#x51B3;&#x8BAE;&#x7684;&#x3002;
+extension &#x5728;&#x7F16;&#x8BD1;&#x671F;&#x548C;&#x5934;&#x6587;&#x4EF6;&#x91CC;&#x7684; @interface &#x4EE5;&#x53CA;&#x5B9E;&#x73B0;&#x6587;&#x4EF6;&#x91CC;&#x7684; @implementation &#x4E00;&#x8D77;&#x5F62;&#x6210;&#x4E00;&#x4E2A;&#x5B8C;&#x6574;&#x7684;&#x7C7B;&#xFF0C;
+extension &#x4F34;&#x968F;&#x7C7B;&#x7684;&#x4EA7;&#x751F;&#x800C;&#x4EA7;&#x751F;&#xFF0C;&#x4EA6;&#x968F;&#x4E4B;&#x4E00;&#x8D77;&#x6D88;&#x4EA1;
+2&#x3001;extension &#x4E00;&#x822C;&#x7528;&#x6765;&#x9690;&#x85CF;&#x7C7B;&#x7684;&#x79C1;&#x6709;&#x4FE1;&#x606F;&#xFF0C;&#x4F60;&#x5FC5;&#x987B;&#x6709;&#x4E00;&#x4E2A;&#x7C7B;&#x7684;&#x6E90;&#x7801;&#x624D;&#x80FD;&#x4E3A;&#x4E00;&#x4E2A;&#x7C7B;&#x6DFB;&#x52A0; extension&#xFF0C;
+&#x6240;&#x4EE5;&#x4F60;&#x65E0;&#x6CD5;&#x4E3A;&#x7CFB;&#x7EDF;&#x7684;&#x7C7B;&#x6BD4;&#x5982; NSString &#x6DFB;&#x52A0; extension&#xFF0C;&#x9664;&#x975E;&#x521B;&#x5EFA;&#x5B50;&#x7C7B;&#x518D;&#x6DFB;&#x52A0; extension&#x3002;
+&#x800C; category &#x4E0D;&#x9700;&#x8981;&#x6709;&#x7C7B;&#x7684;&#x6E90;&#x7801;&#xFF0C;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x7ED9;&#x7CFB;&#x7EDF;&#x63D0;&#x4F9B;&#x7684;&#x7C7B;&#x6DFB;&#x52A0; category
+3&#x3001;extension &#x53EF;&#x4EE5;&#x6DFB;&#x52A0;&#x5B9E;&#x4F8B;&#x53D8;&#x91CF;&#xFF0C;&#x800C; category &#x4E0D;&#x53EF;&#x4EE5;&#x3002;
+4&#x3001;extension &#x548C; category &#x90FD;&#x53EF;&#x4EE5;&#x6DFB;&#x52A0;&#x5C5E;&#x6027;&#xFF0C;&#x4F46;&#x662F; category &#x7684;&#x5C5E;&#x6027;
+&#x4E0D;&#x80FD;&#x751F;&#x6210;&#x6210;&#x5458;&#x53D8;&#x91CF;&#x548C; getter&#x3001;setter &#x65B9;&#x6CD5;&#x7684;&#x5B9E;&#x73B0;&#x3002;
+</code></pre><h4 id="weak-&#x539F;&#x7406;">weak &#x539F;&#x7406;</h4>
+<pre><code>Runtime &#x7EF4;&#x62A4;&#x4E86;&#x4E00;&#x4E2A; Weak &#x8868;&#xFF0C;&#x7528;&#x4E8E;&#x5B58;&#x50A8;&#x6307;&#x5411;&#x67D0;&#x4E2A;&#x5BF9;&#x8C61;&#x7684;&#x6240;&#x6709; Weak &#x6307;&#x9488;&#x3002;
+Weak &#x8868;&#x5176;&#x5B9E;&#x662F;&#x4E00;&#x4E2A;&#x54C8;&#x5E0C;&#x8868;&#xFF0C;Key &#x662F;&#x6240;&#x6307;&#x5BF9;&#x8C61;&#x7684;&#x5730;&#x5740;&#xFF0C;Value &#x662F; Weak &#x6307;&#x9488;&#x7684;
+&#x5730;&#x5740;&#xFF08;&#x8FD9;&#x4E2A;&#x5730;&#x5740;&#x7684;&#x503C;&#x662F;&#x6240;&#x6307;&#x5BF9;&#x8C61;&#x7684;&#x5730;&#x5740;&#xFF09;&#x7684;&#x6570;&#x7EC4;&#x3002;
+&#x4E00;&#x4E2A;&#x5BF9;&#x8C61; A, &#x91CC;&#x9762;&#x6709;&#x4E00;&#x4E2A; weak &#x5C5E;&#x6027; B, &#x9996;&#x5148;&#x4F1A;&#x6709;&#x4E00;&#x4E2A; hash &#x8868;, &#x952E;&#x4E3A; A &#x7684;&#x5730;&#x5740;, &#x503C;&#x4E3A;&#x4E00;&#x4E2A;&#x6570;&#x7EC4;, 
+&#x8FD9;&#x4E2A;&#x6570;&#x7EC4;&#x91CC;&#x5305;&#x542B;&#x4E86; B &#x6307;&#x9488;&#x7684;&#x5730;&#x5740;, &#x5F53;&#x9500;&#x6BC1;&#x7684;&#x65F6;&#x5019;&#x56DE;&#x6839;&#x636E; B &#x6307;&#x9488;&#x7684;&#x5730;&#x5740;&#x83B7;&#x53D6;&#x5230; B &#x7684;&#x6307;&#x9488;, &#x7136;&#x540E;&#x7F6E;&#x4E3A; nil
+&#x5728;&#x5BF9;&#x8C61;&#x88AB;&#x56DE;&#x6536;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x7ECF;&#x8FC7;&#x5C42;&#x5C42;&#x8C03;&#x7528;&#xFF0C;&#x4F1A;&#x6700;&#x7EC8;&#x89E6;&#x53D1;&#x4E0B;&#x9762;&#x7684;&#x65B9;&#x6CD5;&#x5C06;&#x6240;&#x6709; Weak &#x6307;&#x9488;&#x7684;&#x503C;&#x8BBE;&#x4E3A; nil&#x3002;
+&#x7B80;&#x5355;&#x6765;&#x8BF4;&#xFF0C;&#x8FD9;&#x4E2A;&#x65B9;&#x6CD5;&#x9996;&#x5148;&#x6839;&#x636E;&#x5BF9;&#x8C61;&#x5730;&#x5740;&#x83B7;&#x53D6;&#x6240;&#x6709; Weak &#x6307;&#x9488;&#x5730;&#x5740;&#x7684;&#x6570;&#x7EC4;&#xFF0C;
+&#x7136;&#x540E;&#x904D;&#x5386;&#x8FD9;&#x4E2A;&#x6570;&#x7EC4;&#x628A;&#x5176;&#x4E2D;&#x7684;&#x6570;&#x636E;&#x8BBE;&#x4E3A; nil&#xFF0C;&#x6700;&#x540E;&#x628A;&#x8FD9;&#x4E2A; entry &#x4ECE; Weak &#x8868;&#x4E2D;&#x5220;&#x9664;&#x3002;
+1. &#x521D;&#x59CB;&#x5316;&#x65F6;&#xFF1A;runtime &#x4F1A;&#x8C03;&#x7528; objc_initWeak &#x51FD;&#x6570;&#xFF0C;&#x521D;&#x59CB;&#x5316;&#x4E00;&#x4E2A;&#x65B0;&#x7684; weak &#x6307;&#x9488;&#x6307;&#x5411;&#x5BF9;&#x8C61;&#x7684;&#x5730;&#x5740;&#x3002;
+2. &#x6DFB;&#x52A0;&#x5F15;&#x7528;&#x65F6;&#xFF1A;objc_initWeak &#x51FD;&#x6570;&#x4F1A;&#x8C03;&#x7528; storeWeak() &#x51FD;&#x6570;&#xFF0C; 
+storeWeak() &#x7684;&#x4F5C;&#x7528;&#x662F;&#x66F4;&#x65B0;&#x6307;&#x9488;&#x6307;&#x5411;&#xFF0C;&#x521B;&#x5EFA;&#x5BF9;&#x5E94;&#x7684;&#x5F31;&#x5F15;&#x7528;&#x8868;&#x3002;
+3. &#x91CA;&#x653E;&#x65F6;, &#x8C03;&#x7528; clearDeallocating &#x51FD;&#x6570;&#x3002;&#x4F1A;&#x7ECF;&#x8FC7;&#x4E24;&#x6B21; hash &#x8FD0;&#x7B97;&#xFF0C;
+&#x7B2C;&#x4E00;&#x6B21; hash(obj)&#x5F97;&#x5230; sideTables &#x4E2D;&#x5177;&#x4F53;&#x7684; sideTable
+&#x7B2C;&#x4E8C;&#x6B21; hash(obj) &#x4ECE; sideTable &#x4E2D;&#x7684; weak_table &#x83B7;&#x53D6;&#x5177;&#x4F53;&#x7684; weak_entry_t&#x3002;
+&#x7136;&#x540E; clearDeallocating &#x51FD;&#x6570;&#x6839;&#x636E;&#x5BF9;&#x8C61;&#x5730;&#x5740;&#x83B7;&#x53D6;&#x6240;&#x6709; weak &#x6307;&#x9488;&#x5730;&#x5740;&#x7684;&#x6570;&#x7EC4;&#xFF0C;
+&#x7136;&#x540E;&#x904D;&#x5386;&#x8FD9;&#x4E2A;&#x6570;&#x7EC4;&#x628A;&#x5176;&#x4E2D;&#x7684;&#x6570;&#x636E;&#x8BBE;&#x4E3A; nil&#xFF0C;&#x6700;&#x540E;&#x628A;&#x8FD9;&#x4E2A; entry &#x4ECE; weak &#x8868;&#x4E2D;&#x5220;&#x9664;&#xFF0C;&#x6700;&#x540E;&#x6E05;&#x7406;&#x5BF9;&#x8C61;&#x7684;&#x8BB0;&#x5F55;&#x3002;
+</code></pre><h4 id="classcopypropertylist-&#x4E0E;-classcopyivarlist-&#x533A;&#x522B;">class_copyPropertyList &#x4E0E; class_copyIvarList &#x533A;&#x522B;</h4>
+<pre><code>class_copyPropertyList: &#x53EA;&#x83B7;&#x53D6; @property &#x58F0;&#x660E;&#x7684;&#x5C5E;&#x6027;&#xFF0C;&#x83B7;&#x53D6;&#x540E;&#x4E0D;&#x5E26;&#x4E0B;&#x5212;&#x7EBF;
+class_copyIvarList: &#x4E0D;&#x4F46;&#x83B7;&#x53D6;&#x4E86; @property &#x5C5E;&#x6027;&#xFF0C;&#x83B7;&#x53D6;&#x540E;&#x5E26;&#x4E0B;&#x5212;&#x7EBF;&#xFF0C;
+&#x800C;&#x4E14;&#x8FD8;&#x83B7;&#x53D6;&#x4E86; @interface &#x5927;&#x62EC;&#x53F7;&#x4E2D;&#x58F0;&#x660E;&#x7684;&#x53D8;&#x91CF;
+</code></pre><h4 id="class&#x3001;objcgetclass&#x3001;objectgetclass-&#x65B9;&#x6CD5;&#x6709;&#x4EC0;&#x4E48;&#x533A;&#x522B;">class&#x3001;objc_getClass&#x3001;object_getclass &#x65B9;&#x6CD5;&#x6709;&#x4EC0;&#x4E48;&#x533A;&#x522B;?</h4>
+<pre><code>[obj class]&#xFF1A;&#x5219;&#x5206;&#x4E24;&#x79CD;&#x60C5;&#x51B5;&#xFF1A;&#x4E00;&#x662F;&#x5F53; obj &#x4E3A;&#x5B9E;&#x4F8B;&#x5BF9;&#x8C61;&#x65F6;&#xFF0C;
+[obj class]&#x4E2D; class &#x662F;&#x5B9E;&#x4F8B;&#x65B9;&#x6CD5;&#xFF1A;- (Class)class&#xFF0C;&#x8FD4;&#x56DE;&#x7684; obj &#x5BF9;&#x8C61;&#x4E2D;&#x7684; isa &#x6307;&#x9488;&#xFF1B;
+&#x4E8C;&#x662F;&#x5F53; obj &#x4E3A;&#x7C7B;&#x5BF9;&#x8C61;&#xFF08;&#x5305;&#x62EC;&#x5143;&#x7C7B;&#x548C;&#x6839;&#x7C7B;&#x4EE5;&#x53CA;&#x6839;&#x5143;&#x7C7B;&#xFF09;&#x65F6;&#xFF0C;&#x8C03;&#x7528;&#x7684;&#x662F;&#x7C7B;&#x65B9;&#x6CD5;&#xFF1A;+ (Class)class&#xFF0C;&#x8FD4;&#x56DE;&#x7684;&#x7ED3;&#x679C;&#x4E3A;&#x5176;&#x672C;&#x8EAB;&#x3002;
+objc_getClass&#xFF1A;&#x53C2;&#x6570;&#x662F;&#x7C7B;&#x540D;&#x7684;&#x5B57;&#x7B26;&#x4E32;&#xFF0C;&#x8FD4;&#x56DE;&#x7684;&#x5C31;&#x662F;&#x8FD9;&#x4E2A;&#x7C7B;&#x7684;&#x7C7B;&#x5BF9;&#x8C61;&#xFF1B;
+object_getClass&#xFF1A;&#x53C2;&#x6570;&#x662F; id &#x7C7B;&#x578B;&#xFF0C;&#x5B83;&#x8FD4;&#x56DE;&#x7684;&#x662F;&#x8FD9;&#x4E2A; id &#x7684; isa &#x6307;&#x9488;&#x6240;&#x6307;&#x5411;&#x7684; Class&#xFF0C;
+&#x5982;&#x679C;&#x4F20;&#x53C2;&#x662F; Class&#xFF0C;&#x5219;&#x8FD4;&#x56DE;&#x8BE5; Class &#x7684; metaClass
+</code></pre>
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="Block.html" class="navigation navigation-prev " aria-label="Previous page: Block相关">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="RunLoop.html" class="navigation navigation-next " aria-label="Next page: RunLoop相关">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Runtime相关","level":"1.5","depth":1,"next":{"title":"RunLoop相关","level":"1.6","depth":1,"path":"source/RunLoop.md","ref":"source/RunLoop.md","articles":[]},"previous":{"title":"Block相关","level":"1.4","depth":1,"path":"source/Block.md","ref":"source/Block.md","articles":[]},"dir":"ltr"},"config":{"plugins":[],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Jayxiang","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"iOS开发相关面试题总结","language":"zh-hans","gitbook":"*","description":"select * from learn"},"file":{"path":"source/Runtime.md","mtime":"2020-07-04T09:25:17.768Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-07-05T12:29:03.034Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+
