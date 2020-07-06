@@ -181,7 +181,7 @@ IMP：就是指向最终实现程序的内存地址的指针。
 总结：类对象中包含了类的实例变量，实例方法的定义，而元类对象中包括了
 类的类方法 (也就是 C++ 中的静态方法) 的定义。
 ```
-![类. png](https://upload-images.jianshu.io/upload_images/969362-6fad9921c3b98995.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![类. png](./image/类.png)
 #### 为什么要设计 metaclass
 ```
 实例对象就干存储属性值的事，类对象存储实例方法列表，元类对象存储类方法列表，

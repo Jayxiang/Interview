@@ -21,6 +21,14 @@
 - [类方法和实例方法有什么区别？](# 类方法和实例方法有什么区别？)
 - [浅拷贝和深拷贝的区别？](# 浅拷贝和深拷贝的区别？)
 - [NSCache NSDictionary 区别](#NSCache NSDictionary 区别)
+- [什么是 KVC 和 KVO？](# 什么是 KVC 和 KVO？)
+- [开发中，保存数据有哪几种方式？](# 开发中，保存数据有哪几种方式？)
+- [关键字 const/static/extern、UIKIT_EXTERN 区别和用法以及与宏的区别](# 关键字 const/static/extern、UIKIT_EXTERN 区别和用法以及与宏的区别)
+- [关键字组合 static inline](# 关键字组合 static inline)
+- [isMemberOfClass 、isKindOfClass 和 isSubclassOfClass 联系与区别](# isMemberOfClass 、isKindOfClass 和 isSubclassOfClass 联系与区别)
+- [将一个函数在主线程执行的几种方法](# 将一个函数在主线程执行的几种方法)
+- [+initialize 与 +load 有什么用处，区别](# +initialize 与 +load 有什么用处，区别)
+- [isEqual,isEqualToString 和 == 区别](# isEqual,isEqualToString 和 == 区别)
 
 #### 简要叙述 OC 语言的特点
 
@@ -337,4 +345,177 @@ mutableCopy 是深拷贝。
 2. 当内存不足时 NSCache 会自动释放内存(所以从缓存中取数据的时候总要判断是否为空)
 3.NSCache 可以指定缓存的限额，当缓存超出限额自动释放内存
 4.NSCache 并不会 “拷贝” 键，而是会 “保留” 它。
+```
+#### 什么是 KVC 和 KVO？
+```
+KVC 也就是 key-value-coding , 即键值编码，通常是用来给某一个对象的属性进行赋值.
+开发中我们可以对私有属性进行赋值的, 修改一些控件的内部属性, 还可以用于字典转模型.
+KVO，即 key-value-observing, 利用一个 key 来找到某个属性并监听其值得改变。
+其实这也是一种典型的观察者模式。
+大致用法:
+1. 添加观察者
+2. 在观察者中实现监听方法，observeValueForKeyPath: ofObject: change: context:
+3. 移除观察者
+简单实现原理:
+当一个类的属性被观察的时候，系统会通过 runtime 动态的创建一个该类的派生类，
+并且会在这个类中重写基类被观察的属性的 setter 方法，
+而且系统将这个类的 isa 指针指向了派生类，从而实现了给监听的属性赋值时调用的是派生类的 setter 方法。
+重写的 setter 方法会在调用原 setter 方法前后，通知观察对象值得改变。
+KVC/KVO 实现的根本是 Objective-C 的动态性和 runtime
+```
+#### 开发中，保存数据有哪几种方式？
+```
+所谓的持久化，就是将数据保存到磁盘中，使得在应用程序重启后可以继续访问之前保存的数据.
+iOS 本地数据保存有多种方式, 比如 NSUserDefaults、Plist 文件保存、
+归档 (NSKeyedArchiver)、SQLite、CoreData、KeyChain(钥匙串) 等多种方式。
+NSUserDefaults:
+  NSUserDefaults 是一个单例对象, 在整个应用程序的生命周期中都只有一个实例。
+  NSUserDefaults 保存的数据类型有：NSNumber, 基本数据类型(int，NSInter,float,double,CGFlat..),
+  NSString, NSData, NSArray, NSDictionary, NSURL。
+  NSUserDefaults 一般保存配置信息，比如用户名、密码、是否保存用户名和密码、是否离线下载等一些配置条件信息。
+plist 文件保存:
+  plist 文件是将某些特定的类，通过 XML 文件的方式保存在目录中。
+  plist 主要保存的数据类型为 NSString、NSNumber、NSData、NSArray、NSDictionary。
+可以看出 NSUserDefaults 和 plist 有一定局限性.
+归档: 在 iOS 中是另一种形式的序列化，只要遵循了 NSCoding 协议的对象都可以通过它实现序列化。
+  需要注意的: 必须遵循并实现 NSCoding 协议; 保存文件的扩展名可以任意指定; 
+  继承时必须先调用父类的归档解档方法
+上面的几个存储方法，都是覆盖存储。如果想要增加一条数据就必须把整个文件读出来，
+然后修改数据后再把整个内容覆盖写入文件。所以它们都不适合存储大量的内容。
+因此保存大量数据可以优先考虑用数据库，sql 语句对查询操作有优化作用，所以从查询速度或者插入效率都是很高的。
+SQLite: 在 iOS 中要使用 SQLite3, 需要添加库文件：libsqlite3.dylib 并导入主头文件，
+这是一个 C 语言的库，所以直接使用 SQLite3 还是比较麻烦的。
+  不过在一般开发过程中，使用的都是第三方开源库 FMDB，封装了这些基本的 c 语言方法，
+  使得我们在使用时更加容易理解，提高开发效率。
+CoreData:
+  CoreData 框架提供了对象 - 关系映射 (ORM) 的功能, 即能够将 OC 对象转化成数据, 
+  保存在 SQLite3 数据库文件中, 也能将保存在数据库中的数据还原成 OC 对象. 在次数据操作期间, 不需要编写任何 SQL 语句.
+上面几种都是保存到沙盒中.
+KeyChain: 钥匙串是苹果公司 Mac OS 中的密码管理系统。一个钥匙串可以包含多种类型的数据：
+密码（包括网站，FTP 服务器，SSH 帐户，网络共享，无线网络，加密磁盘镜像等），私钥，电子证书和加密笔记等。
+  当应用程序被删除后，保存到 KeyChain 里面的数据不会被删除，
+  所以 KeyChain 是保存到沙盒范围以外的地方。安全性也比较高.
+  KeyChain 还有一个用途，就是替代 UDID。UDID 已经被废除了，所以只能用 UUID 代替，
+  所以我们可以把 UUID 用 KeyChain 保存。
+```
+#### 关键字 const/static/extern、UIKIT_EXTERN 区别和用法以及与宏的区别
+```
+const:
+  1.const 用来修饰右边的基本变量或指针变量
+  2. 被修饰的变量只读，不能被修改
+  int  const  *p   //  *p 只读 ;p 变量
+  int  *const  p  // *p 变量 ; p 只读
+  const  int   *const p //p 和 * p 都只读
+  int  const  *const  p   //p 和 * p 都只读
+  开发者经常定义只读变量:
+  const CGFloat kWidth = 10.0;
+static:
+  1. 修饰局部变量, 保证局部变量永远只初始化一次，在程序的运行过程中永远只有一份内存，
+  生命周期类似全局变量了，但是作用域不变。
+  2. 修饰全局变量使全局变量的作用域仅限于当前文件内部，即当前文件内部才能访问该全局变量。
+  3. 修饰函数时，被修饰的函数被称为静态函数，使得外部文件无法访问这个函数，仅本文件可以访问
+   另外在开发中经常在单例中使用.
+extern: 它的作用是声明外部全局变量。这里需要特别注意 extern 只能声明，不能用于实现，
+而且定义和分配内存都在原来类中。
+  UIKIT_EXTERN: 可以解决重复定义的问题, 可以参照苹果的做法, 比如系统预置的通知:
+  UIKIT_EXTERN NSString *const   UIKeyboardWillShowNotification;
+  UIKIT_EXTERN NSString *const  UIKeyboardDidShowNotification;
+宏: 1. 宏在编译开始之前就会被替换，而 const 只是变量进行修饰; 
+  2. 宏可以定义一些函数方法，const 不能 
+  3. 宏编译时只替换不做检查不报错，也就是说有重复定义问题。而 const 会编译检查，会报错  
+定义不对外公开的常量的时候，我们应该尽量先考虑使用 static 方式声名 const 来替代使用宏定义。
+const 不能满足的情况再考虑使用宏定义。
+例如:
+  static const CGFloat kWidth = 10.0;
+  可以代替 #define WIDTH 10.0
+```
+#### 关键字组合 static inline
+```
+inline 函数, 即内联函数, 他可以向编译器申请, 将使用 inline 修饰的函数内容, 内联到函数调用的位置
+内联函数的作用类似于 #define, 但是他比 #define 有一些优点
+相对于函数直接调用: inline 修饰的函数, 不会再调用这个函数的时候, 调用 call 方法, 
+就不会将函数压栈, 产生内存消耗。
+这样就减少了调用的开销, 提高效率. 所以执行速度确比一般函数的执行速度要快.
+相对于宏的优点:
+1. 宏需要预编译, 而内联函数是一个函数, 不许要预编译
+2. 编译器调用内联函数的时候, 会检查函数的传参是否正确, 但是宏就不会提醒参数
+3. 可以使用所在类的保护成员及私有成员。
+但是内联函数的使用也有限制：
+1. 内联函数只是我们向编译器提供的申请, 编译器不一定采取 inline 形式调用函数.
+2. 内联函数只能对一些小型的函数起作用, 如果函数中消耗的内存很大, 比如 for 循环, 则内联函数就会默认失效
+3. 内联函数的定义须在调用之前. 另外如果调用次数多的话，会使可执行文件变大。
+使用 static 的原因：
+static 只是为了表明该函数只在该文件中可见！也就是说，在同一个工程中，
+就算在其他文件中也出现同名、同参数的函数也不会引起函数重复定义的错误！
+另外和普通函数的区别：
+1. 普通函数调用需要开辟栈帧和回收栈帧，内联函数不开辟和回收栈帧，在调用出展开代码
+2. 普通函数会在编译完生成函数名对应的符号，链接的时候在符号表上可以找到，内联函数不生成符号
+```
+#### isMemberOfClass 、isKindOfClass 和 isSubclassOfClass 联系与区别
+```
+联系：都能检测一个对象是否是某个类的成员
+区别：
+isKindOfClass: 确定一个对象是否是一个类的成员, 或者是派生自该类的成员.
+isSubclassOfClass 和 isKindOfClass 的作用基本上是一致的，只不过一个是类方法，一个是对象方法。
+isMemberOfClass: 确定一个对象是否是当前类的成员. 他的筛选条件更为苛刻，
+只有当类型完全匹配的时候才会返回 YES。
+```
+#### 将一个函数在主线程执行的几种方法
+```
+//GCD 方法，通过向主线程队列发送一个 block 块，使 block 里的方法可以在主线程中执行。
+dispatch_async(dispatch_get_main_queue(), ^{
+    // 需要执行的方法
+});
+//NSOperation 方法
+NSOperationQueue *mainQueue = [NSOperationQueue mainQueue];
+NSBlockOperation *operation = [NSBlockOperation blockOperationWithBlock:^{
+    // 需要执行的方法
+}];
+[mainQueue addOperation:operation];
+//NSThread 方法
+[self performSelector:@selector(method) onThread:[NSThread mainThread] withObject:nil waitUntilDone:YES modes:nil];
+[self performSelectorOnMainThread:@selector(method) withObject:nil waitUntilDone:YES];
+[[NSThread mainThread] performSelector:@selector(method) withObject:nil];
+//RunLoop 方法
+[[NSRunLoop mainRunLoop] performSelector:@selector(method) withObject:nil];
+```
+#### +initialize 与 +load 有什么用处，区别
+```
+通常情况下，我们在开发过程中可能不必关注这两个方法。如果有需要定制，
+我们可以在自定义的 NSObject 子类中给出这两个方法的实现，
+这样在类的加载和初始化过程中，自定义的方法可以得到调用。
++load: 通过函数地址直接调用，是在 runtime 加载类分类的时候调用，只会调用一次
+1. 当父类和子类都实现 load 函数时, 父类的 load 方法执行顺序要优先于子类
+2. 当子类未实现 load 方法时, 不会调用父类 load 方法
+3. 类中的 load 方法执行顺序要优先于类别(Category)
+4. 当有多个类别 (Category) 都实现了 load 方法, 这几个 load 方法都会执行, 
+但执行顺序不确定(其执行顺序与类别在 Compile Sources 中出现的顺序一致)
+5. 当然当有多个不同的类的时候, 每个类 load  执行顺序与其在 Compile Sources 出现的顺序一致
+
++ initialize：会在第一次接收到消息时调用，会通过 objc_msgSend 调用，
+每个类只会 initialize 一次（父类可能多次，但不代表初始化多次）。
+1. 父类的 initialize 方法会比子类先执行
+2. 当子类未实现 initialize 方法时, 会调用父类 initialize 方法( 可能会多次调用), 
+子类实现 initialize 方法时, 会覆盖父类 initialize 方法.
+3. 当有多个 Category 都实现了 initialize 方法, 会覆盖类中的方法, 
+只执行一个(会执行 Compile Sources 列表中最后一个 Category 的 initialize 方法)
+
+```
+|   | +load | + initialize |
+| --- | --- | --- |
+| 调用时机 | 被添加到 runtime 时（main 前） | 到第一条消息前，可能永远不调用 |
+| 调用顺序 | 父类 ->子类 ->分类 | 父类 ->本类(如果有分类，则调用分类) |
+| 若自身未实现，是否沿用父类的方法 | 否 | 是 |
+| 类别中的定义 | 全都执行，但后于本类的方法（顺序与 Compile Sources 出现的顺序一致） | 覆盖本类的方法，只执行一个（执行 Compile Sources 列表中最后一个 Category 的 initialize 方法） |
+[更多请看：iOS 类方法 load 和 initialize 详解](https://www.jianshu.com/p/c52d0b6ee5e9)
+
+#### isEqual,isEqualToString 和 == 区别
+```
+isEqual：默认情况下是比较两个对象的内存地址；isEqual：就是提供了一个可以自定义相等标准的方法。
+系统自带的类 (比如 Foundation 中 的 NSString, NSArray 等) 重写了这个方法，改变了这个方法的判断规则,
+一般改为比较两个对象的内容，不是内存地址.
+
+isEqualToString: 字符串比较，只比较字符串本身的内容是否一致，不比较内存地址.
+
+==：如果两个对象的内存地址是一样，返回 true，如果内存地址不一样，返回 false.
 ```

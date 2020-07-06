@@ -11,6 +11,7 @@
 - [ARC 的 retainCount 怎么存储的？](#ARC 的 retainCount 怎么存储的？)
 - [一个 NSObject 对象占用多少个字节](# 一个 NSObject 对象占用多少个字节)
 - [内存泄漏的几种原因](# 内存泄漏的几种原因)
+- [常见的循环引用，及解决办法](# 常见的循环引用，及解决办法)
 - [简述一下自动释放池底层怎么实现？](# 简述一下自动释放池底层怎么实现？)
 
 #### iOS 内存管理
@@ -63,7 +64,7 @@ MRC 下内存管理的缺点：
 所以当使用一个指针指向这个区里面的内存时，一定要注意内存是否已经被释放，
 否则会产生程序崩溃（也即是野指针报错）
 ```
-![内存分配. png](https://upload-images.jianshu.io/upload_images/969362-fc58cc49de6d1dd1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![内存分配. png](./image/内存分配.png)
 
 #### 内存管理方案
 ```
@@ -177,6 +178,25 @@ release：和 retain 相反，经过两次哈希查找，找到其对应引用�
 6、CoreFoundation 框架里申请的内存忘记释放   
 7、WKWebView addScriptMessageHandler 导致内存泄漏可以用另一个类代替解决，也需要在 dealloc 移除  
 8、地图使用导致内存泄漏，记得在 viewDidDisappear 销毁即可 
+```
+#### 常见的循环引用，及解决办法
+```
+1. 父类与子类
+如：在使用 UITableView 的时候，将 UITableView 给 Cell 使用，cell 中的 strong 引用会造成循环引用。
+解决：strong 改为 weak
+2.block
+self 将 block 作为自己的属性变量，而在 block 的方法体里面又引用了 self 本身，
+此时就很简单的形成了一个循环引用。
+解决：__weak typeof(self) weakSelf = self;
+     __strong typeof (weakSelf) strongSelf = weakSelf;
+3.Delegate
+@property (nonatomic, weak) id <TestDelegate> delegate;
+如果将 weak 改为 strong，则会造成循环引用
+4.NSTimer
+NSTimer 的 target 对传入的参数都是强引用（即使是 weak 对象）
+解决方法：1. 自己封装成 block timer
+2. 使用 iOS10 后系统的 block timer
+3. 使用 GCD 封装计时器
 ```
 #### 简述一下自动释放池底层怎么实现？
 ```

@@ -62,6 +62,8 @@ GPU 优化：
 其他方面：
 1、正确使用 reuseIdentifier 来重用 cells
 2、缓存行高
+3、如果 cell 内现实的内容来自 web，使用异步加载，缓存请求结果
+4、尽量不要动态的 add 或者 remove 子控件。最好在初始化时就添加完，然后通过 hidden 来控制是否显示。
 ```
 #### 什么是离屏渲染？什么情况下会触发？该如何应对？
 ```
@@ -167,7 +169,7 @@ main：
 [App 启动时间优化  二进制重排和 PGO](https://www.jianshu.com/p/07bb4c99252c)
 [抖音研发实践：基于二进制文件重排的解决方案](https://mp.weixin.qq.com/s?__biz=MzI1MzYzMjE0MQ==&mid=2247485101&idx=1&sn=abbbb6da1aba37a04047fc210363bcc9&scene=21#wechat_redirect)
 
-![启动. png](https://upload-images.jianshu.io/upload_images/969362-88e51fc5083766d0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![启动. png](./image/启动.png)
 
 #### 如何有效降低 APP 包的大小？
 ```

@@ -107,7 +107,7 @@ RunLoop 通过 mach_msg()函数接收、发送消息。
 (3)如果 RunLoop 被手动唤醒但尚未超时，重新启动循环，跳到第 2 步
 10. 通知观察者 RunLoop 结束。
 ```
-![runloop.png](https://upload-images.jianshu.io/upload_images/969362-31a5ed5d049d277c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![runloop.png](./image/runloop.png)
 
 #### RunLoop 和线程
 ```

@@ -92,4 +92,4 @@ NSConditionLock：是对 NSCondition 的进一步封装，可以设置具体的�
 dispatch_semaphore：信号量实现加锁
 ```
 性能如下：
-![锁的性能. png](https://upload-images.jianshu.io/upload_images/969362-c998339b97779bb0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![锁的性能. png](./image/锁的性能.png)

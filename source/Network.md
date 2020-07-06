@@ -78,8 +78,8 @@ RST：重置连接。
 SYN：发起一个新连接。
 FIN：释放一个连接。
 ```
-![三次握手. jpg](https://upload-images.jianshu.io/upload_images/969362-5113db63ed0e4a41.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-![四次挥手. jpg](https://upload-images.jianshu.io/upload_images/969362-dc6cd9344cea5947.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![三次握手. jpg](./image/三次握手.jpg)
+![四次挥手. jpg](./image/四次挥手.jpg)
 
 #### 为什么 TCP 连接建立需要三次握手
 ```
@@ -156,4 +156,4 @@ HTTPS 连接建立过程使用非对称加密，而非对称加密是很耗时�
 
 其中，对称加密加密的是实际的数据，非对称加密加密的是对称加密所需要的客户端的密钥。
 ```
-![HTTPS.png](https://upload-images.jianshu.io/upload_images/969362-ef1c1e9efd894aac.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![HTTPS.png](./image/HTTPS.png)
