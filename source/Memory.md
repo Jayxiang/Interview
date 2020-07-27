@@ -12,7 +12,10 @@
 - [一个 NSObject 对象占用多少个字节](# 一个 NSObject 对象占用多少个字节)
 - [内存泄漏的几种原因](# 内存泄漏的几种原因)
 - [常见的循环引用，及解决办法](# 常见的循环引用，及解决办法)
-- [简述一下自动释放池底层怎么实现？](# 简述一下自动释放池底层怎么实现？)
+- [简述一下自动释放池(@autoreleasePool)底层怎么实现？](# 简述一下自动释放池(@autoreleasePool)底层怎么实现？)
+- [Dealloc 的实现机制](# Dealloc 的实现机制)
+- [64bit 和 32bit 下 long 和 char 所占字节](# 64bit 和 32bit 下 long 和 char 所占字节)
+- [retain、release 的实现机制?](# retain、release 的实现机制?)
 
 #### iOS 内存管理
 ```
@@ -78,6 +81,11 @@ NONPOINTER_ISA:
 非指针型 isa : 值的部分代表 class 地址
 指针型 isa：值代表 class 地址
 64 bit 存储一个内存地址显然是种浪费。于是可以优化存储方案，用一部分额外的存储空间存储其他内容。
+第一位的 0 或 1 代表是纯地址型 isa 指针，还是 NONPOINTER_ISA 指针。 
+第二位，代表是否有关联对象
+第三位代表是否有 C++ 代码。
+接下来33位代表指向的内存地址
+接下来有 弱引用 的标记 接下来有是否 delloc 的标记....等等
 
 散列表: 复杂的数据结构，包括了引用计数表和弱引用表
 通过 SideTables() 结构来实现的，SideTables()结构下，有很多 SideTable 的数据结构。
@@ -198,7 +206,7 @@ NSTimer 的 target 对传入的参数都是强引用（即使是 weak 对象）
 2. 使用 iOS10 后系统的 block timer
 3. 使用 GCD 封装计时器
 ```
-#### 简述一下自动释放池底层怎么实现？
+#### 简述一下自动释放池(@autoreleasePool)底层怎么实现？
 ```
 说道内存管理就要说一下自动释放池了, 当你创建一个新的自动释放池时，它将被添加到栈顶，
 当一个对象收到发送 autorelease 消息时，
@@ -227,4 +235,54 @@ for (int i = 0; i < 1000000; i++) {
 }
 新增的自动释放池可以减少内存用量，因为系统会在块的末尾把这些对象回收掉。
 而上述这些临时对象，正在回收之列。
+```
+#### Dealloc 的实现机制
+```
+Dealloc 调用流程:
+1.首先调用 _objc_rootDealloc()
+2.接下来调用 rootDealloc() 
+3.这时候会判断是否可以被释放，判断的依据主要有5个，判断是否有以上五种情况
+ NONPointer_ISA
+ weakly_reference  has_assoc
+ has_cxx_dtor
+ has_sidetable_rc
+4-1.如果有以上五中任意一种，将会调用 object_dispose()方法，做下一步的处理。 
+4-2.如果没有之前五种情况的任意一种，则可以执行释放操作，C 函数的free()。 
+
+object_dispose() 调用流程：
+1.直接调用 objc_destructInstance()
+2.之后调用 C 函数的 free()
+
+objc_destructInstance() 调用流程：
+1.先判断 hasCxxDtor，如果有 C++ 的相关内容，要调用 object_cxxDestruct() ，销毁 C++ 相关的内容。
+2.再判断 hasAssocitatedObjects，如果有的话，
+要调用 object_remove_associations()，销毁关联对象的一系列操作。
+3.然后调用 clearDeallocating()。
+
+clearDeallocating() 调用流程：
+1.先执行 sideTable_clearDellocating()。
+2.再执行 weak_clear_no_lock,在这一步骤中，会将指向该对象的弱引用指针置为 nil。
+3.接下来执行 table.refcnts.eraser()，从引用计数表中擦除该对象的引用计数。
+4.至此为止，Dealloc 的执行流程结束。
+```
+#### 64bit 和 32bit 下 long 和 char 所占字节
+```
+char:1字节(ASCII2=256个字符)
+char*(即指针变量):4个字节(32位的寻址空间是2,即32个bit，也就是4个字节。同理
+64 位编译器为 8 个字节)
+short int : 2 个字节 范围 -2~> 2 即 -32768~>32767
+int: 4 个字节 范围 -2147483648~>2147483647
+unsignedint:4个字节
+long:4个字节 范围 和int一样 64位下8个字节，范围
+-9223372036854775808~9223372036854775807
+long long: 8 个字节 范围-9223372036854775808~9223372036854775807
+unsigned long long: 8 个字节 最大值:1844674407370955161
+float:4个字节
+double:8个字节
+```
+#### retain、release 的实现机制?
+```
+二者的实现机制类似，概括讲就是通过第一层 hash 算法，找到 指针变量 所对应的 sideTable。
+然后再通 过一层 hash 算法，找到存储 引用计数 的 size_t，然后对其进行增减操作。
+retainCount 不是固定的 1， SIZE_TABLE_RC_ONE 是一个宏定义，实际上是一个值为 4 的偏移量。
 ```
