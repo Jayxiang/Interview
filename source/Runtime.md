@@ -1,7 +1,10 @@
 # iOS 面试 - Runtime
 
 - [什么是 runtime？](# 什么是 runtime？)
+- [一个 NSObject 对象占用多少内存空间](# 一个 NSObject 对象占用多少内存空间)
 - [说一下对 isa 指针的理解](# 说一下对 isa 指针的理解)
+- [class_rw_t 和 class_ro_t](# class_rw_t 和 class_ro_t)
+- [Runtime 的方法缓存?存储的形式、数据结构以及查找的过程?](# Runtime 的方法缓存?存储的形式、数据结构以及查找的过程?)
 - [什么是 method swizzling?](# 什么是 method swizzling?)
 - [使用 method swizzling 需要注意什么](# 使用 method swizzling 需要注意什么)
 - [KVC 实现原理](#KVC 实现原理)
@@ -11,13 +14,15 @@
 - [类和元类](# 类和元类)
 - [为什么要设计 metaclass](# 为什么要设计 metaclass)
 - [分类（Category）实现原理](# 分类（Category）实现原理)
+- [使用 runtime Associate 方法关联的对象，需要在主对象 dealloc 的时候释放么](# 使用 runtime Associate 方法关联的对象，需要在主对象 dealloc 的时候释放么)
 - [Category 在编译过后，是在什么时机与原有的类合并到一起的？](#Category 在编译过后，是在什么时机与原有的类合并到一起的？)
 - [分类（Category）可以添加 weak 属性吗](# 分类（Category）可以添加 weak 属性吗)
 - [category 和 extension 的区别](#category 和 extension 的区别)
 - [weak 原理](#weak 原理)
+- [objc 中向一个 nil 对象发送消息将会发生什么](# objc 中向一个 nil 对象发送消息将会发生什么)
 - [class_copyPropertyList 与 class_copyIvarList 区别](#class_copyPropertyList 与 class_copyIvarList 区别)
 - [class、objc_getClass、object_getclass 方法有什么区别?](#class、objc_getClass、object_getclass 方法有什么区别?)
-
+- [[self class] 与 [super class]](# [self class] 与 [super class])
 #### 什么是 runtime？
 ```
 Objective-C 是基于 C 的，它为 C 添加了面向对象的特性，
@@ -34,6 +39,14 @@ json 转 model
 
 使用：导入的头文件 <objc/message.h> <objc/runtime.h>
 ```
+#### 一个 NSObject 对象占用多少内存空间
+```
+受限于内存分配的机制，一个 NSObject 对象都会分配 16byte 的内存空间。
+但是实际上在 64 位 下，只使用了 8byte; 在 32 位下，只使用了 4byte
+一个 NSObject 实例对象成员变量所占的大小，实际上是 8 字节
+获取 Obj-C 指针所指向的内存的大小，实际上是 16 字节
+对象在分配内存空间时，会进行内存对齐，所以在 iOS 中，分配内存空间都是 16 字节 的倍数。
+```
 #### 说一下对 isa 指针的理解
 ```
 isa 等价于 is kind of
@@ -42,6 +55,92 @@ isa 等价于 is kind of
 元类对象的 isa 指向元类的基类
 isa 有两种类型: 纯指针，指向内存地址; 
 NON_POINTER_ISA，除了内存地址，还存有一些其他信息
+在 Runtime 源码查看 isa_t 是共用体:
+// 简化后
+union isa_t {
+
+    Class cls;
+    // 相当于是unsigned long bits;
+    uintptr_t bits;
+    struct {
+      uintptr_t nonpointer        : 1; // 0代表普通指针，1代表优化过可存储更多信息
+      uintptr_t has_assoc         : 1; // 是否设置过关联对象
+      uintptr_t has_cxx_dtor      : 1; // 有没有 c++ 析构函数
+      uintptr_t shiftcls          : 33; /*MACH_VM_MAX_ADDRESS 0x1000000000 内存地址值*/ 
+      uintptr_t magic             : 6; // 用于在调试时分辨对象是否未完成初始化
+      uintptr_t weakly_referenced : 1; // 是否被弱引用指向过
+      uintptr_t deallocating      : 1; // 是否正在释放
+      uintptr_t has_sidetable_rc  : 1; // 引用计数器是否过大无法存储 isa 中，
+      如果为1则存放在 SideTable
+      uintptr_t extra_rc          : 19 // 里面存储的值引用计数减1
+    };
+};
+```
+#### class_rw_t 和 class_ro_t
+```
+class_rw_t：
+rw 代表可读可写。
+// 类的方法、属性、协议等信息都保存在class_rw_t结构体中
+struct class_rw_t {
+    // Be warned that Symbolication knows the layout of this structure.
+    uint32_t flags;
+    uint32_t version;
+    // 指向只读结构体，存放类初始信息
+    const class_ro_t *ro;
+    
+    /**
+    这三个都是二维数组，可读可写，包含类的初始内容，分类内容。
+    methods 存储 method_list_t -----> method_t
+    还有一部分数据是 class_ro_t 合并过来的
+    */
+    // 方法信息
+    method_array_t methods;
+    // 属性信息
+    property_array_t properties;
+    // 协议信息
+    protocol_array_t protocols;
+
+    // ...
+};
+class_ro_t：
+存储了当前类在编译期就已经确定的属性、方法以及遵循的协议。
+因为在编译期就已经确定了，所以是ro(readonly)的，不可修改
+struct class_ro_t {
+    uint32_t flags;
+    uint32_t instanceStart;
+    uint32_t instanceSize;
+#ifdef __LP64__
+    uint32_t reserved;
+#endif
+
+    const uint8_t * ivarLayout;
+    
+    const char * name;
+    // 方法列表
+    method_list_t * baseMethodList;
+    // 协议列表
+    protocol_list_t * baseProtocols;
+    // 变量列表
+    const ivar_list_t * ivars;
+
+    const uint8_t * weakIvarLayout;
+    // 属性列表
+    property_list_t *baseProperties;
+
+    method_list_t *baseMethods() const {
+        return baseMethodList;
+    }
+};
+```
+#### Runtime 的方法缓存?存储的形式、数据结构以及查找的过程?
+```
+cache_t 增量扩展的哈希表结构。哈希表内部存储的 bucket_t。
+bucket_t 中存储的是 SEL 和 IMP 的键值对。
+如果是有序方法列表，采用二分查找
+如果是无序方法列表，直接遍历查找
+查询散列表函数，其中 cache_hash(k, m)是静态内联方法，
+将传入的 key 和 mask 进行&操作返回 uint32_t 索引值。
+do-while 循环查找过程，当发生冲突 cache_next 方法将索引值减 1。
 ```
 #### 什么是 method swizzling?
 ```
@@ -196,6 +295,11 @@ Category 实际上是 Category_t 的结构体，在运行时，新添加的方�
 Category 在刚刚编译完的时候，和原来的类是分开的，
 只有在程序运行起来后，通过 Runtime ，Category 和原来的类才会合并到一起。
 ```
+#### 使用 runtime Associate 方法关联的对象，需要在主对象 dealloc 的时候释放么
+```
+无论在 MRC 下还是 ARC 下均不需要，被关联的对象在生命周期内要比对象本身释放的晚很多，
+它们会在 dealloc 调用的 object_dispose()方法中释放。
+```
 #### Category 在编译过后，是在什么时机与原有的类合并到一起的？
 ```
 1. 程序启动后，通过编译之后，Runtime 会进行初始化，调用 _objc_init。
@@ -254,6 +358,16 @@ storeWeak() 的作用是更新指针指向，创建对应的弱引用表。
 然后 clearDeallocating 函数根据对象地址获取所有 weak 指针地址的数组，
 然后遍历这个数组把其中的数据设为 nil，最后把这个 entry 从 weak 表中删除，最后清理对象的记录。
 ```
+#### objc 中向一个 nil 对象发送消息将会发生什么
+```
+如果向一个 nil 对象发送消息，首先在寻找对象的 isa 指针时就是 0 地址返回了，所以不会出现任何错误。也不会崩溃。
+详解:
+如果一个方法返回值是一个对象，那么发送给 nil 的消息将返回 0(nil);
+如果方法返回值为指针类型，其指针大小为小于或者等于 sizeof(void*) ，float，double，long double 
+或者 long long 的整型标量，发送给 nil 的消息将返回 0;
+如果方法返回值为结构体,发送给 nil 的消息将返回 0。结构体中各个字段的值将都是 0; 
+如果方法的返回值不是上述提到的几种情况，那么发送给 nil 的消息的返回值将是未定义的。
+```
 #### class_copyPropertyList 与 class_copyIvarList 区别
 ```
 class_copyPropertyList: 只获取 @property 声明的属性，获取后不带下划线
@@ -268,4 +382,19 @@ class_copyIvarList: 不但获取了 @property 属性，获取后带下划线，
 objc_getClass：参数是类名的字符串，返回的就是这个类的类对象；
 object_getClass：参数是 id 类型，它返回的是这个 id 的 isa 指针所指向的 Class，
 如果传参是 Class，则返回该 Class 的 metaClass
+```
+#### [self class] 与 [super class]
+```
+self 是类的隐藏参数，指向当前调用方法的这个类的实例;
+super 本质是一个编译器标示符，和 self 是指向的同一个消息接受者。
+不同点在于:super 会告诉编译器，当调用方法时，去调用父类的方法，而不是本类中的方法。
+当使用 self 调用方法时，会从当前类的方法列表中开始找，如果没有，就从父类中再找;
+而当使用 super 时，则从父类的方法列表中开始找。然后调用父类的这个方法。
+在调用[super class]的时候，runtime 会去调用 objc_msgSendSuper 方法，而不是 objc_msgSend;
+在 objc_msgSendSuper 方法中，第一个参数是一个 objc_super 的结构体，这个结构体里面有两个变量，
+一个是接收消息的 receiver，一个是当前类的父类 super_class。
+objc_msgSendSuper 的工作原理应该是这样的:
+从 objc_super 结构体指向的 superClass 父类的方法列表开始查找 selector，
+找到后以 objc->receiver 去调用父类的这个 selector。
+注意，最后的调用者是 objc->receiver，而不是  super_class.
 ```

@@ -8,6 +8,8 @@
 - [耗电网络优化](# 耗电网络优化)
 - [APP 启动时间应从哪些方面优化？](#APP 启动时间应从哪些方面优化？)
 - [如何有效降低 APP 包的大小？](# 如何有效降低 APP 包的大小？)
+- [如何高性能的画一个圆角?](# 如何高性能的画一个圆角?)
+- [怎么检测图层混合?](# 怎么检测图层混合?)
 
 #### 常见的优化方式
 ```
@@ -195,4 +197,31 @@ Deployment Postprocessing 和 Strip Linked Product，两个需要都设置为 YE
 LinkMap 分析哪里占用包资源大：
 生成 LinkMap 文件，可以查看可执行文件的具体组成
 可借助第三方工具解析 LinkMap 文件： https://github.com/huanxsd/LinkMap
+```
+#### 如何高性能的画一个圆角?
+```
+如果能够只用 cornerRadius 解决问题，就不用优化。
+如果必须设置masksToBounds，可以参考圆角视图的数量，如果数量较少(一页只有几个)也可以
+考虑不用优化。
+UIImageView 的圆角通过直接截取图片实现，其它视图的圆角可以通过 Core Graphics 画出圆
+角矩形实现。
+
+四种方式：
+1.设置 CALayer 的 cornerRadius,和 masksToBounds 会触发离屏渲染
+2.设置 CALayer 的 mask，也会触发离屏渲染
+3.通过 Core Graphics 重新绘制带圆角的视图
+又可以分为 贝塞尔曲线(UIBezierPath) + CoreGraphics
+和 CoreGraphics 单独裁剪
+4.通过混合图层：添加圆角的视图上再叠加一个部分透明的视图，只对圆角部分进行遮挡。
+图层混合的透明度处理方式与mask正好相反。此方法虽然是最优解，没有离屏渲染，
+没有额外的CPU计算，但是应用范围有限。
+```
+#### 怎么检测图层混合?
+```
+1、模拟器 debug- 选中 color blended layers 红色区域表示图层发生了混合
+2、Instrument-选中 Core Animation-勾选 Color Blended Layers
+避免图层混合:
+1、确保控件的 opaque 属性设置为 true，确保 backgroundColor 和父视图颜色一致且不透明
+2、如无特殊需要，不要设置低于 1 的 alpha 值
+3、确保 UIImage 没有 alpha 通道
 ```

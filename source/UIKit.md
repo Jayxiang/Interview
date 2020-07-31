@@ -8,8 +8,11 @@
 - [layoutSubviews 何时会被调用](# layoutSubviews 何时会被调用)
 - [frame 和 bounds 有什么不同？](# frame 和 bounds 有什么不同？)
 - [UIView、CALayer 和 UIWindow 是什么关系?](# UIView、CALayer 和 UIWindow 是什么关系?)
+- [CALayer 的 Contents 几个主要的属性](# CALayer 的 Contents 几个主要的属性)
 - [layoutIfNeeded 和 setNeedsLayout 的区别](# layoutIfNeeded 和 setNeedsLayout 的区别)
 - [CoreGraphics, CoreAnimation 区别](# CoreGraphics, CoreAnimation 区别)
+- [图像显示原理](# 图像显示原理)
+- [UI 卡顿掉帧原因](# UI 卡顿掉帧原因)
 
 #### 简述 APP 生命周期
 
@@ -133,7 +136,13 @@ UIWindow 在程序中主要起到三个作用：
 2、传递触摸消息到程序中 view 和其他对象
 3、与 UIViewController 协同工作，方便完成设备方向旋转的支持
 ```
-
+#### CALayer 的 Contents 几个主要的属性
+```
+ContentsRect:单位制(0 - 1)，限制显示的范围区域
+ContentGravity:类似于 ContentMode，不过不是枚举值，而是字符串
+ContentsScale:决定了物理显示屏是 几@X 屏
+ContentsCenter:跟拉伸有关的属性
+```
 #### layoutIfNeeded 和 setNeedsLayout 的区别
 ```
 首先我们布局总会重新触发 layoutSubviews 方法
@@ -163,4 +172,27 @@ CoreAnimation(核心动画)：
 4. CoreGraphics 和 CoreAnimation 的关系：它们都是跨 iOS 和 Mac OS 使用的，
 这点区别于 UIKit，并且 CoreAnimation 中大量使用到 CoreGraphics 中的类，因为实现动画要用到图形库中的东西。
 5. CoreGraphics 是底层绘制框架，我们实际会用到的也就是 CG 开头的一些底层绘制函数和变量，这是一个纯 C 语言框架。
+```
+#### 图像显示原理
+```
+1.CPU:输出位图
+2.GPU:图层渲染，纹理合成
+3.把结果放到帧缓冲区(frame buffer)中
+4.再由视频控制器根据 vsync 信号在指定时间之前去提取帧缓冲区的屏幕显示内容 
+5.显示到屏幕上
+CPU 工作
+1.Layout: UI 布局，文本计算 
+2.Display: 绘制
+3.Prepare: 图片解码 
+4.Commit:提交位图
+GPU 渲染管线(OpenGL) 顶点着色，图元装配，光栅化，片段着色，片段处理
+```
+#### UI 卡顿掉帧原因
+```
+iOS 设备的硬件时钟会发出 Vsync(垂直同步信号)，然后 App 的 CPU 会去计算屏幕要显示的内容，
+之后将计算好的内容提交到 GPU 去渲染。随后，GPU 将渲染结果提交到帧缓冲区，
+等到下一个 VSync 到来时将 缓冲区的帧显示到屏幕上。
+也就是说，一帧的显示是由 CPU 和 GPU 共同决定的。 
+一般来说，页面滑动流畅是 60fps，也就是 1s 有 60 帧更新，即每隔 16.7ms 就要产生一帧画面，
+而如果 CPU 和 GPU 加起来的处理时间超过了 16.7ms，就会造成掉帧甚至卡顿。
 ```
