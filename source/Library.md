@@ -1,6 +1,6 @@
 # iOS 面试-第三方库相关
 
-- [pod update 和 pod install 的区别](# pod update 和 pod install 的区别)
+- [pod update 和 pod install 的区别](#pod-update-和-pod-install-的区别)
 
 #### pod update 和 pod install 的区别
 ```

@@ -1,15 +1,15 @@
 # iOS 面试-多线程
 
-- [线程与进程的区别和联系?](# 线程与进程的区别和联系?)
-- [进程间常用通信方式](# 进程间常用通信方式)
-- [iOS中实现多线程的几种方案](# iOS中实现多线程的几种方案)
-- [线程死锁的四个条件](# 线程死锁的四个条件)
-- [任务、队列](# 任务、队列)
-- [GCD---队列](# GCD---队列)
-- [OC 你了解的锁有哪些](# OC 你了解的锁有哪些)
-- [Dispatch Semaphore 信号量](# Dispatch Semaphore 信号量)
-- [NSOperationQueue 的优点](# NSOperationQueue 的优点)
-- [NSOperation 和 NSOperationQueue](# NSOperation 和 NSOperationQueue)
+- [线程与进程的区别和联系?](#线程与进程的区别和联系)
+- [进程间常用通信方式](#进程间常用通信方式)
+- [iOS中实现多线程的几种方案](#ios中实现多线程的几种方案)
+- [线程死锁的四个条件](#线程死锁的四个条件)
+- [任务、队列](#任务、队列)
+- [GCD---队列](#gcd---队列)
+- [OC 你了解的锁有哪些](#oc-你了解的锁有哪些)
+- [Dispatch Semaphore 信号量](#dispatch-semaphore-信号量)
+- [NSOperationQueue 的优点](#nsoperationqueue-的优点)
+- [NSOperation 和 NSOperationQueue](#nsoperation-和-nsoperationqueue)
 
 #### 线程与进程的区别和联系?
 ```

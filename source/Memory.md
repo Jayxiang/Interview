@@ -1,21 +1,21 @@
 # iOS 面试 - 内存管理
 
-- [iOS 内存管理](#iOS 内存管理)
-- [什么是 ARC（ARC 是为了解决什么问题诞生的）](# 什么是 ARC（ARC 是为了解决什么问题诞生的）)
-- [iOS 内存分配](#iOS 内存分配)
-- [内存管理方案](# 内存管理方案)
-- [什么是悬垂指针？什么是 野指针?](# 什么是悬垂指针？什么是 野指针?)
-- [深拷贝与浅拷贝分别是什么？](# 深拷贝与浅拷贝分别是什么？)
-- [循环引用](# 循环引用)
-- [（MRC（手动引用计数）和 ARC(自动引用计数)](#（MRC（手动引用计数）和 ARC(自动引用计数))
-- [ARC 的 retainCount 怎么存储的？](#ARC 的 retainCount 怎么存储的？)
-- [一个 NSObject 对象占用多少个字节](# 一个 NSObject 对象占用多少个字节)
-- [内存泄漏的几种原因](# 内存泄漏的几种原因)
-- [常见的循环引用，及解决办法](# 常见的循环引用，及解决办法)
-- [简述一下自动释放池(@autoreleasePool)底层怎么实现？](# 简述一下自动释放池(@autoreleasePool)底层怎么实现？)
-- [Dealloc 的实现机制](# Dealloc 的实现机制)
-- [64bit 和 32bit 下 long 和 char 所占字节](# 64bit 和 32bit 下 long 和 char 所占字节)
-- [retain、release 的实现机制?](# retain、release 的实现机制?)
+- [iOS 内存管理](#ios-内存管理)
+- [什么是 ARC（ARC 是为了解决什么问题诞生的）](#什么是-arc（arc-是为了解决什么问题诞生的）)
+- [iOS 内存分配](#ios-内存分配)
+- [内存管理方案](#内存管理方案)
+- [什么是悬垂指针？什么是 野指针?](#什么是悬垂指针？什么是-野指针)
+- [深拷贝与浅拷贝分别是什么？](#深拷贝与浅拷贝分别是什么？)
+- [循环引用](#循环引用)
+- [MRC（手动引用计数）和 ARC(自动引用计数)](#mrc（手动引用计数）和-arc自动引用计数)
+- [ARC 的 retainCount 怎么存储的？](#arc-的-retaincount-怎么存储的？)
+- [一个 NSObject 对象占用多少个字节](#一个-nsobject-对象占用多少个字节)
+- [内存泄漏的几种原因](#内存泄漏的几种原因)
+- [常见的循环引用，及解决办法](#常见的循环引用，及解决办法)
+- [简述一下自动释放池(@autoreleasePool)底层怎么实现？](#简述一下自动释放池autoreleasepool底层怎么实现？)
+- [Dealloc 的实现机制](#dealloc-的实现机制)
+- [64bit 和 32bit 下 long 和 char 所占字节](#64bit-和-32bit-下-long-和-char-所占字节)
+- [retain、release 的实现机制?](#retain、release-的实现机制)
 
 #### iOS 内存管理
 ```
@@ -142,7 +142,7 @@ delegate 是 iOS 中开发中比较常遇到的循环引用，一般在声明 de
 解决方案就是使用 __weak 修饰 self 即可。还应该在 block 中对 对象使用 __strong 修饰，
 使得在 block 期间对 对象持有，block 执行结束后，解除其持有。
 ```
-#### （MRC（手动引用计数）和 ARC(自动引用计数)
+#### MRC（手动引用计数）和 ARC(自动引用计数)
 ```
 MRC：alloc，retain，release，retainCount,autorelease,dealloc
 ARC：

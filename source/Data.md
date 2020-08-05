@@ -23,7 +23,7 @@
 链表：链表中的元素在内存中不是顺序存储的，查找慢，插入、删除只需要对元素指针重新赋值，效率高
 ```
 #### 常用算法及其复杂度
-[常见排序算法-图片来自小码哥](./image/排序.png)
+![常见排序算法-图片来自小码哥](./image/排序.png)
 
 #### 链表反转
 ```
@@ -68,5 +68,5 @@ struct Node *reverseLiset2(struct Node *head) {
 ```
 
 ### 算法学习参考
-[算法代码在线演示](https://algorithm-visualizer.org)
+[算法代码在线演示](https://algorithm-visualizer.org)  
 [数据结构和算法动态可视化](https://visualgo.net/zh)

@@ -1,36 +1,35 @@
 # iOS 面试 - 基本概念
 
-- [简要叙述 OC 语言的特点](# 简要叙述 OC 语言的特点)
-- [类别的作用？继承、类别和扩展在实现中有何区别](# 类别的作用？继承、类别和扩展在实现中有何区别)
-- [在 OC 中类变量的 @protected,@private,@public,@package 区别](# 在 OC 中类变量的 @protected,@private,@public,@package 区别)
-- [\#import、#include、@class、#import<>和 #import""的区别](#\#import、#include、@class、#import<>和 #import"" 的区别)
-- [@property 的本质是什么？ivar、getter、setter 是如何生成并添加到这个类中的](#@property 的本质是什么？ivar、getter、setter 是如何生成并添加到这个类中的)
-- [@property 常用属性及如何使用](#@property 常用属性及如何使用)
-- [用 @property 声明的 NSString / NSArray / NSDictionary 经常使用 copy 关键字，为什么？如果改用 strong 关键字，可能造成什么问题？](# 用 @property 声明的 NSString / NSArray / NSDictionary 经常使用 copy 关键字，为什么？如果改用 strong 关键字，可能造成什么问题？)
-- [为什么 IBOutlet 属性是 weak 的？](# 为什么 IBOutlet 属性是 weak 的？)
-- [\__weak，\__block 的区别](#__weak，__block 的区别)
-- [id 声明的对象有什么特性？](#id 声明的对象有什么特性？)
-- [id 和 nil 代表什么（nil 和 NULL 的区别）](#id 和 nil 代表什么（nil 和 NULL 的区别）)
-- [BOOL/bool/Boolean 的区别](#BOOL/bool/Boolean 的区别)
-- [OC 的反射机制](#OC 的反射机制)
-- [简述一下自动释放池底层怎么实现？](# 简述一下自动释放池底层怎么实现？)
-- [堆和栈的区别？和队列](# 堆和栈的区别？和队列)
-- [沙盒机制的理解和使用](# 沙盒机制的理解和使用)
-- [事件响应者链的概念](# 事件响应者链的概念)
-- [@synthesize 和 @dynamic 分别有什么作用？](#@synthesize 和 @dynamic 分别有什么作用？)
-- [类方法和实例方法有什么区别？](# 类方法和实例方法有什么区别？)
-- [浅拷贝和深拷贝的区别？](# 浅拷贝和深拷贝的区别？)
-- [NSCache NSDictionary 区别](#NSCache NSDictionary 区别)
-- [什么是 KVC 和 KVO？](# 什么是 KVC 和 KVO？)
-- [开发中，保存数据有哪几种方式？](# 开发中，保存数据有哪几种方式？)
-- [关键字 const/static/extern、UIKIT_EXTERN 区别和用法以及与宏的区别](# 关键字 const/static/extern、UIKIT_EXTERN 区别和用法以及与宏的区别)
-- [关键字组合 static inline](# 关键字组合 static inline)
-- [isMemberOfClass 、isKindOfClass 和 isSubclassOfClass 联系与区别](# isMemberOfClass 、isKindOfClass 和 isSubclassOfClass 联系与区别)
-- [将一个函数在主线程执行的几种方法](# 将一个函数在主线程执行的几种方法)
-- [+initialize 与 +load 有什么用处，区别](# +initialize 与 +load 有什么用处，区别)
-- [isEqual,isEqualToString 和 == 区别](# isEqual,isEqualToString 和 == 区别)
-- [分类的理解](# 分类的理解)
-- [iOS 签名机制](# iOS 签名机制)
+- [简要叙述 OC 语言的特点](#简要叙述-oc-语言的特点)
+- [类别的作用？继承、类别和扩展在实现中有何区别](#类别的作用？继承、类别和扩展在实现中有何区别)
+- [在 OC 中类变量的 @protected,@private,@public,@package 区别](#在-oc-中类变量的-protectedprivatepublicpackage-区别)
+- [\#import、#include、@class、#import<>和 #import""的区别](#import、include、class、import和-import-的区别)
+- [@property 的本质是什么？ivar、getter、setter 是如何生成并添加到这个类中的](#property-的本质是什么？ivar、getter、setter-是如何生成并添加到这个类中的)
+- [@property 常用属性及如何使用](#property-常用属性及如何使用)
+- [用 @property 声明的 NSString / NSArray / NSDictionary 经常使用 copy 关键字，为什么？如果改用 strong 关键字，可能造成什么问题？](#用-property-声明的-nsstring--nsarray--nsdictionary-经常使用-copy-关键字，为什么？如果改用-strong-关键字，可能造成什么问题)
+- [为什么 IBOutlet 属性是 weak 的？](#为什么-iboutlet-属性是-weak-的)
+- [\__weak，\__block 的区别](#weak，block-的区别)
+- [id 声明的对象有什么特性](#id-声明的对象有什么特性)
+- [id 和 nil 代表什么以及 nil 和 NULL 的区别](#id-和-nil-代表什么以及-nil-和-null-的区别)
+- [BOOL/bool/Boolean 的区别](#boolboolboolean-的区别)
+- [OC 的反射机制](#oc-的反射机制)
+- [堆和栈的区别？和队列](#堆和栈的区别？和队列)
+- [沙盒机制的理解和使用](#沙盒机制的理解和使用)
+- [事件响应者链的概念](#事件响应者链的概念)
+- [@synthesize 和 @dynamic 分别有什么作用](#synthesize-和-dynamic-分别有什么作用)
+- [类方法和实例方法有什么区别](#类方法和实例方法有什么区别)
+- [浅拷贝和深拷贝的区别](#浅拷贝和深拷贝的区别)
+- [NSCache NSDictionary 区别](#nscache-nsdictionary-区别)
+- [什么是 KVC 和 KVO？](#什么是-kvc-和-kvo)
+- [开发中，保存数据有哪几种方式？](#开发中，保存数据有哪几种方式？)
+- [关键字 const/static/extern、UIKIT_EXTERN 区别和用法以及与宏的区别](#关键字-conststaticextern、uikitextern-区别和用法以及与宏的区别)
+- [关键字组合 static inline](#关键字组合-static-inline)
+- [isMemberOfClass、isKindOfClass 和 isSubclassOfClass 联系与区别](#ismemberofclass、iskindofclass-和-issubclassofclass-联系与区别)
+- [将一个函数在主线程执行的几种方法](#将一个函数在主线程执行的几种方法)
+- [+initialize 与 +load 有什么用处区别](#initialize-与-load-有什么用处区别)
+- [isEqual,isEqualToString 和 == 区别](#isequalisequaltostring-和--区别)
+- [分类的理解](#分类的理解)
+- [iOS 签名机制](#ios-签名机制)
 
 #### 简要叙述 OC 语言的特点
 
@@ -78,7 +77,7 @@ category 可以在不获悉，不改变原来代码的情况下往里面添加�
 @package 本包内使用，跨包不可以
 实际开发中基本都是默认, 没有使用过其他的
 ```
-#### \#import、#include、@class、#import<>和 #import"" 的区别
+#### #import、#include、@class、#import<>和 #import"" 的区别
 ```
 #include 与 #import 都是导入头文件的关键字, 完整地包含某个文件的内容,
 后者会自动导入一次，不会重复导入, 不会引发交叉编译.
@@ -90,7 +89,6 @@ category 可以在不获悉，不改变原来代码的情况下往里面添加�
 另外：iOS7 之后的新特性，可以使用 @import 关键词来代理 #import 引入系统类库。
      使用 @import 引入系统类库，不需要到 build phases 中先添加添加系统库到项目中。
 ```
-
 #### @property 的本质是什么？ivar、getter、setter 是如何生成并添加到这个类中的
 ```
 1.@property 的本质 = ivar (实例变量) + getter (取方法) + setter （存方法）
@@ -145,7 +143,7 @@ null_unspecified: 不确定是否为空
 
 class：类属性，类使用类方法。
 ```
-#### 用 @property 声明的 NSString / NSArray / NSDictionary 经常使用 copy 关键字，为什么？如果改用 strong 关键字，可能造成什么问题？
+#### 用 @property 声明的 NSString / NSArray / NSDictionary 经常使用 copy 关键字，为什么？如果改用 strong 关键字，可能造成什么问题
 ```
 用 @property 声明 NSString、NSArray、NSDictionary 经常使用 copy 关键字，
 是因为他们有对应的可变类型：NSMutableString、NSMutableArray、NSMutableDictionary，
@@ -158,7 +156,7 @@ class：类属性，类使用类方法。
 3. 使用 copy 的目的是，防止把可变类型的对象赋值给不可变类型的对象时，
 可变类型对象的值发送变化会无意间篡改不可变类型对象原来的值。
 ```
-#### 为什么 IBOutlet 属性是 weak 的？
+#### 为什么 IBOutlet 属性是 weak 的
 ```
 因为既然有外链那么视图在 xib 或者 storyboard 中肯定存在，视图已经对它有一个强引用了。 
 IBoutlet 连线到控制器中作为视图的属性时用 weak 修饰就可以了, (用 strong 修饰也可以但是没有必要)
@@ -170,13 +168,13 @@ __weak 主要用于防止 block 中的循环引用。
 __block 也用于修饰变量。它是引用修饰，所以其修饰的值是动态变化的，即可以被重新赋值的。
 __block 用于修饰某些 block 内部将要修改的外部变量。
 ```
-#### id 声明的对象有什么特性？
+#### id 声明的对象有什么特性
 ```
  id 声明的对象具有运行时的特性，在程序运行时才确定对象的类型。
 可以指向任意类型的 OC 的对象，与 C 中的 void * 万能指针相似。
 运行效率低，不可以使用点语法。
 ```
-#### id 和 nil 代表什么（nil 和 NULL 的区别）
+#### id 和 nil 代表什么以及 nil 和 NULL 的区别
 ```
 id 类型：是一个独特的数据类型，可以转换为任何数据类型，id 类型的变量可以存放任何数据类型的对象，
   在内部处理上，这种类型被定义为指向对象的指针，实际上是一个指向这种对象的实例变量的指针
@@ -292,7 +290,7 @@ SystemData 目录: 最近查看目录才发现的，新加入的一个文件夹,
 ```
 [可参考文章](https://www.jianshu.com/p/2e074db792ba)
 
-#### @synthesize 和 @dynamic 分别有什么作用？
+#### @synthesize 和 @dynamic 分别有什么作用
 ```
 1.@property 有两个对应的词，一个是 @synthesize，一个是 @dynamic。
   如果 @synthesize 和 @dynamic 都没写，那么默认的就是 @synthesize var = _var;
@@ -306,7 +304,7 @@ SystemData 目录: 最近查看目录才发现的，新加入的一个文件夹,
   编译时没问题，运行时才执行相应的方法，这就是所谓的动态绑定。
 实际开发中我们常会用到重写 getter 方法来做懒加载, 或者用 setter 方法来完成调用. 很少会将两个同时重写.
 ```
-#### 类方法和实例方法有什么区别？
+#### 类方法和实例方法有什么区别
 ```
 类方法: 在 OC 类定义方法时以 + 开头的方法，又称为静态方法。
   它不用实例就可以直接调用的方法，一般是有返回值的，返回对应的实例（数组、字符串等），
@@ -329,7 +327,7 @@ OC 用的就是这种消息模式.
 实例方法中直接调用实例方法
 实例方法中也可以调用类方法（通过类名）
 ```
-#### 浅拷贝和深拷贝的区别？
+#### 浅拷贝和深拷贝的区别
 ```
 浅拷贝：只复制指向对象的指针，而不复制引用对象本身。只是新创建了类的空间，然后将属性的值复制一遍；
   对于属性所指向的内存空间并没有重新创建；因此通过浅拷贝的新旧两个对象的属性
@@ -348,7 +346,7 @@ mutableCopy 是深拷贝。
 3.NSCache 可以指定缓存的限额，当缓存超出限额自动释放内存
 4.NSCache 并不会 “拷贝” 键，而是会 “保留” 它。
 ```
-#### 什么是 KVC 和 KVO？
+#### 什么是 KVC 和 KVO
 ```
 KVC 也就是 key-value-coding , 即键值编码，通常是用来给某一个对象的属性进行赋值.
 开发中我们可以对私有属性进行赋值的, 修改一些控件的内部属性, 还可以用于字典转模型.
@@ -365,7 +363,7 @@ KVO，即 key-value-observing, 利用一个 key 来找到某个属性并监听�
 重写的 setter 方法会在调用原 setter 方法前后，通知观察对象值得改变。
 KVC/KVO 实现的根本是 Objective-C 的动态性和 runtime
 ```
-#### 开发中，保存数据有哪几种方式？
+#### 开发中，保存数据有哪几种方式
 ```
 所谓的持久化，就是将数据保存到磁盘中，使得在应用程序重启后可以继续访问之前保存的数据.
 iOS 本地数据保存有多种方式, 比如 NSUserDefaults、Plist 文件保存、
@@ -453,7 +451,7 @@ static 只是为了表明该函数只在该文件中可见！也就是说，在�
 1. 普通函数调用需要开辟栈帧和回收栈帧，内联函数不开辟和回收栈帧，在调用出展开代码
 2. 普通函数会在编译完生成函数名对应的符号，链接的时候在符号表上可以找到，内联函数不生成符号
 ```
-#### isMemberOfClass 、isKindOfClass 和 isSubclassOfClass 联系与区别
+#### isMemberOfClass、isKindOfClass 和 isSubclassOfClass 联系与区别
 ```
 联系：都能检测一个对象是否是某个类的成员
 区别：
@@ -481,7 +479,7 @@ NSBlockOperation *operation = [NSBlockOperation blockOperationWithBlock:^{
 //RunLoop 方法
 [[NSRunLoop mainRunLoop] performSelector:@selector(method) withObject:nil];
 ```
-#### +initialize 与 +load 有什么用处，区别
+#### +initialize 与 +load 有什么用处区别
 ```
 通常情况下，我们在开发过程中可能不必关注这两个方法。如果有需要定制，
 我们可以在自定义的 NSObject 子类中给出这两个方法的实现，

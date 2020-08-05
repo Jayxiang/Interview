@@ -1,18 +1,18 @@
 # iOS 面试 - UIKit
 
-- [简述 APP 生命周期](# 简述 APP 生命周期)
-- [APP 启动过程及简单优化](# APP 启动过程及简单优化)
-- [UIViewController 的生命周期](# UIViewController 的生命周期)
-- [loadView 什么作用](# loadView 什么作用)
-- [View 中的加载顺序](# View 中的加载顺序)
-- [layoutSubviews 何时会被调用](# layoutSubviews 何时会被调用)
-- [frame 和 bounds 有什么不同？](# frame 和 bounds 有什么不同？)
-- [UIView、CALayer 和 UIWindow 是什么关系?](# UIView、CALayer 和 UIWindow 是什么关系?)
-- [CALayer 的 Contents 几个主要的属性](# CALayer 的 Contents 几个主要的属性)
-- [layoutIfNeeded 和 setNeedsLayout 的区别](# layoutIfNeeded 和 setNeedsLayout 的区别)
-- [CoreGraphics, CoreAnimation 区别](# CoreGraphics, CoreAnimation 区别)
-- [图像显示原理](# 图像显示原理)
-- [UI 卡顿掉帧原因](# UI 卡顿掉帧原因)
+- [简述 APP 生命周期](#简述-app-生命周期)
+- [APP 启动过程及简单优化](#app-启动过程及简单优化)
+- [UIViewController 的生命周期](#uiviewcontroller-的生命周期)
+- [loadView 什么作用](#loadview-什么作用)
+- [View 中的加载顺序](#view-中的加载顺序)
+- [layoutSubviews 何时会被调用](#layoutsubviews-何时会被调用)
+- [frame 和 bounds 有什么不同？](#frame-和-bounds-有什么不同？)
+- [UIView、CALayer 和 UIWindow 是什么关系](#uiview、calayer-和-uiwindow-是什么关系)
+- [CALayer 的 Contents 几个主要的属性](#calayer-的-contents-几个主要的属性)
+- [layoutIfNeeded 和 setNeedsLayout 的区别](#layoutifneeded-和-setneedslayout-的区别)
+- [CoreGraphics, CoreAnimation 区别](#coregraphics-coreanimation-区别)
+- [图像显示原理](#图像显示原理)
+- [UI 卡顿掉帧原因](#ui-卡顿掉帧原因)
 
 #### 简述 APP 生命周期
 
@@ -121,7 +121,7 @@ frame 指的是：该 view 在父 view 坐标系统中的位置和大小。（�
 bounds 指的是：该 view 在本身坐标系统中 的位置和大小。（参照点是本身坐标系统）
 理解这两个概念在实际开发中还是比较重要的.
 ```
-#### UIView、CALayer 和 UIWindow 是什么关系?
+#### UIView、CALayer 和 UIWindow 是什么关系
 ```
 UIView 是 iOS 系统中界面元素的基础, 所有的界面元素都继承自它, 
 UIView 本身完全是由 CoreAnimation 来实现. 真正的绘图部分, 是由一个 CALayer 类来管理.

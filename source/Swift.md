@@ -1,31 +1,31 @@
-# iOS 面试-Swift 相关
+# iOS 面试 - Swift 相关
 
-- [Swift 和 OC 的区别](# Swift 和 OC 的区别)
-- [如何理解面向协议编程](# 如何理解面向协议编程)
-- [函数式编程的理解](# 函数式编程的理解)
-- [结构体和类的区别](# 结构体和类的区别)
-- [Swift 和 OC 如何相互调用?](# Swift 和 OC 如何相互调用?)
-- [访问控制关键字 open, public, internal, fileprivate, private 的区别?](# 访问控制关键字 open, public, internal, fileprivate, private 的区别?)
-- [关键字:Strong,Weak,Unowned 区别?](# 关键字:Strong,Weak,Unowned 区别?)
-- [如何理解 copy-on-write?](# 如何理解 copy-on-write?)
-- [什么是属性观察?](# 什么是属性观察?)
-- [如何将 Swift 中的协议(protocol)中的部分方法设计为可选(optional)](# 如何将 Swift 中的协议(protocol)中的部分方法设计为可选(optional))
-- [比较 Swift 和 OC 中的初始化方法 (init) 有什么不同?](# 比较 Swift 和 OC 中的初始化方法 (init) 有什么不同?)
-- [比较 Swift 和 OC 中的 protocol 有什么不同?](# 比较 Swift 和 OC 中的 protocol 有什么不同?)
-- [什么是函数重载? swift 支不支持函数重载?](# 什么是函数重载? swift 支不支持函数重载?)
-- [swift 中的枚举的关联值和原始值的区分?](# swift 中的枚举的关联值和原始值的区分?)
-- [swift 中的闭包结构](# swift 中的闭包结构)
-- [什么是尾随闭包?](# 什么是尾随闭包?)
-- [什么是逃逸闭包?](# 什么是逃逸闭包?)
-- [什么是自动闭包?](# 什么是自动闭包?)
-- [swift 中存储属性和计算属性的区别?](# swift 中存储属性和计算属性的区别?)
-- [什么是延迟存储属性(Lazy Stored Property)?](# 什么是延迟存储属性(Lazy Stored Property)?)
-- [swift中什么类型属性(Type Property)?](# swift中什么类型属性(Type Property)?)
-- [swift 中如何使用单例模式?](# swift 中如何使用单例模式?)
-- [swift 中的下标是什么?](# swift 中的下标是什么?)
-- [简要说明 Swift 中的初始化器?](# 简要说明 Swift 中的初始化器?)
-- [什么可选链?](# 什么可选链?)
-- [什么是运算符重载(Operator Overload)?](# 什么是运算符重载(Operator Overload)?)
+- [Swift 和 OC 的区别](#swift-和-oc-的区别)
+- [如何理解面向协议编程](#如何理解面向协议编程)
+- [函数式编程的理解](#函数式编程的理解)
+- [结构体和类的区别](#结构体和类的区别)
+- [Swift 和 OC 如何相互调用](#swift-和-oc-如何相互调用)
+- [访问控制关键字 open public internal fileprivate private 的区别](#访问控制关键字-open-public-internal-fileprivate-private-的区别)
+- [关键字 Strong Weak Unowned 区别](#关键字-strong-weak-unowned-区别)
+- [如何理解 copy-on-write](#如何理解-copy-on-write)
+- [什么是属性观察](#什么是属性观察)
+- [如何将 Swift 中的协议 protocol 中的部分方法设计为可选 optional ](#如何将-swift-中的协议-protocol-中的部分方法设计为可选-optional)
+- [比较 Swift 和 OC 中的初始化方法 (init) 有什么不同](#比较-swift-和-oc-中的初始化方法-init-有什么不同)
+- [比较 Swift 和 OC 中的 protocol 有什么不同](#比较-swift-和-oc-中的-protocol-有什么不同)
+- [什么是函数重载 Swift 支不支持函数重载](#什么是函数重载-swift-支不支持函数重载)
+- [Swift 中的枚举的关联值和原始值的区分](#swift-中的枚举的关联值和原始值的区分)
+- [Swift 中的闭包结构](#swift-中的闭包结构)
+- [什么是尾随闭包](#什么是尾随闭包)
+- [什么是逃逸闭包](#什么是逃逸闭包)
+- [什么是自动闭包](#什么是自动闭包)
+- [Swift 中存储属性和计算属性的区别](#swift-中存储属性和计算属性的区别)
+- [什么是延迟存储属性](#什么是延迟存储属性)
+- [Swift 中什么类型属性](#swift-中什么类型属性)
+- [Swift 中如何使用单例模式](#swift-中如何使用单例模式)
+- [Swift 中的下标是什么](#swift-中的下标是什么)
+- [简要说明 Swift 中的初始化器](#简要说明-swift-中的初始化器)
+- [什么是可选链](#什么是可选链)
+- [什么是运算符重载](#什么是运算符重载)
 
 #### Swift 和 OC 的区别
 ```
@@ -69,7 +69,7 @@ swift 中结构体比较强大，类的大部分功能结构体基本都有。�
 5.结构体默认值类型的对象方法不能修改属性值，需要在函数前面加 mutating 关键字
 6.创建相同属性的结构体比类更加节省内存，速度也更快，但不适合大量的运算操作
 ```
-#### Swift 和 OC 如何相互调用?
+#### Swift 和 OC 如何相互调用
 ```
 Swift 调用 OC 代码:
 需要创建一个 Target-BriBridging-Header.h 的桥文件,在乔文件导入需要调用的OC代码头文件即可
@@ -77,7 +77,7 @@ OC 调用 Swift 代码:
 直接导入 Target-Swift.h 文件即可, Swift 如果需要被 OC 调用,需要使用 @objc 对方法或者属性进行修饰
 默认系统会提示创建
 ```
-#### 访问控制关键字 open, public, internal, fileprivate, private 的区别?
+#### 访问控制关键字 open, public, internal, fileprivate, private 的区别
 ```
 Swift 中有个5个级别的访问控制权限,从高到低依次是 open, public, internal, fileprivate, private
 它们遵循的基本规则: 高级别的变量不允许被定义为低级别变量的成员变量,
@@ -88,21 +88,21 @@ internal: 默认权限, 只允许在当前的模块中访问，可以继承和�
 fileprivate: 修饰的对象只允许在当前的文件中访问;
 private: 最低级别访问权限,只允许在定义的作用域内访问
 ```
-#### 关键字:Strong,Weak,Unowned 区别?
+#### 关键字 Strong Weak Unowned 区别
 ```
 Swift 的内存管理机制同OC一致,都是ARC管理机制; 
 Strong,和 Weak 用法同 OC 一样
 Unowned(无主引用), 不会产生强引用，实例销毁后仍然存储着实例的内存地址
 (类似于 OC 中的 unsafe_unretained), 试图在实例销毁后访问无主引用，会产生运行时错误(野指针)
 ```
-#### 如何理解 copy-on-write?
+#### 如何理解 copy-on-write
 ```
 值类型(比如:struct),在复制时,复制对象与原对象实际上在内存中指向同一个对象,当且仅当修改复制的对象时,才会在内存中创建一个新的对象
 为了提升性能，Struct, String、Array、Dictionary、Set 采取了 Copy On Write 的技术
 比如仅当有“写”操作时，才会真正执行拷贝操作
 对于标准库值类型的赋值操作，Swift 能确保最佳性能，所有没必要为了保证最佳性能来避免赋值
 ```
-#### 什么是属性观察?
+#### 什么是属性观察
 ```
 属性观察是指在当前类型内对特性属性进行监测,并作出响应,
 属性观察是 swift 中的特性,具有2种, willset 和 didset
@@ -119,7 +119,7 @@ willSet 会传递新值，默认叫 newValue
 didSet 会传递旧值，默认叫 oldValue
 在初始化器中设置属性值不会触发 willSe 和 didSet
 ```
-#### 如何将 Swift 中的协议(protocol)中的部分方法设计为可选(optional)
+#### 如何将 Swift 中的协议 protocol 中的部分方法设计为可选 optional
 ```
 1.在协议和方法前面添加 @objc,然后在方法前面添加 optional 关键字,该方式实际上是将协议转为了 OC 的方式
 @objc protocol someProtocol {
@@ -136,25 +136,25 @@ extension someProtocol{
     }
 }
 ```
-#### 比较 Swift 和 OC 中的初始化方法 (init) 有什么不同?
+#### 比较 Swift 和 OC 中的初始化方法 (init) 有什么不同
 ```
 swift 的初始化方法,更加严格和准确, swift 初始化方法需要保证所有的非 optional 的成员变量都完成初始化, 
 同时 swfit 新增了 convenience 和 required 两个修饰初始化器的关键字
 convenience:只提供一种方便的初始化器,必须通过一个指定初始化器来完成初始化
 required:是强制子类重写父类中所修饰的初始化方法
 ```
-#### 比较 Swift 和 OC 中的 protocol 有什么不同?
+#### 比较 Swift 和 OC 中的 protocol 有什么不同
 ```
 相同点: 两者都可以被用作代理;
 不同点: Swift 中的 protocol 还可以对接口进行抽象,可以实现面向协议,从而大大提高编程效率,Swift 中的 protocol 可以用于值类型,结构体,枚举;
 ```
-#### 什么是函数重载? swift 支不支持函数重载?
+#### 什么是函数重载 Swift 支不支持函数重载
 ```
 函数重载是指: 函数名称相同,函数的参数个数不同, 或者参数类型不同,
 或参数标签不同, 返回值类型与函数重载无关
 swift 支持函数重载
 ```
-#### swift 中的枚举的关联值和原始值的区分?
+#### Swift 中的枚举的关联值和原始值的区分
 ```
 关联值--有时会将枚举的成员值跟其他类型的变量关联存储在一起，会非常有用:
 // 关联值
@@ -171,13 +171,13 @@ enum Grade: String {
   case bad = "D"
 }
 ```
-#### swift 中的闭包结构
+#### Swift 中的闭包结构
 ```
 {
     (参数列表) -> 返回值类型 in 函数体代码
 }
 ```
-#### 什么是尾随闭包?
+#### 什么是尾随闭包
 ```
 将一个很长的闭包表达式作为函数的最后一个实参
 使用尾随闭包可以增强函数的可读性
@@ -192,7 +192,7 @@ add(v1: 10, v2: 20) {
     $0 + $1
 }
 ```
-#### 什么是逃逸闭包?
+#### 什么是逃逸闭包
 ```
 当闭包作为一个实际参数传递给一个函数或者变量的时候，我们就说这个闭包逃逸了，
 可以在形式参数前写 @escaping 来明确闭包是允许逃逸的。
@@ -208,7 +208,7 @@ func someFunctionWithEscapingClosure(completionHandler: @escaping () -> Void) {
     completionHandlers.append(completionHandler)
 }
 ```
-#### 什么是自动闭包?
+#### 什么是自动闭包
 ```
 自动闭包是一种自动创建的用来把作为实际参数传递给函数的表达式打包的闭包。
 它不接受任何实际参数，并且当它被调用时，它会返回内部打包的表达式的值。
@@ -224,7 +224,7 @@ getFirstPositive(10, 20)
 有 @autoclosure、无 @autoclosure，构成了函数重载
 如果你想要自动闭包允许逃逸，就同时使用 @autoclosure 和 @escaping 标志。
 ```
-#### swift 中存储属性和计算属性的区别?
+#### Swift 中存储属性和计算属性的区别
 ```
 存储属性(Stored Property):
 类似于成员变量这个概念
@@ -249,9 +249,10 @@ struct Circle {
     }
 }
 ```
-#### 什么是延迟存储属性(Lazy Stored Property)?
+#### 什么是延迟存储属性
 ```
-使用 lazy 可以定义一个延迟存储属性，在第一次用到属性的时候才会进行初始化(类似OC中的懒加载)
+使用 lazy 可以定义一个延迟存储属性(Lazy Stored Property)，在第一次用到属性的时候
+才会进行初始化(类似OC中的懒加载)
 lazy 属性必须是var，不能是let:
 let 必须在实例对象的初始化方法完成之前就拥有值
 如果多条线程同时第一次访问lazy属性:
@@ -267,7 +268,7 @@ class Test {
     lazy var dataArr = [String]()
 }
 ```
-#### swift中什么类型属性(Type Property)?
+#### Swift 中什么类型属性
 ```
 严格来说，属性可以分为:
 实例属性(Instance Property): 只能通过实例对象去访问:
@@ -288,14 +289,14 @@ class Test {
 
 枚举类型也可以定义类型属性(存储类型属性、计算类型属性)
 ```
-#### swift 中如何使用单例模式?
+#### Swift 中如何使用单例模式
 ```
  public class FileManager {
     public static let shared = FileManager()
     private init() { }
 }
 ```
-#### swift 中的下标是什么?
+#### Swift 中的下标是什么
 ```
 使用 subscript 可以给任意类型(枚举、结构体、类)增加下标功能，有些地方也翻译为:下标脚本
 subscript 的语法类似于实例方法、计算属性，本质就是方法(函数)
@@ -327,7 +328,7 @@ p[1] = 22.2
 print(p.x) // 11.1
 print(p.y) // 22.2
 ```
-#### 简要说明 Swift 中的初始化器?
+#### 简要说明 Swift 中的初始化器
 ```
 类、结构体、枚举都可以定义初始化器
 类有2种初始化器: 指定初始化器(designated initializer)、便捷初始化器(convenience initializer)
@@ -349,7 +350,7 @@ convenience init(parameters) {
 便捷初始化器必须从相同的类里调用另一个初始化器
 便捷初始化器最终必须调用一个指定初始化器
 ```
-#### 什么可选链?
+#### 什么是可选链
 ```
 可选链是一个调用和查询可选属性、方法和下标的过程，它可能为 nil 。
 如果可选项包含值，属性、方法或者下标的调用成功；如果可选项是 nil ，属性、方法或者下标的调用会返回 nil 。
@@ -357,9 +358,9 @@ convenience init(parameters) {
 多个?可以链接在一起
 如果链中任何一个节点是nil，那么整个链就会调用失败
 ```
-#### 什么是运算符重载(Operator Overload)?
+#### 什么是运算符重载
 ```
-类、结构体、枚举可以为现有的运算符提供自定义的实现，这个操作叫做:运算符重载
+类、结构体、枚举可以为现有的运算符提供自定义的实现，这个操作叫做:运算符重载(Operator Overload)
 struct Point {
     var x: Int
     var y: Int

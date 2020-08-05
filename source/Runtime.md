@@ -1,28 +1,29 @@
 # iOS 面试 - Runtime
 
-- [什么是 runtime？](# 什么是 runtime？)
-- [一个 NSObject 对象占用多少内存空间](# 一个 NSObject 对象占用多少内存空间)
-- [说一下对 isa 指针的理解](# 说一下对 isa 指针的理解)
-- [class_rw_t 和 class_ro_t](# class_rw_t 和 class_ro_t)
-- [Runtime 的方法缓存?存储的形式、数据结构以及查找的过程?](# Runtime 的方法缓存?存储的形式、数据结构以及查找的过程?)
-- [什么是 method swizzling?](# 什么是 method swizzling?)
-- [使用 method swizzling 需要注意什么](# 使用 method swizzling 需要注意什么)
-- [KVC 实现原理](#KVC 实现原理)
-- [KVO 实现原理](#KVO 实现原理)
-- [如何手动关闭 KVO？](# 如何手动关闭 KVO？)
-- [消息传递和转发机制](##### 传递和转发机制)
-- [类和元类](# 类和元类)
-- [为什么要设计 metaclass](# 为什么要设计 metaclass)
-- [分类（Category）实现原理](# 分类（Category）实现原理)
-- [使用 runtime Associate 方法关联的对象，需要在主对象 dealloc 的时候释放么](# 使用 runtime Associate 方法关联的对象，需要在主对象 dealloc 的时候释放么)
-- [Category 在编译过后，是在什么时机与原有的类合并到一起的？](#Category 在编译过后，是在什么时机与原有的类合并到一起的？)
-- [分类（Category）可以添加 weak 属性吗](# 分类（Category）可以添加 weak 属性吗)
-- [category 和 extension 的区别](#category 和 extension 的区别)
-- [weak 原理](#weak 原理)
-- [objc 中向一个 nil 对象发送消息将会发生什么](# objc 中向一个 nil 对象发送消息将会发生什么)
-- [class_copyPropertyList 与 class_copyIvarList 区别](#class_copyPropertyList 与 class_copyIvarList 区别)
-- [class、objc_getClass、object_getclass 方法有什么区别?](#class、objc_getClass、object_getclass 方法有什么区别?)
-- [[self class] 与 [super class]](# [self class] 与 [super class])
+- [什么是 runtime？](#什么是-runtime？)
+- [一个 NSObject 对象占用多少内存空间](#一个-nsobject-对象占用多少内存空间)
+- [说一下对 isa 指针的理解](#说一下对-isa-指针的理解)
+- [class_rw_t 和 class_ro_t](#classrwt-和-classrot)
+- [Runtime 的方法缓存?存储的形式、数据结构以及查找的过程?](#runtime-的方法缓存存储的形式、数据结构以及查找的过程)
+- [什么是 method swizzling?](#什么是-method-swizzling)
+- [使用 method swizzling 需要注意什么](#使用-method-swizzling-需要注意什么)
+- [KVC 实现原理](#kvc-实现原理)
+- [KVO 实现原理](#kvo-实现原理)
+- [如何手动关闭 KVO？](#如何手动关闭-kvo？)
+- [消息传递和转发机制](#####传递和转发机制)
+- [类和元类](#类和元类)
+- [为什么要设计 metaclass](#为什么要设计-metaclass)
+- [分类（Category）实现原理](#分类（category）实现原理)
+- [使用 runtime Associate 方法关联的对象，需要在主对象 dealloc 的时候释放么](#使用-runtime-associate-方法关联的对象，需要在主对象-dealloc-的时候释放么)
+- [Category 在编译过后，是在什么时机与原有的类合并到一起的？](#category-在编译过后，是在什么时机与原有的类合并到一起的？)
+- [分类（Category）可以添加 weak 属性吗](#分类（category）可以添加-weak-属性吗)
+- [category 和 extension 的区别](#category-和-extension-的区别)
+- [weak 原理](#weak-原理)
+- [objc 中向一个 nil 对象发送消息将会发生什么](#objc-中向一个-nil-对象发送消息将会发生什么)
+- [class_copyPropertyList 与 class_copyIvarList 区别](#classcopypropertylist-与-classcopyivarlist-区别)
+- [class、objc_getClass、object_getclass 方法有什么区别?](#class、objcgetclass、objectgetclass-方法有什么区别)
+- [[self class] 与 [super class]](#self-class-与-super-class)
+
 #### 什么是 runtime？
 ```
 Objective-C 是基于 C 的，它为 C 添加了面向对象的特性，
@@ -186,7 +187,8 @@ setValue 机制：
 会检查 + (BOOL)accessInstanceVariablesDirectly 方法有没有返回 YES，默认该方法会返回 YES，
 如果你重写了该方法让其返回 NO 的话，那么在这一步 KVC 会执行 setValue：forUndefinedKey：方法，
 不过一般开发者不会这么做。
-所以 KVC 机制会搜索该类里面有没有名为 < key > 的成员变量，无论该变量是在类接口处定义，还是在类实现处定义，
+所以 KVC 机制会搜索该类里面有没有名为 < key > 的成员变量，
+无论该变量是在类接口处定义，还是在类实现处定义，
 也无论用了什么样的访问修饰符，只在存在以 < key > 命名的变量，KVC 都可以对该成员变量赋值。
 3. 如果该类即没有 set<key>：方法，也没有_<key > 成员变量，KVC 机制会搜索_is<Key > 的成员变量
 4. 和上面一样，如果该类即没有 set<Key>：方法，也没有_<key > 和_is<Key > 成员变量，
@@ -208,9 +210,11 @@ valueForKey 机制：
 就会以 countOf<Key>,objectIn<Key>AtIndex 或 < Key>AtIndexes 这几个方法组合的形式调用。
 还有一个可选的 get<Key>:range: 方法。所以你想重新定义 KVC 的一些功能，
 你可以添加这些方法，需要注意的是你的方法名要符合 KVC 的标准命名方法，包括方法签名。
-3. 如果上面的方法没有找到，那么会同时查找 countOf<Key>，enumeratorOf<Key>,memberOf<Key > 格式的方法。
+3. 如果上面的方法没有找到，那么会同时查找 countOf<Key>，enumeratorOf<Key>,
+memberOf<Key > 格式的方法。
 如果这三个方法都找到，那么就返回一个可以响应 NSSet 所的方法的代理集合，
-和上面一样，给这个代理集合发 NSSet 的消息，就会以 countOf<Key>，enumeratorOf<Key>,memberOf<Key > 组合的形式调用。
+和上面一样，给这个代理集合发 NSSet 的消息，
+就会以 countOf<Key>，enumeratorOf<Key>,memberOf<Key > 组合的形式调用。
 4. 如果没有发现简单 getter 方法，或集合存取方法组，
 以及接收类方法 accessInstanceVariablesDirectly 是返回 YES 的。
 搜索一个名为_<key>、_is<Key>、<key>、is<Key > 的实例，根据他们的顺序。
@@ -223,7 +227,8 @@ valueForKey 机制：
 ```
 KVO 的实现依赖于 Objective-C 强大的 Runtime，当观察某对象 A 时，
 KVO 机制动态创建一个对象 A 当前类的子类，
-并为这个新的子类重写了被观察属性 keyPath 的 setter 方法。setter 方法随后负责通知观察对象属性的改变状况。
+并为这个新的子类重写了被观察属性 keyPath 的 setter 方法。setter 方法随后
+负责通知观察对象属性的改变状况。
 Apple 使用了 isa-swizzling 来实现 KVO 。当观察对象 A 时，
 KVO 机制动态创建一个新的名为：NSKVONotifying_A 的新类，该类继承自对象 A 的本类，
 且 KVO 为 NSKVONotifying_A 重写观察属性的 setter 方法，
