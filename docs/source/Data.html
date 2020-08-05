@@ -323,14 +323,55 @@
 &#x76F8;&#x5F53;&#x4E8E;&#x4E00;&#x6761;&#x7EBF;&#x88AB;&#x5206;&#x6210;&#x4E86;&#x597D;&#x51E0;&#x6BB5;&#x7684;&#x6837;&#x5B50; &#xFF08;&#x53D1;&#x6325;&#x4F60;&#x7684;&#x60F3;&#x8C61;&#x529B;&#xFF09;&#x3002; &#x7EBF;&#x6027;&#x7ED3;&#x6784;&#x662F;&#x4E00;&#x5BF9;&#x4E00;&#x7684;&#x5173;&#x7CFB;
 3&#x3001;&#x6811;&#x5F62;&#x7ED3;&#x6784; &#x8BF4;&#x767D;&#x4E86; &#x505A;&#x5F00;&#x53D1;&#x7684;&#x80AF;&#x5B9A;&#x6216;&#x591A;&#x6216;&#x5C11;&#x7684;&#x77E5;&#x9053; xml &#x89E3;&#x6790; &#x6811;&#x5F62;&#x7ED3;&#x6784;&#x8DDF;&#x4ED6;&#x975E;&#x5E38;&#x7C7B;&#x4F3C;&#x3002;
 &#x4E5F;&#x53EF;&#x4EE5;&#x60F3;&#x8C61;&#x6210;&#x4E00;&#x4E2A;&#x91D1;&#x5B57;&#x5854;&#x3002;&#x6811;&#x5F62;&#x7ED3;&#x6784;&#x662F;&#x4E00;&#x5BF9;&#x591A;&#x7684;&#x5173;&#x7CFB;
-4&#x3001;&#x56FE;&#x5F62;&#x7ED3;&#x6784;
+4&#x3001;&#x56FE;&#x5F62;&#x7ED3;&#x6784;&#xFF1A;&#x6BD4;&#x8F83;&#x590D;&#x6742;&#xFF0C;&#x65E0;&#x7A77;&#xFF0C;&#x65E0;&#x8FB9;&#xFF0C;&#x65E0;&#x5411;
 </code></pre><h4 id="&#x6570;&#x636E;&#x7ED3;&#x6784;&#x7684;&#x5B58;&#x50A8;&#x65B9;&#x5F0F;">&#x6570;&#x636E;&#x7ED3;&#x6784;&#x7684;&#x5B58;&#x50A8;&#x65B9;&#x5F0F;</h4>
 <pre><code>&#x6570;&#x636E;&#x7ED3;&#x6784;&#x7684;&#x5B58;&#x50A8;&#x4E00;&#x822C;&#x5E38;&#x7528;&#x7684;&#x6709;&#x4E24;&#x79CD; &#x987A;&#x5E8F;&#x5B58;&#x50A8;&#x7ED3;&#x6784; &#x548C; &#x94FE;&#x5F0F;&#x5B58;&#x50A8;&#x7ED3;&#x6784;
 </code></pre><h4 id="&#x6570;&#x7EC4;&#x548C;&#x94FE;&#x8868;&#x533A;&#x522B;">&#x6570;&#x7EC4;&#x548C;&#x94FE;&#x8868;&#x533A;&#x522B;</h4>
 <pre><code>&#x6570;&#x7EC4;&#xFF1A;&#x6570;&#x7EC4;&#x5143;&#x7D20;&#x5728;&#x5185;&#x5B58;&#x4E0A;&#x8FDE;&#x7EED;&#x5B58;&#x653E;&#xFF0C;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x4E0B;&#x6807;&#x67E5;&#x627E;&#x5143;&#x7D20;&#xFF1B;
 &#x63D2;&#x5165;&#x3001;&#x5220;&#x9664;&#x9700;&#x8981;&#x79FB;&#x52A8;&#x5927;&#x91CF;&#x5143;&#x7D20;&#xFF0C;&#x6BD4;&#x8F83;&#x9002;&#x7528;&#x4E8E;&#x5143;&#x7D20;&#x5F88;&#x5C11;&#x53D8;&#x5316;&#x7684;&#x60C5;&#x51B5;
 &#x94FE;&#x8868;&#xFF1A;&#x94FE;&#x8868;&#x4E2D;&#x7684;&#x5143;&#x7D20;&#x5728;&#x5185;&#x5B58;&#x4E2D;&#x4E0D;&#x662F;&#x987A;&#x5E8F;&#x5B58;&#x50A8;&#x7684;&#xFF0C;&#x67E5;&#x627E;&#x6162;&#xFF0C;&#x63D2;&#x5165;&#x3001;&#x5220;&#x9664;&#x53EA;&#x9700;&#x8981;&#x5BF9;&#x5143;&#x7D20;&#x6307;&#x9488;&#x91CD;&#x65B0;&#x8D4B;&#x503C;&#xFF0C;&#x6548;&#x7387;&#x9AD8;
-</code></pre>
+</code></pre><h4 id="&#x5E38;&#x7528;&#x7B97;&#x6CD5;&#x53CA;&#x5176;&#x590D;&#x6742;&#x5EA6;">&#x5E38;&#x7528;&#x7B97;&#x6CD5;&#x53CA;&#x5176;&#x590D;&#x6742;&#x5EA6;</h4>
+<p><img src="image/&#x6392;&#x5E8F;.png" alt="&#x5E38;&#x89C1;&#x6392;&#x5E8F;&#x7B97;&#x6CD5;-&#x56FE;&#x7247;&#x6765;&#x81EA;&#x5C0F;&#x7801;&#x54E5;"></p>
+<h4 id="&#x94FE;&#x8868;&#x53CD;&#x8F6C;">&#x94FE;&#x8868;&#x53CD;&#x8F6C;</h4>
+<pre><code>//&#x4E00;&#x4E2A;&#x94FE;&#x8868;
+struct Node {
+    int data;
+    struct Node *next;
+};
+//&#x94FE;&#x8868;&#x53CD;&#x8F6C; 1.&#x8FED;&#x4EE3;
+struct Node *reverseList(struct Node *head) {
+    struct Node *newH = NULL;
+    while (head != NULL) {
+        struct Node *temp = head-&gt;next;
+        head-&gt;next = newH;
+        newH = head;
+        head = temp;
+    }
+    return newH;
+}
+//&#x94FE;&#x8868;&#x53CD;&#x8F6C; 2.&#x9012;&#x5F52;
+struct Node *reverseLiset2(struct Node *head) {
+    if (head == NULL || head-&gt;next == NULL) {
+        return head;
+    }
+    //&#x6CE8;&#x610F;,&#x6B64;&#x5904;&#x7684;&#x64CD;&#x4F5C;&#x662F;&#x4E00;&#x76F4;&#x5FAA;&#x73AF;&#x5230;&#x94FE;&#x8868;&#x672B;&#x5C3E;
+    struct Node *newHead = reverseLiset2(head-&gt;next);
+    head-&gt;next-&gt;next = head;
+    head-&gt;next = NULL;
+    printList(head);
+    return newHead;
+}
+</code></pre><h4 id="&#x4EC0;&#x4E48;&#x662F;&#x4E8C;&#x53C9;&#x6811;">&#x4EC0;&#x4E48;&#x662F;&#x4E8C;&#x53C9;&#x6811;</h4>
+<pre><code>&#x6811;&#x5F62;&#x7ED3;&#x6784;&#x4E0B;&#xFF0C;&#x4E24;&#x4E2A;&#x8282;&#x70B9;&#x4EE5;&#x5185;&#x90FD;&#x79F0;&#x4E4B;&#x4E3A;&#x4E8C;&#x53C9;&#x6811;&#xFF0C;&#x4E0D;&#x5B58;&#x5728;&#x5927;&#x4E8E; 2 &#x7684;&#x8282;&#x70B9;&#xFF0C;&#x5206;&#x4E3A;&#x5DE6;&#x5B50;&#x6811;&#x53F3;&#x5B50;&#x6811;&#x6709;&#x987A;&#x5E8F;&#x4E0D;&#x80FD;&#x98A0;&#x5012;
+&#x4E8C;&#x53C9;&#x6811;&#x6709;&#x4E94;&#x79CD;&#x8868;&#x73B0;&#x5F62;&#x5F0F;&#xFF1A;
+1.&#x7A7A;&#x7684;&#x6811;(&#x6CA1;&#x6709;&#x8282;&#x70B9;)&#x53EF;&#x4EE5;&#x7406;&#x89E3;&#x4E3A;&#x4EC0;&#x4E48;&#x90FD;&#x6CA1; &#x50CF;&#x7A7A;&#x6C14;&#x4E00;&#x6837;
+2.&#x53EA;&#x6709;&#x6839;&#x8282;&#x70B9;&#x3002;
+3.&#x53EA;&#x6709;&#x5DE6;&#x5B50;&#x6811;
+4.&#x53EA;&#x6709;&#x53F3;&#x5B50;&#x6811;
+5.&#x5DE6;&#x53F3;&#x5B50;&#x6811;&#x90FD;&#x6709;
+</code></pre><h3 id="&#x7B97;&#x6CD5;&#x5B66;&#x4E60;&#x53C2;&#x8003;">&#x7B97;&#x6CD5;&#x5B66;&#x4E60;&#x53C2;&#x8003;</h3>
+<p><a href="https://algorithm-visualizer.org" target="_blank">&#x7B97;&#x6CD5;&#x4EE3;&#x7801;&#x5728;&#x7EBF;&#x6F14;&#x793A;</a><br><a href="https://visualgo.net/zh" target="_blank">&#x6570;&#x636E;&#x7ED3;&#x6784;&#x548C;&#x7B97;&#x6CD5;&#x52A8;&#x6001;&#x53EF;&#x89C6;&#x5316;</a></p>
+
                                 
                                 </section>
                             
@@ -373,7 +414,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"数据结构与算法","level":"1.12","depth":1,"next":{"title":"第三方库","level":"1.13","depth":1,"path":"source/Library.md","ref":"source/Library.md","articles":[]},"previous":{"title":"性能优化相关","level":"1.11","depth":1,"path":"source/Performance.md","ref":"source/Performance.md","articles":[]},"dir":"ltr"},"config":{"plugins":[],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Jayxiang","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"iOS开发相关面试题总结","language":"zh-hans","gitbook":"*","description":"select * from learn"},"file":{"path":"source/Data.md","mtime":"2020-07-04T10:21:30.472Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-07-05T12:29:03.034Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"数据结构与算法","level":"1.12","depth":1,"next":{"title":"第三方库","level":"1.13","depth":1,"path":"source/Library.md","ref":"source/Library.md","articles":[]},"previous":{"title":"性能优化相关","level":"1.11","depth":1,"path":"source/Performance.md","ref":"source/Performance.md","articles":[]},"dir":"ltr"},"config":{"plugins":[],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Jayxiang","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"iOS开发相关面试题总结","language":"zh-hans","gitbook":"*","description":"select * from learn"},"file":{"path":"source/Data.md","mtime":"2020-08-05T06:21:12.987Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-08-05T06:44:04.997Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

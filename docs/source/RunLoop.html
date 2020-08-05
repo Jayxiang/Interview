@@ -318,16 +318,17 @@
                                 
                                 <h1 id="ios-&#x9762;&#x8BD5;---runloop">iOS &#x9762;&#x8BD5; - RunLoop</h1>
 <ul>
-<li><a href="#%20&#x4EC0;&#x4E48;&#x662F;%20RunLoop">&#x4EC0;&#x4E48;&#x662F; RunLoop</a></li>
-<li><a href="#RunLoop%20&#x7684;&#x6570;&#x636E;&#x7ED3;&#x6784;">RunLoop &#x7684;&#x6570;&#x636E;&#x7ED3;&#x6784;</a></li>
-<li><a href="#RunLoop%20&#x7684;%20Mode">RunLoop &#x7684; Mode</a></li>
-<li><a href="#RunLoop%20&#x7684;&#x5B9E;&#x73B0;&#x673A;&#x5236;&#x548C;&#x5185;&#x90E8;&#x903B;&#x8F91;">RunLoop &#x7684;&#x5B9E;&#x73B0;&#x673A;&#x5236;&#x548C;&#x5185;&#x90E8;&#x903B;&#x8F91;</a></li>
-<li><a href="#RunLoop%20&#x548C;&#x7EBF;&#x7A0B;">RunLoop &#x548C;&#x7EBF;&#x7A0B;</a></li>
-<li><a href="#PerformSelector%20&#x7684;&#x5B9E;&#x73B0;&#x539F;&#x7406;&#xFF1F;">PerformSelector &#x7684;&#x5B9E;&#x73B0;&#x539F;&#x7406;&#xFF1F;</a></li>
-<li><a href="#autoreleasePool%20&#x5728;&#x4F55;&#x65F6;&#x88AB;&#x91CA;&#x653E;&#xFF1F;">autoreleasePool &#x5728;&#x4F55;&#x65F6;&#x88AB;&#x91CA;&#x653E;&#xFF1F;</a></li>
-<li><a href="#%20&#x5B50;&#x7EBF;&#x7A0B;&#x91CC;&#x9762;&#xFF0C;&#x9700;&#x8981;&#x52A0;%20autoreleasepool%20&#x5417;">&#x5B50;&#x7EBF;&#x7A0B;&#x91CC;&#x9762;&#xFF0C;&#x9700;&#x8981;&#x52A0; autoreleasepool &#x5417;</a></li>
-<li><a href="#%20&#x4E8B;&#x4EF6;&#x54CD;&#x5E94;&#x7684;&#x8FC7;&#x7A0B;&#xFF1F;">&#x4E8B;&#x4EF6;&#x54CD;&#x5E94;&#x7684;&#x8FC7;&#x7A0B;&#xFF1F;</a></li>
-<li><a href="#%20&#x624B;&#x52BF;&#x8BC6;&#x522B;&#x7684;&#x8FC7;&#x7A0B;&#xFF1F;">&#x624B;&#x52BF;&#x8BC6;&#x522B;&#x7684;&#x8FC7;&#x7A0B;&#xFF1F;</a></li>
+<li><a href="#&#x4EC0;&#x4E48;&#x662F;-runloop">&#x4EC0;&#x4E48;&#x662F; RunLoop</a></li>
+<li><a href="#runloop-&#x7684;&#x6570;&#x636E;&#x7ED3;&#x6784;">RunLoop &#x7684;&#x6570;&#x636E;&#x7ED3;&#x6784;</a></li>
+<li><a href="#runloop-&#x7684;-mode">RunLoop &#x7684; Mode</a></li>
+<li><a href="#runloop-&#x7684;&#x5B9E;&#x73B0;&#x673A;&#x5236;&#x548C;&#x5185;&#x90E8;&#x903B;&#x8F91;">RunLoop &#x7684;&#x5B9E;&#x73B0;&#x673A;&#x5236;&#x548C;&#x5185;&#x90E8;&#x903B;&#x8F91;</a></li>
+<li><a href="#runloop-&#x548C;&#x7EBF;&#x7A0B;">RunLoop &#x548C;&#x7EBF;&#x7A0B;</a></li>
+<li><a href="#performselector-&#x7684;&#x5B9E;&#x73B0;&#x539F;&#x7406;&#xFF1F;">PerformSelector &#x7684;&#x5B9E;&#x73B0;&#x539F;&#x7406;&#xFF1F;</a></li>
+<li><a href="#autoreleasepool-&#x5728;&#x4F55;&#x65F6;&#x88AB;&#x91CA;&#x653E;&#xFF1F;">autoreleasePool &#x5728;&#x4F55;&#x65F6;&#x88AB;&#x91CA;&#x653E;&#xFF1F;</a></li>
+<li><a href="#&#x5B50;&#x7EBF;&#x7A0B;&#x91CC;&#x9762;&#xFF0C;&#x9700;&#x8981;&#x52A0;-autoreleasepool-&#x5417;">&#x5B50;&#x7EBF;&#x7A0B;&#x91CC;&#x9762;&#xFF0C;&#x9700;&#x8981;&#x52A0; autoreleasepool &#x5417;</a></li>
+<li><a href="#&#x4E8B;&#x4EF6;&#x54CD;&#x5E94;&#x7684;&#x8FC7;&#x7A0B;&#xFF1F;">&#x4E8B;&#x4EF6;&#x54CD;&#x5E94;&#x7684;&#x8FC7;&#x7A0B;&#xFF1F;</a></li>
+<li><a href="#&#x624B;&#x52BF;&#x8BC6;&#x522B;&#x7684;&#x8FC7;&#x7A0B;&#xFF1F;">&#x624B;&#x52BF;&#x8BC6;&#x522B;&#x7684;&#x8FC7;&#x7A0B;&#xFF1F;</a></li>
+<li><a href="#&#x89E3;&#x91CA;&#x4E00;&#x4E0B;-nstimer">&#x89E3;&#x91CA;&#x4E00;&#x4E0B; NSTimer</a></li>
 </ul>
 <h4 id="&#x4EC0;&#x4E48;&#x662F;-runloop">&#x4EC0;&#x4E48;&#x662F; RunLoop</h4>
 <pre><code>RunLoop &#x662F;&#x901A;&#x8FC7;&#x5185;&#x90E8;&#x7EF4;&#x62A4;&#x7684;&#x4E8B;&#x4EF6;&#x5FAA;&#x73AF; (Event Loop) &#x6765;&#x5BF9;&#x4E8B;&#x4EF6; / &#x6D88;&#x606F;&#x8FDB;&#x884C;&#x7BA1;&#x7406;&#x7684;&#x4E00;&#x4E2A;&#x5BF9;&#x8C61;&#x3002;
@@ -417,7 +418,7 @@ RunLoop &#x901A;&#x8FC7; mach_msg()&#x51FD;&#x6570;&#x63A5;&#x6536;&#x3001;&#x53
 (2)&#x5982;&#x679C;&#x8F93;&#x5165;&#x6E90;&#x88AB;&#x89E6;&#x53D1;&#xFF0C;&#x5904;&#x7406;&#x8BE5;&#x4E8B;&#x4EF6;&#xFF08;&#x6587;&#x6863;&#x4E0A;&#x662F; deliver the event&#xFF09;
 (3)&#x5982;&#x679C; RunLoop &#x88AB;&#x624B;&#x52A8;&#x5524;&#x9192;&#x4F46;&#x5C1A;&#x672A;&#x8D85;&#x65F6;&#xFF0C;&#x91CD;&#x65B0;&#x542F;&#x52A8;&#x5FAA;&#x73AF;&#xFF0C;&#x8DF3;&#x5230;&#x7B2C; 2 &#x6B65;
 10. &#x901A;&#x77E5;&#x89C2;&#x5BDF;&#x8005; RunLoop &#x7ED3;&#x675F;&#x3002;
-</code></pre><p><img src="https://upload-images.jianshu.io/upload_images/969362-31a5ed5d049d277c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="runloop.png"></p>
+</code></pre><p><img src="image/runloop.png" alt="runloop.png"></p>
 <h4 id="runloop-&#x548C;&#x7EBF;&#x7A0B;">RunLoop &#x548C;&#x7EBF;&#x7A0B;</h4>
 <pre><code>&#x7EBF;&#x7A0B;&#x548C; RunLoop &#x662F;&#x4E00;&#x4E00;&#x5BF9;&#x5E94;&#x7684;, &#x5176;&#x6620;&#x5C04;&#x5173;&#x7CFB;&#x662F;&#x4FDD;&#x5B58;&#x5728;&#x4E00;&#x4E2A;&#x5168;&#x5C40;&#x7684; Dictionary &#x91CC;&#xFF0C;
 &#x7EBF;&#x7A0B;&#x662F; key &#xFF0C;Runloop &#x662F; value&#x3002;
@@ -478,6 +479,20 @@ SpringBoard &#x53EA;&#x63A5;&#x6536;&#x6309;&#x952E;(&#x9501;&#x5C4F; / &#x9759;
 &#x8FD9;&#x4E2A; Observer &#x7684;&#x56DE;&#x8C03;&#x51FD;&#x6570;&#x662F; _UIGestureRecognizerUpdateObserver()&#xFF0C;
 &#x5176;&#x5185;&#x90E8;&#x4F1A;&#x83B7;&#x53D6;&#x6240;&#x6709;&#x521A;&#x88AB;&#x6807;&#x8BB0;&#x4E3A;&#x5F85;&#x5904;&#x7406;&#x7684; GestureRecognizer&#xFF0C;&#x5E76;&#x6267;&#x884C; GestureRecognizer &#x7684;&#x56DE;&#x8C03;&#x3002;
 3. &#x5F53;&#x6709; UIGestureRecognizer &#x7684;&#x53D8;&#x5316; (&#x521B;&#x5EFA; / &#x9500;&#x6BC1; / &#x72B6;&#x6001;&#x6539;&#x53D8;) &#x65F6;&#xFF0C;&#x8FD9;&#x4E2A;&#x56DE;&#x8C03;&#x90FD;&#x4F1A;&#x8FDB;&#x884C;&#x76F8;&#x5E94;&#x5904;&#x7406;&#x3002;
+</code></pre><h4 id="&#x89E3;&#x91CA;&#x4E00;&#x4E0B;-nstimer">&#x89E3;&#x91CA;&#x4E00;&#x4E0B; NSTimer</h4>
+<pre><code>NSTimer &#x5176;&#x5B9E;&#x5C31;&#x662F; CFRunLoopTimerRef&#xFF0C;&#x4ED6;&#x4EEC;&#x4E4B;&#x95F4;&#x662F; toll-free bridged &#x7684;&#x3002;
+&#x4E00;&#x4E2A; NSTimer &#x6CE8;&#x518C;&#x5230; RunLoop &#x540E;&#xFF0C;RunLoop &#x4F1A;&#x4E3A;&#x5176;&#x91CD;&#x590D;&#x7684;&#x65F6;&#x95F4;&#x70B9;&#x6CE8;&#x518C;&#x597D;&#x4E8B;&#x4EF6;&#x3002;
+&#x4F8B;&#x5982; 10:00, 10:10, 10:20 &#x8FD9;&#x51E0;&#x4E2A;&#x65F6;&#x95F4;&#x70B9;&#x3002;RunLoop &#x4E3A;&#x4E86;&#x8282;&#x7701;&#x8D44;&#x6E90;&#xFF0C;
+&#x5E76;&#x4E0D;&#x4F1A;&#x5728;&#x975E;&#x5E38;&#x51C6;&#x786E;&#x7684;&#x65F6;&#x95F4;&#x70B9;&#x56DE;&#x8C03;&#x8FD9;&#x4E2A; Timer&#x3002;Timer &#x6709;&#x4E2A;&#x5C5E;&#x6027;&#x53EB;&#x505A; 
+Tolerance(&#x5BBD;&#x5BB9;&#x5EA6;)&#xFF0C;&#x6807;&#x793A;&#x4E86;&#x5F53;&#x65F6;&#x95F4;&#x70B9;&#x5230;&#x540E;&#xFF0C;&#x5BB9;&#x8BB8;&#x6709;&#x591A;&#x5C11;&#x6700;&#x5927;&#x8BEF;&#x5DEE;&#x3002;
+&#x5982;&#x679C;&#x67D0;&#x4E2A;&#x65F6;&#x95F4;&#x70B9;&#x88AB;&#x9519;&#x8FC7;&#x4E86;&#xFF0C;&#x4F8B;&#x5982;&#x6267;&#x884C;&#x4E86;&#x4E00;&#x4E2A;&#x5F88;&#x957F;&#x7684;&#x4EFB;&#x52A1;&#xFF0C;&#x5219;&#x90A3;&#x4E2A;&#x65F6;&#x95F4;&#x70B9;&#x7684;&#x56DE;&#x8C03;&#x4E5F;&#x4F1A;&#x8DF3;&#x8FC7;&#x53BB;&#xFF0C;&#x4E0D;&#x4F1A;&#x5EF6;&#x540E;&#x6267;&#x884C;&#x3002;
+&#x5C31;&#x6BD4;&#x5982;&#x7B49;&#x516C;&#x4EA4;&#xFF0C;&#x5982;&#x679C; 10:10 &#x65F6;&#x6211;&#x5FD9;&#x7740;&#x73A9;&#x624B;&#x673A;&#x9519;&#x8FC7;&#x4E86;&#x90A3;&#x4E2A;&#x70B9;&#x7684;&#x516C;&#x4EA4;&#xFF0C;&#x90A3;&#x6211;&#x53EA;&#x80FD;&#x7B49; 10:20 &#x8FD9;&#x4E00;&#x8D9F;&#x4E86;&#x3002;
+
+CADisplayLink &#x662F;&#x4E00;&#x4E2A;&#x548C;&#x5C4F;&#x5E55;&#x5237;&#x65B0;&#x7387;&#x4E00;&#x81F4;&#x7684;&#x5B9A;&#x65F6;&#x5668;(&#x4F46;&#x5B9E;&#x9645;&#x5B9E;&#x73B0;&#x539F;&#x7406;&#x66F4;&#x590D;&#x6742;&#xFF0C;&#x548C; NSTimer &#x5E76;&#x4E0D;&#x4E00;&#x6837;&#xFF0C;
+&#x5176;&#x5185;&#x90E8;&#x5B9E;&#x9645;&#x662F;&#x64CD;&#x4F5C;&#x4E86;&#x4E00;&#x4E2A; Source)&#x3002;&#x5982;&#x679C;&#x5728;&#x4E24;&#x6B21;&#x5C4F;&#x5E55;&#x5237;&#x65B0;&#x4E4B;&#x95F4;&#x6267;&#x884C;&#x4E86;&#x4E00;&#x4E2A;&#x957F;&#x4EFB;&#x52A1;&#xFF0C;
+&#x90A3;&#x5176;&#x4E2D;&#x5C31;&#x4F1A;&#x6709;&#x4E00;&#x5E27;&#x88AB;&#x8DF3;&#x8FC7;&#x53BB;(&#x548C; NSTimer &#x76F8;&#x4F3C;)&#xFF0C;&#x9020;&#x6210;&#x754C;&#x9762;&#x5361;&#x987F;&#x7684;&#x611F;&#x89C9;&#x3002;
+&#x5728;&#x5FEB;&#x901F;&#x6ED1;&#x52A8; TableView &#x65F6;&#xFF0C;&#x5373;&#x4F7F;&#x4E00;&#x5E27;&#x7684;&#x5361;&#x987F;&#x4E5F;&#x4F1A; &#x8BA9;&#x7528;&#x6237;&#x6709;&#x6240;&#x5BDF;&#x89C9;&#x3002; 
+&#x5F00;&#x6E90;&#x7684; AsyncDisplayLink &#x5C31;&#x662F;&#x4E3A;&#x4E86;&#x89E3;&#x51B3;&#x754C;&#x9762;&#x5361;&#x987F;&#x7684;&#x95EE;&#x9898;&#xFF0C;&#x5176;&#x5185;&#x90E8;&#x4E5F;&#x7528;&#x5230;&#x4E86; RunLoop
 </code></pre><p>&#x7ECF;&#x5178;&#x6587;&#x7AE0;&#xFF1A;<a href="https://blog.ibireme.com/2015/05/18/runloop/" target="_blank">&#x6DF1;&#x5165;&#x7406;&#x89E3; RunLoop</a></p>
 
                                 
@@ -522,7 +537,7 @@ SpringBoard &#x53EA;&#x63A5;&#x6536;&#x6309;&#x952E;(&#x9501;&#x5C4F; / &#x9759;
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"RunLoop相关","level":"1.6","depth":1,"next":{"title":"多线程相关","level":"1.7","depth":1,"path":"source/Thread.md","ref":"source/Thread.md","articles":[]},"previous":{"title":"Runtime相关","level":"1.5","depth":1,"path":"source/Runtime.md","ref":"source/Runtime.md","articles":[]},"dir":"ltr"},"config":{"plugins":[],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Jayxiang","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"iOS开发相关面试题总结","language":"zh-hans","gitbook":"*","description":"select * from learn"},"file":{"path":"source/RunLoop.md","mtime":"2020-07-04T09:27:12.858Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-07-05T12:29:03.034Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"RunLoop相关","level":"1.6","depth":1,"next":{"title":"多线程相关","level":"1.7","depth":1,"path":"source/Thread.md","ref":"source/Thread.md","articles":[]},"previous":{"title":"Runtime相关","level":"1.5","depth":1,"path":"source/Runtime.md","ref":"source/Runtime.md","articles":[]},"dir":"ltr"},"config":{"plugins":[],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Jayxiang","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"iOS开发相关面试题总结","language":"zh-hans","gitbook":"*","description":"select * from learn"},"file":{"path":"source/RunLoop.md","mtime":"2020-08-05T05:57:04.541Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-08-05T06:44:04.997Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
