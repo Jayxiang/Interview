@@ -8,3 +8,5 @@ pod install 用于工程第一次安装 pod 库和修改 podfile(添加，更新
 pod update 用于更新特定的 pod(或所有的 pod)版本时。
 ```
 
+更详细可以参考：[pod install vs. pod update](https://blog.csdn.net/huangyimo/article/details/85130398)
+
