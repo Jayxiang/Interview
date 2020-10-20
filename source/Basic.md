@@ -29,12 +29,14 @@
 - [+initialize 与 +load 有什么用处区别](#initialize-与-load-有什么用处区别)
 - [isEqual,isEqualToString 和 == 区别](#isequalisequaltostring-和--区别)
 - [分类的理解](#分类的理解)
+- [Foundation 对象与 Core Foundation 对象有什么区别](#Foundation-对象与-Core-Foundation-对象有什么区别)
 - [iOS 签名机制](#ios-签名机制)
 
 #### 简要叙述 OC 语言的特点
 
 是根据 C 语言所衍生出来的语言，继承了 C 语言的特性，是扩充 C 的面向对象编程语言,
 所以具有面向对象的语言特性，如：封装、多态、继承。
+
 - 封装：是对象和类概念的主要特性。它是隐藏内部实现，提供外部接口。
 - 继承：它可以使用现有类的所有功能，并在无需重新编写原来的类的情况下对这些功能进行扩展。
 - 多态：不同对象以自己的方式响应相同的消息的能力叫做多态。
@@ -54,6 +56,7 @@
     根据需求动态地加载资源。
 
 #### 类别的作用？继承、类别和扩展在实现中有何区别
+
 ```
 类别的作用:(1)将类的实现分散到多个不同文件或多个不同框架中。
 (2)创建对私有方法的前向引用。
@@ -69,7 +72,9 @@ category 可以在不获悉，不改变原来代码的情况下往里面添加�
 并且如果类别和原来类中的方法产生名称冲突，则类别将覆盖原来的方法，因为类别具有更高的优先级。
 继承可以增加，修改方法，并且可以增加属性。
 ```
+
 #### 在 OC 中类变量的 @protected,@private,@public,@package 区别
+
 ```
 @protected (默认)该类和所有子类中的方法可以直接访问这样的变量。
 @private 该类中的方法可以访问，子类不可以访问。
@@ -77,7 +82,9 @@ category 可以在不获悉，不改变原来代码的情况下往里面添加�
 @package 本包内使用，跨包不可以
 实际开发中基本都是默认, 没有使用过其他的
 ```
-#### #import、#include、@class、#import<>和 #import"" 的区别
+
+##### import、#include、@class、#import<>和 #import"" 的区别
+
 ```
 #include 与 #import 都是导入头文件的关键字, 完整地包含某个文件的内容,
 后者会自动导入一次，不会重复导入, 不会引发交叉编译.
@@ -89,7 +96,9 @@ category 可以在不获悉，不改变原来代码的情况下往里面添加�
 另外：iOS7 之后的新特性，可以使用 @import 关键词来代理 #import 引入系统类库。
      使用 @import 引入系统类库，不需要到 build phases 中先添加添加系统库到项目中。
 ```
+
 #### @property 的本质是什么？ivar、getter、setter 是如何生成并添加到这个类中的
+
 ```
 1.@property 的本质 = ivar (实例变量) + getter (取方法) + setter （存方法）
 “属性”（property）有两大概念：实例变量（ivar）、存取方法(getter + setter)
@@ -102,12 +111,14 @@ category 可以在不获悉，不改变原来代码的情况下往里面添加�
 生成 getter 方法时，会判断当前属性名是否有“_”, 比如声明属性为 @property（nonatomic,copy）NSString *_name;
 那么所生成的成员变量名就会变成 “_name”, 如果我们要手动生成 getter 方法，就要判断是否以“_” 开头了。
 ```
+
 #### @property 常用属性及如何使用
+
 ```
 读写属性: (readwrite/readonly/setter = /getter = )
 引用计数:(assign/retain/copy/strong)
 原⼦性: (atomic/nonatomic)
-ARC 其中属性默认是：readwrite，strong, atomic
+ARC 其中对象属性默认是：readwrite，strong, atomic，基本数据类型默认是：readwrite，assign, atomic
 atomic 是默认的属性, 表示对象的操作属于原子操作
 (原子性指事务的一个完整操作。操作成功则提交，失败则回滚),
 主要是在多线程的环境下, 提供多线程访问的安全。
@@ -143,7 +154,9 @@ null_unspecified: 不确定是否为空
 
 class：类属性，类使用类方法。
 ```
+
 #### 用 @property 声明的 NSString / NSArray / NSDictionary 经常使用 copy 关键字，为什么？如果改用 strong 关键字，可能造成什么问题
+
 ```
 用 @property 声明 NSString、NSArray、NSDictionary 经常使用 copy 关键字，
 是因为他们有对应的可变类型：NSMutableString、NSMutableArray、NSMutableDictionary，
@@ -156,25 +169,33 @@ class：类属性，类使用类方法。
 3. 使用 copy 的目的是，防止把可变类型的对象赋值给不可变类型的对象时，
 可变类型对象的值发送变化会无意间篡改不可变类型对象原来的值。
 ```
+
 #### 为什么 IBOutlet 属性是 weak 的
+
 ```
 因为既然有外链那么视图在 xib 或者 storyboard 中肯定存在，视图已经对它有一个强引用了。 
 IBoutlet 连线到控制器中作为视图的属性时用 weak 修饰就可以了, (用 strong 修饰也可以但是没有必要)
 ```
+
 #### __weak，__block 的区别
+
 ```
 __weak 与 weak 基本相同。前者用于修饰变量（variable），后者用于修饰属性（property）。
 __weak 主要用于防止 block 中的循环引用。
 __block 也用于修饰变量。它是引用修饰，所以其修饰的值是动态变化的，即可以被重新赋值的。
 __block 用于修饰某些 block 内部将要修改的外部变量。
 ```
+
 #### id 声明的对象有什么特性
+
 ```
  id 声明的对象具有运行时的特性，在程序运行时才确定对象的类型。
 可以指向任意类型的 OC 的对象，与 C 中的 void * 万能指针相似。
 运行效率低，不可以使用点语法。
 ```
+
 #### id 和 nil 代表什么以及 nil 和 NULL 的区别
+
 ```
 id 类型：是一个独特的数据类型，可以转换为任何数据类型，id 类型的变量可以存放任何数据类型的对象，
   在内部处理上，这种类型被定义为指向对象的指针，实际上是一个指向这种对象的实例变量的指针
@@ -184,7 +205,9 @@ nil 是宏，是对于 Objective-C 中的对象而使用的，表示对象为空
 Nil 是宏，是对于 Objective-C 中的类而使用的，表示类指向空
 NSNull 是类类型，是用于表示空的占位对象，与 JS 或者服务端的 null 类似的含意
 ```
+
 #### BOOL/bool/Boolean 的区别
+
 ```
 BOOL:
 typedef signed char BOOL;
@@ -199,15 +222,17 @@ Boolean:
 typedef unsigned char Boolean;
 enum DYLD_BOOL { FALSE, TRUE };
 ```
+
 如表所示:
 
-| Name         |    Typedef    |      Header      |   True Value   |     False Value |
-|--------------|:-------------:|:----------------:|:--------------:|----------------:|
-| BOOL         |  signed char  |      objc.h      |      YES       |              NO |
-| bool         |  _Bool (int)  |    stdbool.h     |      true      |           false |
-| Boolean      | unsigned char |    MacTypes.h    |      TRUE      |           FALSE |
-| NSNumber     | __NSCFBoolean |   Foundation.h   |     @(YES)     |           @(NO) |
-| CFBooleanRef |    struct     | CoreFoundation.h | kCFBooleanTrue | kCFBooleanFalse |
+| Name         | Typedef       | Header           | True Value     | False Value     |
+| ------------ |:-------------:|:----------------:|:--------------:| ---------------:|
+| BOOL         | signed char   | objc.h           | YES            | NO              |
+| bool         | _Bool (int)   | stdbool.h        | true           | false           |
+| Boolean      | unsigned char | MacTypes.h       | TRUE           | FALSE           |
+| NSNumber     | __NSCFBoolean | Foundation.h     | @(YES)         | @(NO)           |
+| CFBooleanRef | struct        | CoreFoundation.h | kCFBooleanTrue | kCFBooleanFalse |
+
 #### OC 的反射机制
 
 > Objective-C 语言中的 OC 对象，都继承自 NSObject 类。这个类为我们提供了一些基础的方法和协议，我们可以直接调用从这个类继承过来方法。大部分的动态反射支持来自 NSObject 类。NSObject 是所有类（除了一些很少见的例外）的根类。所以基本常用到的类应该都可以支持反射。
@@ -226,7 +251,9 @@ SEL selector = NSSelectorFromString(@"setName");
 // 将方法变成字符串
 NSStringFromSelector(@selector*(setName:));
 ```
+
 #### 堆和栈的区别？和队列
+
 ```
 堆栈是两种数据结构, 堆，先进先出;  栈，先进后出
 按管理和内存方式来看
@@ -245,7 +272,9 @@ NSStringFromSelector(@selector*(setName:));
 和栈一样，队列是一种操作受限制的线性表。
 队列是一种先进先出的数据结构，又称为先进先出的线性表，简称 FIFO（First In First Out）结构。
 ```
+
 #### 沙盒机制的理解和使用
+
 ```
 处于安全考虑，iOS 系统的沙盒机制规定每个应用都只能访问当前沙盒目录下面的文件
 （也有例外，比如在用户授权情况下访问通讯录，相册等）
@@ -271,7 +300,9 @@ tmp 目录：这个目录用于存放临时文件，保存应用程序再次启�
 该路径下的文件不会被 iTunes 备份。该目录下的东西随时有可能被系统清理掉
 SystemData 目录: 最近查看目录才发现的，新加入的一个文件夹, 存放系统的一些东西. 具体没太研究.
 ```
+
 #### 事件响应者链的概念
+
 ```
 响应者链表示一系列的响应者对象. 事件被交给由第一响应者对象处理, 如果第一响应者不处理, 
 事件被沿着响应者链向上传递, 交给下一响应者(next responder).
@@ -288,9 +319,11 @@ SystemData 目录: 最近查看目录才发现的，新加入的一个文件夹,
 简单来说就是: 事件的传递是从上到下（父控件到子控件），
 事件的响应是从下到上（顺着响应者链条向上传递：子控件到父控件。
 ```
+
 [可参考文章](https://www.jianshu.com/p/2e074db792ba)
 
 #### @synthesize 和 @dynamic 分别有什么作用
+
 ```
 1.@property 有两个对应的词，一个是 @synthesize，一个是 @dynamic。
   如果 @synthesize 和 @dynamic 都没写，那么默认的就是 @synthesize var = _var;
@@ -304,7 +337,9 @@ SystemData 目录: 最近查看目录才发现的，新加入的一个文件夹,
   编译时没问题，运行时才执行相应的方法，这就是所谓的动态绑定。
 实际开发中我们常会用到重写 getter 方法来做懒加载, 或者用 setter 方法来完成调用. 很少会将两个同时重写.
 ```
+
 #### 类方法和实例方法有什么区别
+
 ```
 类方法: 在 OC 类定义方法时以 + 开头的方法，又称为静态方法。
   它不用实例就可以直接调用的方法，一般是有返回值的，返回对应的实例（数组、字符串等），
@@ -327,7 +362,9 @@ OC 用的就是这种消息模式.
 实例方法中直接调用实例方法
 实例方法中也可以调用类方法（通过类名）
 ```
+
 #### 浅拷贝和深拷贝的区别
+
 ```
 浅拷贝：只复制指向对象的指针，而不复制引用对象本身。只是新创建了类的空间，然后将属性的值复制一遍；
   对于属性所指向的内存空间并没有重新创建；因此通过浅拷贝的新旧两个对象的属性
@@ -337,16 +374,20 @@ OC 用的就是这种消息模式.
   指向各自的内存空间，不再共享空间
 另外可变对象复制（copy，mutableCopy）的都是深拷贝; 不可变对象 copy 是浅拷贝，
 mutableCopy 是深拷贝。
-但是注意 copy 返回的都是不可变对象，如果对 copy 返回值去调用可变对象的接口就会 crash. 
+但是注意 copy 返回的都是不可变对象，如果对 copy 返回值去调用可变对象的接口就会 crash.
 ```
+
 #### NSCache NSDictionary 区别
+
 ```
 1.NSCache 是线程安全的，NSMutableDictionary 线程不安全
 2. 当内存不足时 NSCache 会自动释放内存(所以从缓存中取数据的时候总要判断是否为空)
 3.NSCache 可以指定缓存的限额，当缓存超出限额自动释放内存
 4.NSCache 并不会 “拷贝” 键，而是会 “保留” 它。
 ```
+
 #### 什么是 KVC 和 KVO
+
 ```
 KVC 也就是 key-value-coding , 即键值编码，通常是用来给某一个对象的属性进行赋值.
 开发中我们可以对私有属性进行赋值的, 修改一些控件的内部属性, 还可以用于字典转模型.
@@ -363,7 +404,9 @@ KVO，即 key-value-observing, 利用一个 key 来找到某个属性并监听�
 重写的 setter 方法会在调用原 setter 方法前后，通知观察对象值得改变。
 KVC/KVO 实现的根本是 Objective-C 的动态性和 runtime
 ```
+
 #### 开发中，保存数据有哪几种方式
+
 ```
 所谓的持久化，就是将数据保存到磁盘中，使得在应用程序重启后可以继续访问之前保存的数据.
 iOS 本地数据保存有多种方式, 比如 NSUserDefaults、Plist 文件保存、
@@ -398,7 +441,9 @@ KeyChain: 钥匙串是苹果公司 Mac OS 中的密码管理系统。一个钥�
   KeyChain 还有一个用途，就是替代 UDID。UDID 已经被废除了，所以只能用 UUID 代替，
   所以我们可以把 UUID 用 KeyChain 保存。
 ```
+
 #### 关键字 const/static/extern、UIKIT_EXTERN 区别和用法以及与宏的区别
+
 ```
 const:
   1.const 用来修饰右边的基本变量或指针变量
@@ -429,7 +474,9 @@ const 不能满足的情况再考虑使用宏定义。
   static const CGFloat kWidth = 10.0;
   可以代替 #define WIDTH 10.0
 ```
+
 #### 关键字组合 static inline
+
 ```
 inline 函数, 即内联函数, 他可以向编译器申请, 将使用 inline 修饰的函数内容, 内联到函数调用的位置
 内联函数的作用类似于 #define, 但是他比 #define 有一些优点
@@ -451,7 +498,9 @@ static 只是为了表明该函数只在该文件中可见！也就是说，在�
 1. 普通函数调用需要开辟栈帧和回收栈帧，内联函数不开辟和回收栈帧，在调用出展开代码
 2. 普通函数会在编译完生成函数名对应的符号，链接的时候在符号表上可以找到，内联函数不生成符号
 ```
+
 #### isMemberOfClass、isKindOfClass 和 isSubclassOfClass 联系与区别
+
 ```
 联系：都能检测一个对象是否是某个类的成员
 区别：
@@ -460,7 +509,9 @@ isSubclassOfClass 和 isKindOfClass 的作用基本上是一致的，只不过�
 isMemberOfClass: 确定一个对象是否是当前类的成员. 他的筛选条件更为苛刻，
 只有当类型完全匹配的时候才会返回 YES。
 ```
+
 #### 将一个函数在主线程执行的几种方法
+
 ```
 //GCD 方法，通过向主线程队列发送一个 block 块，使 block 里的方法可以在主线程中执行。
 dispatch_async(dispatch_get_main_queue(), ^{
@@ -479,7 +530,9 @@ NSBlockOperation *operation = [NSBlockOperation blockOperationWithBlock:^{
 //RunLoop 方法
 [[NSRunLoop mainRunLoop] performSelector:@selector(method) withObject:nil];
 ```
+
 #### +initialize 与 +load 有什么用处区别
+
 ```
 通常情况下，我们在开发过程中可能不必关注这两个方法。如果有需要定制，
 我们可以在自定义的 NSObject 子类中给出这两个方法的实现，
@@ -499,17 +552,19 @@ NSBlockOperation *operation = [NSBlockOperation blockOperationWithBlock:^{
 子类实现 initialize 方法时, 会覆盖父类 initialize 方法.
 3. 当有多个 Category 都实现了 initialize 方法, 会覆盖类中的方法, 
 只执行一个(会执行 Compile Sources 列表中最后一个 Category 的 initialize 方法)
-
 ```
-|   | +load | + initialize |
-| --- | --- | --- |
-| 调用时机 | 被添加到 runtime 时（main 前） | 到第一条消息前，可能永远不调用 |
-| 调用顺序 | 父类 ->子类 ->分类 | 父类 ->本类(如果有分类，则调用分类) |
-| 若自身未实现，是否沿用父类的方法 | 否 | 是 |
-| 类别中的定义 | 全都执行，但后于本类的方法（顺序与 Compile Sources 出现的顺序一致） | 覆盖本类的方法，只执行一个（执行 Compile Sources 列表中最后一个 Category 的 initialize 方法） |
+
+|                  | +load                                      | + initialize                                                       |
+| ---------------- | ------------------------------------------ | ------------------------------------------------------------------ |
+| 调用时机             | 被添加到 runtime 时（main 前）                     | 到第一条消息前，可能永远不调用                                                    |
+| 调用顺序             | 父类 ->子类 ->分类                               | 父类 ->本类(如果有分类，则调用分类)                                               |
+| 若自身未实现，是否沿用父类的方法 | 否                                          | 是                                                                  |
+| 类别中的定义           | 全都执行，但后于本类的方法（顺序与 Compile Sources 出现的顺序一致） | 覆盖本类的方法，只执行一个（执行 Compile Sources 列表中最后一个 Category 的 initialize 方法） |
+
 [更多请看：iOS 类方法 load 和 initialize 详解](https://www.jianshu.com/p/c52d0b6ee5e9)
 
 #### isEqual,isEqualToString 和 == 区别
+
 ```
 isEqual：默认情况下是比较两个对象的内存地址；isEqual：就是提供了一个可以自定义相等标准的方法。
 系统自带的类 (比如 Foundation 中 的 NSString, NSArray 等) 重写了这个方法，改变了这个方法的判断规则,
@@ -519,7 +574,9 @@ isEqualToString: 字符串比较，只比较字符串本身的内容是否一致
 
 ==：如果两个对象的内存地址是一样，返回 true，如果内存地址不一样，返回 false.
 ```
+
 #### 分类的理解
+
 ```
 作用：声明私有方法，分解体积大的类文件，把 framework 的私有方法公开
 
@@ -546,7 +603,53 @@ AssociationsHashMap,由 AssociationsManager 统一管理。
 和扩展的区别：扩展的特点
 编译时决议，只能以声明的形式存在，多数情况下寄生在宿主类的.m 中，不能为系统类添加扩展。
 ```
+#### Foundation 对象与 Core Foundation 对象有什么区别
+```
+Foundation 框架是使用 OC 实现的，Core Foundation 是使用 C 实现的
+ARC 环境桥接关键字:
+// 可用于 Foundation 对象 和 Core Foundation 对象间的转换 __bridge
+// 用于 Foundation 对象 转成 Core Foundation 对象 __bridge_retained
+// Core Foundation 对象 转成 Foundation 对象 __bridge_transfer
+
+Foundation 对象转成 Core Foundation 对象使用 
+1.使用 __bridge 桥接：
+使用 __bridge 桥接,仅仅是将 strOC 的地址给了 strC,，并没有转移对象的所有权，
+也就是说，如果使用 __bridge 桥接, 那么如果 strOC 释放了，strC 也不能用了
+在 ARC 下,如果是使用 __bridge 桥接,那么 strC 可以不用主动释放,因为 ARC 会自动管理 strOC 和 strC
+ NSString *strOC = [NSString stringWithFormat:@"abcdefg"]; 
+ CFStringRef strC = (__bridge CFStringRef)strOC; 
+ NSLog(@"%@ %@", strOC, strC);
+
+2.使用 __bridge_retained 桥接
+如果使用 __bridge_retained 桥接,它会将对象的所有权转移给 strC ,
+也就是说,即便 strOC 被释放了, strC 也可以使用
+所以:在 ARC 条件下,如果是使用 __bridge_retained 桥接,那么 strC 必须自己手动释放,
+因为桥接的时候已经将对象的所有权转移给了 strC,而 C 语言的东⻄不是不归 ARC 管理的
+ NSString *strOC = [NSString stringWithFormat:@"abcdefg"];
+ // CFStringRef strC = (__bridge_retained CFStringRef)strOC; 
+ CFStringRef strC = CFBridgingRetain(strOC);// 这一句, 就等同于上一句
+ CFRelease(strC);
+
+Core Foundation 对象转 Foundation 对象
+1.使用 __bridge 桥接
+如果使用 __bridge 桥接,它仅仅是将 strC 的地址给了 strOC,并没有转移对象的所有权
+也就是说如果使用 __bridge 桥接,那么如果 strC 释放了,strOC 也不能用了
+ CFStringRef strC = CFStringCreateWithCString(CFAllocatorGetDefault(), "12345678", kCFStringEncodingASCII);
+ NSString *strOC = (__bridge NSString *)strC; 
+ CFRelease(strC);
+
+2.使用 __bridge_transfer 桥接
+如果使用 __bridge_transfer 桥接,它会将对象的所有权转移给 strOC,
+也就是说,即便 strC 被释放了, strOC 也可以使用
+如果使用 __bridge_transfer 桥接, 他会自动释放 strC, 也就是以后我们不用手动释放 strC
+ CFStringRef strC = CFStringCreateWithCString(CFAllocatorGetDefault(), "12345678", kCFStringEncodingASCII);
+ // NSString *strOC = (__bridge_transfer NSString *)strC;
+ NSString *strOC = CFBridgingRelease(strC); // 这一句就等同于上一句
+ 
+```
+
 #### iOS 签名机制
+
 ```
 App的安装方式有四种：
 1.通过 App Store 安装。
@@ -567,4 +670,5 @@ App的安装方式有四种：
 7.保证 Cer 及 embedded.mobileprovision 是经过苹果认证之后，从 Cer 中取出 Mac 公钥，
 验证 App 签名，及设备 id 列表、权限开关是否对应。
 ```
+
 ![签名机制](./image/签名机制.png)
