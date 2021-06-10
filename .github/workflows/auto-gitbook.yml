@@ -26,7 +26,7 @@ jobs:
       run: |
         gitbook build ./ ./docs
                 
-    - name: push docs to main
+    - name: push docs to master
       env:
         TOKEN: ${{ secrets.TOKEN }}
         REF: github.com/${{github.repository}}
@@ -35,11 +35,9 @@ jobs:
       run: |
         git config --global user.email "${MYEMAIL}"
         git config --global user.name "${MYNAME}"
-        git remote add origin https://${REF}
-        git add . 
+        git add .
         git commit -m "Docs ${{github.run_number}} of ${{github.workflow}} For Github Pages"
-        git branch -M master
-        git push --force --quiet "https://${TOKEN}@${REF}" master
+        git push --force --quiet
                 
                 
                 
