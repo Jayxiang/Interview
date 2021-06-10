@@ -319,11 +319,32 @@
                                 <h1 id="ios-&#x9762;&#x8BD5;-&#x7B2C;&#x4E09;&#x65B9;&#x5E93;&#x76F8;&#x5173;">iOS &#x9762;&#x8BD5;-&#x7B2C;&#x4E09;&#x65B9;&#x5E93;&#x76F8;&#x5173;</h1>
 <ul>
 <li><a href="#pod-update-&#x548C;-pod-install-&#x7684;&#x533A;&#x522B;">pod update &#x548C; pod install &#x7684;&#x533A;&#x522B;</a></li>
+<li><a href="#Git-&#x5E38;&#x7528;&#x7684;&#x547D;&#x4EE4;">Git &#x5E38;&#x7528;&#x7684;&#x547D;&#x4EE4;</a></li>
 </ul>
 <h4 id="pod-update-&#x548C;-pod-install-&#x7684;&#x533A;&#x522B;">pod update &#x548C; pod install &#x7684;&#x533A;&#x522B;</h4>
 <pre><code>pod install &#x7528;&#x4E8E;&#x5DE5;&#x7A0B;&#x7B2C;&#x4E00;&#x6B21;&#x5B89;&#x88C5; pod &#x5E93;&#x548C;&#x4FEE;&#x6539; podfile(&#x6DFB;&#x52A0;&#xFF0C;&#x66F4;&#x65B0;&#xFF0C;&#x79FB;&#x9664; pod &#x5E93;)&#x7684;&#x65F6;&#x5019;&#x3002;
 pod update &#x7528;&#x4E8E;&#x66F4;&#x65B0;&#x7279;&#x5B9A;&#x7684; pod(&#x6216;&#x6240;&#x6709;&#x7684; pod)&#x7248;&#x672C;&#x65F6;&#x3002;
 </code></pre><p>&#x66F4;&#x8BE6;&#x7EC6;&#x53EF;&#x4EE5;&#x53C2;&#x8003;&#xFF1A;<a href="https://blog.csdn.net/huangyimo/article/details/85130398" target="_blank">pod install vs. pod update</a></p>
+<h4 id="git-&#x5E38;&#x7528;&#x7684;&#x547D;&#x4EE4;">Git &#x5E38;&#x7528;&#x7684;&#x547D;&#x4EE4;</h4>
+<ul>
+<li>1.<code>git init</code> &#x521D;&#x59CB;&#x5316;&#x4E00;&#x4E2A; Git &#x4ED3;&#x5E93;&#x3002;</li>
+<li>2.<code>git add &lt;file&gt;</code> &#x6DFB;&#x52A0;&#x6587;&#x4EF6;</li>
+<li>3.<code>git status</code> &#x67E5;&#x770B;&#x5F53;&#x524D; Git &#x4ED3;&#x5E93;&#x7684;&#x6587;&#x4EF6;&#x72B6;&#x6001;&#x3002;</li>
+<li>4.<code>git diff</code> &#x67E5;&#x770B;&#x4E00;&#x4E2A;&#x6587;&#x4EF6;&#x524D;&#x540E;&#x6709;&#x4EC0;&#x4E48;&#x4E0D;&#x540C;&#x3002;</li>
+<li>5.<code>git commit -m &apos;&#x63CF;&#x8FF0;&#x4FE1;&#x606F;&apos;</code> &#x63D0;&#x4EA4;&#x6587;&#x4EF6;&#x53CA;&#x76F8;&#x5173;&#x4FE1;&#x606F;&#x3002;</li>
+<li>6.<code>git checkout -- &lt;file&gt;...</code> :&#x5F53;&#x4F60;&#x6539;&#x4E71;&#x4E86;&#x5DE5;&#x4F5C;&#x533A;&#x67D0;&#x4E2A;&#x6587;&#x4EF6;&#x7684;&#x5185;&#x5BB9;&#xFF0C;&#x60F3;&#x76F4;&#x63A5;&#x4E22;&#x5F03;&#x5DE5;&#x4F5C;&#x533A;&#x7684;&#x4FEE;&#x6539;&#x3002;</li>
+<li>7.<code>git log</code> &#x547D;&#x4EE4;&#x663E;&#x793A;&#x4ECE;&#x6700;&#x8FD1;&#x5230;&#x6700;&#x8FDC;&#x7684;&#x63D0;&#x4EA4;&#x65E5;&#x5FD7;&#xFF08;&#x53EF;&#x4EE5;&#x56DE;&#x5230;&#x8FC7;&#x53BB;&#xFF09;&#x3002;</li>
+<li>8.<code>git reset --hard HEAD^</code> &#x56DE;&#x9000;&#x5230;&#x4E0A;&#x4E00;&#x4E2A;&#x7248;&#x672C;&#x3002;</li>
+<li>9.<code>git reset --hard 1094a</code> &#x5982;&#x679C;&#x662F;&#x9519;&#x8BEF;&#x56DE;&#x9000;&#xFF0C;&#x53EA;&#x8981;&#x5F53;&#x524D;&#x7A97;&#x53E3;&#x8FD8;&#x6CA1;&#x6709;&#x5173;&#x95ED;&#xFF0C;&#x53EF;&#x4EE5;&#x627E;&#x5230;&#x6700;&#x65B0;&#x7684; <code>commit id</code>&#xFF0C;&#x6839;&#x636E; <code>commit id</code> &#x8FD8;&#x539F;&#x3002;</li>
+<li>10.<code>git reflog</code> &#x53EF;&#x4EE5;&#x7528;&#x6765;&#x8BB0;&#x5F55;&#x4F60;&#x7684;&#x6BCF;&#x4E00;&#x6B21;&#x547D;&#x4EE4;&#xFF0C;&#x5373;&#x4FBF;&#x662F;&#x8BEF;&#x64CD;&#x4F5C;&#xFF0C;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x8FD9;&#x4E2A;&#x547D;&#x4EE4;&#x8FDB;&#x884C;&#x8FD8;&#x539F;(&#x4E5F;&#x5C31;&#x662F;&#x53EF;&#x4EE5;&#x56DE;&#x5230;&#x672A;&#x6765;)&#x3002;</li>
+<li>11.<code>git checkout</code> &#x662F;&#x5207;&#x6362;&#x5206;&#x652F;&#x7684;&#x610F;&#x601D;&#x3002;</li>
+<li>12.<code>git reset HEAD &lt;file&gt;</code> &#x53EF;&#x4EE5;&#x628A;&#x6682;&#x5B58;&#x533A;&#x7684;&#x4FEE;&#x6539;&#x64A4;&#x9500;&#x6389;&#xFF08;unstage&#xFF09;</li>
+<li>13.<code>git remote add origin &#x8FDC;&#x7A0B;&#x4ED3;&#x5E93;&#x5730;&#x5740;</code> &#x5C06;&#x672C;&#x5730;&#x4ED3;&#x5E93;&#x4E0E;&#x8FDC;&#x7A0B;&#x4ED3;&#x5E93;&#x5173;&#x8054;</li>
+<li>14.<code>git push -u origin master</code> &#x4F1A;&#x628A;&#x672C;&#x5730;&#x7684; <code>master</code> &#x5206;&#x652F;&#x5185;&#x5BB9;&#x63A8;&#x9001;&#x7684;&#x8FDC;&#x7A0B;&#x65B0;&#x7684; <code>master</code> &#x5206;&#x652F;&#xFF0C;&#x8FD8;&#x4F1A;&#x628A;&#x672C;&#x5730;&#x7684; <code>master</code> &#x5206;&#x652F;&#x548C;&#x8FDC;&#x7A0B;&#x7684; <code>master</code> &#x5206;&#x652F;&#x5173;&#x8054;&#x8D77;&#x6765;.</li>
+<li>15.<code>git merge xxx</code> &#x5408;&#x5E76;&#x6307;&#x5B9A;&#x5206;&#x652F;&#x5230;&#x5F53;&#x524D;&#x5206;&#x652F;</li>
+<li>16.<code>git branch</code> &#x67E5;&#x770B;&#x5F53;&#x524D;&#x7684;&#x6240;&#x6709;&#x5206;&#x652F;&#x3002;</li>
+<li>17.<code>git branch xxx</code> &#x521B;&#x5EFA;&#x6307;&#x5B9A;&#x7684;&#x5206;&#x652F;&#x3002;</li>
+</ul>
 
                                 
                                 </section>
@@ -367,7 +388,7 @@ pod update &#x7528;&#x4E8E;&#x66F4;&#x65B0;&#x7279;&#x5B9A;&#x7684; pod(&#x6216;
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"第三方库","level":"1.13","depth":1,"next":{"title":"Swift","level":"1.14","depth":1,"path":"source/Swift.md","ref":"source/Swift.md","articles":[]},"previous":{"title":"数据结构与算法","level":"1.12","depth":1,"path":"source/Data.md","ref":"source/Data.md","articles":[]},"dir":"ltr"},"config":{"plugins":[],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Jayxiang","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"iOS开发相关面试题总结","language":"zh-hans","gitbook":"*","description":"select * from learn"},"file":{"path":"source/Library.md","mtime":"2021-06-10T08:59:23.684Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2021-06-10T09:00:06.367Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"第三方库","level":"1.13","depth":1,"next":{"title":"Swift","level":"1.14","depth":1,"path":"source/Swift.md","ref":"source/Swift.md","articles":[]},"previous":{"title":"数据结构与算法","level":"1.12","depth":1,"path":"source/Data.md","ref":"source/Data.md","articles":[]},"dir":"ltr"},"config":{"plugins":[],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Jayxiang","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"iOS开发相关面试题总结","language":"zh-hans","gitbook":"*","description":"select * from learn"},"file":{"path":"source/Library.md","mtime":"2021-06-10T09:39:56.017Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2021-06-10T09:40:39.950Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
