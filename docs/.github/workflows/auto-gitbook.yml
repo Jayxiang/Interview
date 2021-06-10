@@ -1,0 +1,43 @@
+name: auto-generate-gitbook
+on:                                 #在main分支上进行push时触发  
+  push:
+    branches:
+    - master
+
+jobs:
+  gitbook-to-docs:
+    runs-on: ubuntu-latest
+        
+    steps:                          
+    - name: checkout master
+      uses: actions/checkout@v2
+      with:
+        ref: master
+            
+    - name: install nodejs
+      uses: actions/setup-node@v1
+      
+    - name: configue gitbook
+      run: |
+        npm install -g gitbook-cli          
+        gitbook install
+                
+    - name: generate docs folder
+      run: |
+        gitbook build ./ ./docs
+                
+    - name: push docs to master
+      env:
+        TOKEN: ${{ secrets.TOKEN }}
+        REF: github.com/${{github.repository}}
+        MYEMAIL: 610469644@qq.com                  # ！！记得修改为自己邮箱
+        MYNAME: ${{github.repository_owner}}          
+      run: |
+        git config --global user.email "${MYEMAIL}"
+        git config --global user.name "${MYNAME}"
+        git add .
+        git commit -m "Docs ${{github.run_number}} of ${{github.workflow}} For Github Pages"
+        git push --force --quiet
+                
+                
+                
