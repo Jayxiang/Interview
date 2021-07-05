@@ -30,13 +30,14 @@ jobs:
       env:
         TOKEN: ${{ secrets.TOKEN }}
         REF: github.com/${{github.repository}}
-        MYEMAIL: 610469644@qq.com                  # ！！记得修改为自己邮箱
-        MYNAME: ${{github.repository_owner}}          
+        # ！！记得修改为自己邮箱
+        MYEMAIL: 610469644@qq.com
+        MYNAME: ${{github.repository_owner}}
       run: |
         git config --global user.email "${MYEMAIL}"
         git config --global user.name "${MYNAME}"
         git add .
-        git commit -m "Docs ${{github.run_number}} of ${{github.workflow}} For Github Pages"
+        git commit -m "Updated at $(TZ=':Asia/Shanghai' date '+'%Y-%m-%dT%H:%M:%S')"
         git push --force --quiet
                 
                 
