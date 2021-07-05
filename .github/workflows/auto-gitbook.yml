@@ -37,7 +37,7 @@ jobs:
         git config --global user.email "${MYEMAIL}"
         git config --global user.name "${MYNAME}"
         git add .
-        git commit -m "Updated at $(TZ=':Asia/Shanghai' date '+'%Y-%m-%dT%H:%M:%S')"
+        git commit -m "Updated at $(TZ=':Asia/Shanghai' date +'%Y-%m-%dT%H:%M:%S')"
         git push --force --quiet
                 
                 
