@@ -13,6 +13,7 @@
 - [CoreGraphics, CoreAnimation 区别](#coregraphics-coreanimation-区别)
 - [图像显示原理](#图像显示原理)
 - [UI 卡顿掉帧原因](#ui-卡顿掉帧原因)
+- [sizeThatFits、sizeToFit](#sizeThatFits、sizeToFit)
 
 #### 简述 APP 生命周期
 
@@ -61,7 +62,7 @@ rootViewControlle 以及 childViewController 的加载，view 和 subViews 的�
 8.viewDidDisappear: 视图已经消失
 这个面试点在实际开发中还是比较重要的, 毕竟写个视图都会有自己的生命周期, 从而更好的优化视图加载.
 ```
-
+![VC 生命周期]](./image/VC生命周期.png)
 #### loadView 什么作用
 ```
 loadView 在 View 为 nil 时调用，早于 ViewDidLoad，通常用于代码实现控件，
@@ -195,4 +196,14 @@ iOS 设备的硬件时钟会发出 Vsync(垂直同步信号)，然后 App 的 CP
 也就是说，一帧的显示是由 CPU 和 GPU 共同决定的。 
 一般来说，页面滑动流畅是 60fps，也就是 1s 有 60 帧更新，即每隔 16.7ms 就要产生一帧画面，
 而如果 CPU 和 GPU 加起来的处理时间超过了 16.7ms，就会造成掉帧甚至卡顿。
+```
+
+#### sizeThatFits、sizeToFit
+```
+一般在使用 UILabel 的时候会用到，使用这两个方法之前，必须要给 label 赋值，否则不会显示内容的。
+sizeToFit 会自动调用 sizeThatFits 方法；
+sizeToFit 不应该在子类中被重写，应该重写 sizeThatFits；
+sizeThatFits 传入的参数是 receiver 当前的 size，返回一个适合的 size；
+sizeToFit 可以被手动直接调用；
+sizeToFit 和 sizeThatFits 方法都没有递归，对 subviews 也不负责，只负责自己；
 ```

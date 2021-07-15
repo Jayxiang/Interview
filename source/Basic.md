@@ -45,15 +45,9 @@
 
 另外 OC 具有动态特性: 之所以叫做动态，是因为必须到运行时（runtime）才会做一些事情。
 （动态特性的三个方面：动态类型、动态绑定、动态加载）  
-（1）动态类型:
-    动态类型，（id 类型）在编译器编译的时候不能被识别出，在运行时（runtime），程序运行的时候才会根据语境来识别。  
-    静态类型，与动态类型相对。在编译的时候就能识别出来，明确的基本类型都属于静态类型。
-    （int、NSString 等）  
-（2）动态绑定：
-    （关键词 @selector）跳过编译，在运行时动态添加函数调用，
-      运行时才决定调用什么方法，传递什么参数。  
-（3）动态加载：
-    根据需求动态地加载资源。
+（1）动态类型：动态类型，（id 类型）在编译器编译的时候不能被识别出，在运行时（runtime），程序运行的时候才会根据语境来识别。静态类型，与动态类型相对。在编译的时候就能识别出来，明确的基本类型都属于静态类型。（int、NSString 等）  
+（2）动态绑定：（关键词 @selector）跳过编译，在运行时动态添加函数调用，运行时才决定调用什么方法，传递什么参数。  
+（3）动态加载：根据需求动态地加载资源。
 
 #### 类别的作用？继承、类别和扩展在实现中有何区别
 
@@ -127,7 +121,7 @@ atomic 是默认的属性, 表示对象的操作属于原子操作
   注意: atomic 的作用只是给 getter 和 setter 加了个锁，
   atomic 只能保证代码进入 getter 或者 setter 函数内部时是安全的，并不能保证整个对象是线程安全的。
   个人在实际开发中还真的没用过。
-nonatomic 表示访问器的访问不是原⼦操作, 不支持多线程访问安全, 但 是访问性能⾼。
+nonatomic 表示访问器的访问不是原⼦操作, 不支持多线程访问安全, 但是访问性能⾼。
 
 readwrite（默认）：readwrite 是默认值，表示该属性同时拥有 setter 和 getter。
 readonly： readonly 表示只有 getter 没有 setter。
@@ -167,7 +161,7 @@ class：类属性，类使用类方法。
 2. 如果我们使用是 strong , 那么这个属性就有可能指向一个可变对象, 如果这个可变对象在外部被修改了, 
 那么会影响该属性。
 3. 使用 copy 的目的是，防止把可变类型的对象赋值给不可变类型的对象时，
-可变类型对象的值发送变化会无意间篡改不可变类型对象原来的值。
+可变类型对象的值发生变化会无意间篡改不可变类型对象原来的值。
 ```
 
 #### 为什么 IBOutlet 属性是 weak 的
@@ -255,15 +249,16 @@ NSStringFromSelector(@selector*(setName:));
 #### 堆和栈的区别？和队列
 
 ```
-堆栈是两种数据结构, 堆，先进先出;  栈，先进后出
+堆栈是两种数据结构, 队列，先进先出;  栈，先进后出
 按管理和内存方式来看
-  对于栈来讲，是由系统编译器自动管理，不需要程序员手动管理
-  对于堆来讲，释放工作由程序员手动管理，不及时回收容易产生内存泄露
+  对于栈来讲，是由系统编译器自动管理，不需要程序员手动管理，由高地址往低地址扩展，是一块连续的内存的区域。
+  对应线程/进程是唯一的。优点是快速高效，缺点时有限制，数据不灵活。
+  对于堆来讲，释放工作由程序员手动管理，不及时回收容易产生内存泄露，低地址往高地址扩展
 按分配方式分
   堆是动态分配和回收内存的，没有静态分配的堆
   栈有两种分配方式：静态分配和动态分配
   静态分配是系统编译器完成的，比如局部变量的分配
-  动态分配是有 alloc 函数进行分配的，但是栈的动态分配和堆是不同  的，
+  动态分配是有 alloc 函数进行分配的，但是栈的动态分配和堆是不同的，
   它的动态分配也由系统编译器进行释放，不需要程序员手动管理。
 
 队列是只允许在一端进行插入操作、而在另一端进行删除操作的线性表。
@@ -271,6 +266,11 @@ NSStringFromSelector(@selector*(setName:));
 它是一种特殊的线性表，特殊之处在于它只允许在表的前端进行删除操作，而在表的后端进行插入操作，
 和栈一样，队列是一种操作受限制的线性表。
 队列是一种先进先出的数据结构，又称为先进先出的线性表，简称 FIFO（First In First Out）结构。
+
+注意区分数据结构中的堆：
+  堆是一种特殊的树形数据结构，每个结点都有一个值。通常我们所说的堆的数据结构，是指二叉堆。
+  堆的特点是根结点的值最小（或最大），且根结点的两个子树也是一个堆。
+  堆分为大顶堆,小顶堆,大顶堆就是树的根结点大于叶子结点.
 ```
 
 #### 沙盒机制的理解和使用
@@ -317,7 +317,7 @@ SystemData 目录: 最近查看目录才发现的，新加入的一个文件夹,
 然后根据代码调整.
 比较重要的函数: hitTest:withEvent: 方法和 pointInside 方法
 简单来说就是: 事件的传递是从上到下（父控件到子控件），
-事件的响应是从下到上（顺着响应者链条向上传递：子控件到父控件。
+事件的响应是从下到上（顺着响应者链条向上传递：子控件到父控件）。
 ```
 
 [可参考文章](https://www.jianshu.com/p/2e074db792ba)
@@ -381,7 +381,7 @@ mutableCopy 是深拷贝。
 
 ```
 1.NSCache 是线程安全的，NSMutableDictionary 线程不安全
-2. 当内存不足时 NSCache 会自动释放内存(所以从缓存中取数据的时候总要判断是否为空)
+2.当内存不足时 NSCache 会自动释放内存(所以从缓存中取数据的时候总要判断是否为空)
 3.NSCache 可以指定缓存的限额，当缓存超出限额自动释放内存
 4.NSCache 并不会 “拷贝” 键，而是会 “保留” 它。
 ```
@@ -402,6 +402,8 @@ KVO，即 key-value-observing, 利用一个 key 来找到某个属性并监听�
 并且会在这个类中重写基类被观察的属性的 setter 方法，
 而且系统将这个类的 isa 指针指向了派生类，从而实现了给监听的属性赋值时调用的是派生类的 setter 方法。
 重写的 setter 方法会在调用原 setter 方法前后，通知观察对象值得改变。
+KVO 的键值观察通知依赖于 NSObject 的两个方法: willChangeValueForKey: 和 
+didChangeValueForKey: ，在存取数值的前后分别调用 2 个方法：
 KVC/KVO 实现的根本是 Objective-C 的动态性和 runtime
 ```
 
@@ -513,21 +515,21 @@ isMemberOfClass: 确定一个对象是否是当前类的成员. 他的筛选条�
 #### 将一个函数在主线程执行的几种方法
 
 ```
-//GCD 方法，通过向主线程队列发送一个 block 块，使 block 里的方法可以在主线程中执行。
+// GCD 方法，通过向主线程队列发送一个 block 块，使 block 里的方法可以在主线程中执行。
 dispatch_async(dispatch_get_main_queue(), ^{
     // 需要执行的方法
 });
-//NSOperation 方法
+// NSOperation 方法
 NSOperationQueue *mainQueue = [NSOperationQueue mainQueue];
 NSBlockOperation *operation = [NSBlockOperation blockOperationWithBlock:^{
     // 需要执行的方法
 }];
 [mainQueue addOperation:operation];
-//NSThread 方法
+// NSThread 方法
 [self performSelector:@selector(method) onThread:[NSThread mainThread] withObject:nil waitUntilDone:YES modes:nil];
 [self performSelectorOnMainThread:@selector(method) withObject:nil waitUntilDone:YES];
 [[NSThread mainThread] performSelector:@selector(method) withObject:nil];
-//RunLoop 方法
+// RunLoop 方法
 [[NSRunLoop mainRunLoop] performSelector:@selector(method) withObject:nil];
 ```
 
@@ -591,12 +593,12 @@ isEqualToString: 字符串比较，只比较字符串本身的内容是否一致
 如果工程里有两个分类 A 和 B，两个分类中有一个同名的方法，哪个方法最终生效：
 取决于分类的编译顺序，最后编译的那个分类的同名方法最终生效，
 而之前的都会被覆盖掉(这里并不是真正的覆盖，因为其余方法仍然存在，只是访问不到，
-因为在动态添加类的方法的时候是倒序遍历 方法列表的，而最后编译的分类的方法会放在方法列表前面，
+因为在动态添加类的方法的时候是倒序遍历方法列表的，而最后编译的分类的方法会放在方法列表前面，
 访问的时候就会先被访问到，同理如果声明了一个和原类方法同名的方法，也会覆盖掉原类的方法)。
 
-如果声明了两个同名的分类会怎样： 会报错，所以第三方的分类，一般都带有命名前缀
+如果声明了两个同名的分类会怎样：会报错，所以第三方的分类，一般都带有命名前缀
 
-分类能添加成员变量吗： 不能。只能通过关联对象(objc_setAssociatedObject)来模拟实现成员变量，
+分类能添加成员变量吗：不能。只能通过关联对象(objc_setAssociatedObject)来模拟实现成员变量，
 但其实质是关联内容，所有对象的关联内容都放在同一个全局容器哈希表中:
 AssociationsHashMap,由 AssociationsManager 统一管理。
 
@@ -660,15 +662,17 @@ App的安装方式有四种：
 完整流程：
 1.Mac 电脑和苹果分别有一套公私钥，苹果的私钥在后台，
 公钥存放在每个 iOS 设备，Mac 的私钥存放在电脑，公钥后面要发送给苹果服务器。
-2.Mac 从钥匙串生成 CSR（就是或者包含公钥），上传至苹果服务器。
+2.Mac 从钥匙串生成 CSR（CertificateSigningRequest 就是本地公钥），上传至苹果服务器。
 3.苹果服务器使用私钥对 CSR 进行签名，得到包含 Mac 公钥以及其签名的数据，称为证书（Cer文件）。
 4.从苹果后台申请 Appid，配置好设备 ID 列表及 App 的其他权限信息，
 使用苹果的私钥进行签名生成描述文件（Provisioning Profile），
 和第 3 步的证书 Cer 一并下载到 Mac 安装，钥匙串会自动将 Cer 与之前生成 CSR 文件的私钥关联（公私钥对应）。
-5.使用 Mac 编译 App 后，使用 Mac 私钥进行签名，并把 描述文件打包进 App，文件名为 embedded.mobileprovision。
-6.安装 App 时，iOS 设备取得证书，使用内置的 Apple 私钥去验证 Cer 及 embedded.mobileprovision 文件。
+5.使用 Mac 编译 App 后，使用 Mac 私钥进行签名，并把描述文件打包进 App，文件名为 embedded.mobileprovision。
+6.安装 App 时，iOS 设备取得证书，使用内置的 Apple 公钥去验证 Cer 及 embedded.mobileprovision 文件。
 7.保证 Cer 及 embedded.mobileprovision 是经过苹果认证之后，从 Cer 中取出 Mac 公钥，
 验证 App 签名，及设备 id 列表、权限开关是否对应。
 ```
 
 ![签名机制](./image/签名机制.png)
+
+参考：[iOS App 签名的原理](http://blog.cnbang.net/tech/3386/)
