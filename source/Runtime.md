@@ -46,7 +46,7 @@ json 转 model
 但是实际上在 64 位 下，只使用了 8byte; 在 32 位下，只使用了 4byte
 一个 NSObject 实例对象成员变量所占的大小，实际上是 8 字节
 获取 Obj-C 指针所指向的内存的大小，实际上是 16 字节
-对象在分配内存空间时，会进行内存对齐，所以在 iOS 中，分配内存空间都是 16 字节 的倍数。
+对象在分配内存空间时，会进行内存对齐，所以在 iOS 中，分配内存空间都是 16 字节的倍数。
 ```
 #### 说一下对 isa 指针的理解
 ```
@@ -250,7 +250,7 @@ didChangeValueForKey: ，在存取数值的前后分别调用 2 个方法：
 #### 消息传递和转发机制
 ```
 消息机制原理：对象根据方法编号 SEL 去映射表查找对应的方法实现 IMP。
-一个对象的方法[obj foo]，编译器转为消息发送 objc_msgSend(obj,foo),Runtime 时执行的流程如下：
+一个对象的方法 [obj foo]，编译器转为消息发送 objc_msgSend(obj,foo), Runtime 时执行的流程如下：
 （1）通过 obj 的 isa 指针找到它的 class
 （2）先在缓存 objc_cache 中查找，再在 class 的 method list 找 foo
 （3）如果 class 中没找到 foo，继续往他的 superclass rootclass 中找

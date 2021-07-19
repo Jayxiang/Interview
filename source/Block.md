@@ -28,7 +28,7 @@ NSMallocBlock:
 将会增加引用计数，对全局 Block 进行 copy，因为是已经初始化的，所以什么也不做。
 另外，__block 变量在 copy 时，由于__forwarding 的存在，
 栈上的指针会指向堆上的__forwarding 变量，而堆上的__forwarding 指针指向其自身，
-所以，如果对 的修改，实际上是在修改堆上的__block 变量。 
+所以，如果对 __block 的修改，实际上是在修改堆上的__block 变量。 
 即__forwarding 指针存在的意义就是，无论在任何内存位置，都可以顺利地访问同一个__block 变量。 
 ```
 #### block 变量截获
@@ -71,8 +71,8 @@ block: 是一段特殊的代码块。使用起来有点像函数. 特点也是�
 #### block 循环引用
 ```
 由于 block 捕获的修饰的变量会去持有变量，那么如果用 __block 修饰 self，
-且 self 持有 block，并且 block 内部使用到 修饰的 self 时，就会造成多循环引用，
-即 self 持有 block，block 持 有__block 变量，而__block 变量持有 self，造成内存泄漏。
+且 self 持有 block，并且 block 内部使用到 __block 修饰的 self 时，就会造成多循环引用，
+即 self 持有 block，block 持有__block 变量，而 __block 变量持有 self，造成内存泄漏。
 
 如果要解决这种循环引用，可以主动断开__block 变量对 self 的持有，
 即在 block 内部使用完 self 后，将其置为 nil，但这种方式有个问题，

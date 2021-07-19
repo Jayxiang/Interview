@@ -62,7 +62,7 @@ rootViewControlle 以及 childViewController 的加载，view 和 subViews 的�
 8.viewDidDisappear: 视图已经消失
 这个面试点在实际开发中还是比较重要的, 毕竟写个视图都会有自己的生命周期, 从而更好的优化视图加载.
 ```
-![VC 生命周期]](./image/VC生命周期.png)
+![VC 生命周期](./image/VC生命周期.png)
 #### loadView 什么作用
 ```
 loadView 在 View 为 nil 时调用，早于 ViewDidLoad，通常用于代码实现控件，
@@ -114,7 +114,7 @@ drawRect 一般用来做绘图个人用的不多.
 2: 滚动 UIScrollView 时会触发
 3: 旋转 UIScreen 时会触发
 4: 当改变 view 的值时候会触发，前提是 frame 前后值发生了变化 
-5: 当改变 UIview 的大小时候会触发
+5: 当改变 UIView 的大小时候会触发
 ```
 #### frame 和 bounds 有什么不同？
 ```
@@ -129,7 +129,10 @@ UIView 本身完全是由 CoreAnimation 来实现. 真正的绘图部分, 是由
 最大的区别是 UIView 继承自 UIResponder, 能接收并响应事件, 负责显示内容的管理, 
 而 CALayer 继承自 NSObject, 不能响应事件, 负责显示内容的绘制. 
 UIView 是基于 CALayer 的高层封装。而 CALayer 不支持自动布局.
-layer 内部维护着三分 layer tree,分别是 presentLayer Tree(动画树),modeLayer Tree(模型树), Render Tree (渲染树),在做 iOS动画的时候，我们修改动画的属性，在动画的其实是 Layer 的 presentLayer的属性值,而最终展示在界面上的其实是提供 View的modelLayer，需要注意
+layer 内部维护着三分 layer tree,
+分别是 presentLayer Tree(动画树),modeLayer Tree(模型树), Render Tree (渲染树)，
+在做 iOS动画的时候，我们修改动画的属性，在动画的其实是 Layer 的 presentLayer 的属性值,
+而最终展示在界面上的其实是提供 View 的 modelLayer，需要注意
 另外 UIWindow 是一种特殊的 UIView, 通常在一个程序中只会有一个 UIWindow，
 但可以手动创建多个 UIWindow，同时加到程序里面。
 UIWindow 在程序中主要起到三个作用：
