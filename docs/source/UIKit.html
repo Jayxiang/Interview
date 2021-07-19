@@ -258,7 +258,20 @@
             
         </li>
     
-        <li class="chapter " data-level="1.14" data-path="Swift.html">
+        <li class="chapter " data-level="1.14" data-path="Code.html">
+            
+                <a href="Code.html">
+            
+                    
+                    代码相关
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15" data-path="Swift.html">
             
                 <a href="Swift.html">
             
@@ -374,7 +387,7 @@ rootViewControlle &#x4EE5;&#x53CA; childViewController &#x7684;&#x52A0;&#x8F7D;&
 7.viewWillDisappear: &#x89C6;&#x56FE;&#x5C06;&#x8981;&#x6D88;&#x5931;
 8.viewDidDisappear: &#x89C6;&#x56FE;&#x5DF2;&#x7ECF;&#x6D88;&#x5931;
 &#x8FD9;&#x4E2A;&#x9762;&#x8BD5;&#x70B9;&#x5728;&#x5B9E;&#x9645;&#x5F00;&#x53D1;&#x4E2D;&#x8FD8;&#x662F;&#x6BD4;&#x8F83;&#x91CD;&#x8981;&#x7684;, &#x6BD5;&#x7ADF;&#x5199;&#x4E2A;&#x89C6;&#x56FE;&#x90FD;&#x4F1A;&#x6709;&#x81EA;&#x5DF1;&#x7684;&#x751F;&#x547D;&#x5468;&#x671F;, &#x4ECE;&#x800C;&#x66F4;&#x597D;&#x7684;&#x4F18;&#x5316;&#x89C6;&#x56FE;&#x52A0;&#x8F7D;.
-</code></pre><p><img src="image/VC&#x751F;&#x547D;&#x5468;&#x671F;.png" alt="VC &#x751F;&#x547D;&#x5468;&#x671F;]"></p>
+</code></pre><p><img src="image/VC&#x751F;&#x547D;&#x5468;&#x671F;.png" alt="VC &#x751F;&#x547D;&#x5468;&#x671F;"></p>
 <h4 id="loadview-&#x4EC0;&#x4E48;&#x4F5C;&#x7528;">loadView &#x4EC0;&#x4E48;&#x4F5C;&#x7528;</h4>
 <pre><code>loadView &#x5728; View &#x4E3A; nil &#x65F6;&#x8C03;&#x7528;&#xFF0C;&#x65E9;&#x4E8E; ViewDidLoad&#xFF0C;&#x901A;&#x5E38;&#x7528;&#x4E8E;&#x4EE3;&#x7801;&#x5B9E;&#x73B0;&#x63A7;&#x4EF6;&#xFF0C;
 &#x6536;&#x5230;&#x5185;&#x5B58;&#x8B66;&#x544A;&#x65F6;&#x4F1A;&#x518D;&#x6B21;&#x8C03;&#x7528;&#x3002;
@@ -420,7 +433,7 @@ drawRect &#x4E00;&#x822C;&#x7528;&#x6765;&#x505A;&#x7ED8;&#x56FE;&#x4E2A;&#x4EBA
 2: &#x6EDA;&#x52A8; UIScrollView &#x65F6;&#x4F1A;&#x89E6;&#x53D1;
 3: &#x65CB;&#x8F6C; UIScreen &#x65F6;&#x4F1A;&#x89E6;&#x53D1;
 4: &#x5F53;&#x6539;&#x53D8; view &#x7684;&#x503C;&#x65F6;&#x5019;&#x4F1A;&#x89E6;&#x53D1;&#xFF0C;&#x524D;&#x63D0;&#x662F; frame &#x524D;&#x540E;&#x503C;&#x53D1;&#x751F;&#x4E86;&#x53D8;&#x5316; 
-5: &#x5F53;&#x6539;&#x53D8; UIview &#x7684;&#x5927;&#x5C0F;&#x65F6;&#x5019;&#x4F1A;&#x89E6;&#x53D1;
+5: &#x5F53;&#x6539;&#x53D8; UIView &#x7684;&#x5927;&#x5C0F;&#x65F6;&#x5019;&#x4F1A;&#x89E6;&#x53D1;
 </code></pre><h4 id="frame-&#x548C;-bounds-&#x6709;&#x4EC0;&#x4E48;&#x4E0D;&#x540C;&#xFF1F;">frame &#x548C; bounds &#x6709;&#x4EC0;&#x4E48;&#x4E0D;&#x540C;&#xFF1F;</h4>
 <pre><code>frame &#x6307;&#x7684;&#x662F;&#xFF1A;&#x8BE5; view &#x5728;&#x7236; view &#x5750;&#x6807;&#x7CFB;&#x7EDF;&#x4E2D;&#x7684;&#x4F4D;&#x7F6E;&#x548C;&#x5927;&#x5C0F;&#x3002;&#xFF08;&#x53C2;&#x7167;&#x70B9;&#x662F;&#x7236;&#x4EB2;&#x7684;&#x5750;&#x6807;&#x7CFB;&#x7EDF;&#xFF09;
 bounds &#x6307;&#x7684;&#x662F;&#xFF1A;&#x8BE5; view &#x5728;&#x672C;&#x8EAB;&#x5750;&#x6807;&#x7CFB;&#x7EDF;&#x4E2D; &#x7684;&#x4F4D;&#x7F6E;&#x548C;&#x5927;&#x5C0F;&#x3002;&#xFF08;&#x53C2;&#x7167;&#x70B9;&#x662F;&#x672C;&#x8EAB;&#x5750;&#x6807;&#x7CFB;&#x7EDF;&#xFF09;
@@ -431,7 +444,10 @@ UIView &#x672C;&#x8EAB;&#x5B8C;&#x5168;&#x662F;&#x7531; CoreAnimation &#x6765;&#
 &#x6700;&#x5927;&#x7684;&#x533A;&#x522B;&#x662F; UIView &#x7EE7;&#x627F;&#x81EA; UIResponder, &#x80FD;&#x63A5;&#x6536;&#x5E76;&#x54CD;&#x5E94;&#x4E8B;&#x4EF6;, &#x8D1F;&#x8D23;&#x663E;&#x793A;&#x5185;&#x5BB9;&#x7684;&#x7BA1;&#x7406;, 
 &#x800C; CALayer &#x7EE7;&#x627F;&#x81EA; NSObject, &#x4E0D;&#x80FD;&#x54CD;&#x5E94;&#x4E8B;&#x4EF6;, &#x8D1F;&#x8D23;&#x663E;&#x793A;&#x5185;&#x5BB9;&#x7684;&#x7ED8;&#x5236;. 
 UIView &#x662F;&#x57FA;&#x4E8E; CALayer &#x7684;&#x9AD8;&#x5C42;&#x5C01;&#x88C5;&#x3002;&#x800C; CALayer &#x4E0D;&#x652F;&#x6301;&#x81EA;&#x52A8;&#x5E03;&#x5C40;.
-layer &#x5185;&#x90E8;&#x7EF4;&#x62A4;&#x7740;&#x4E09;&#x5206; layer tree,&#x5206;&#x522B;&#x662F; presentLayer Tree(&#x52A8;&#x753B;&#x6811;),modeLayer Tree(&#x6A21;&#x578B;&#x6811;), Render Tree (&#x6E32;&#x67D3;&#x6811;),&#x5728;&#x505A; iOS&#x52A8;&#x753B;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x6211;&#x4EEC;&#x4FEE;&#x6539;&#x52A8;&#x753B;&#x7684;&#x5C5E;&#x6027;&#xFF0C;&#x5728;&#x52A8;&#x753B;&#x7684;&#x5176;&#x5B9E;&#x662F; Layer &#x7684; presentLayer&#x7684;&#x5C5E;&#x6027;&#x503C;,&#x800C;&#x6700;&#x7EC8;&#x5C55;&#x793A;&#x5728;&#x754C;&#x9762;&#x4E0A;&#x7684;&#x5176;&#x5B9E;&#x662F;&#x63D0;&#x4F9B; View&#x7684;modelLayer&#xFF0C;&#x9700;&#x8981;&#x6CE8;&#x610F;
+layer &#x5185;&#x90E8;&#x7EF4;&#x62A4;&#x7740;&#x4E09;&#x5206; layer tree,
+&#x5206;&#x522B;&#x662F; presentLayer Tree(&#x52A8;&#x753B;&#x6811;),modeLayer Tree(&#x6A21;&#x578B;&#x6811;), Render Tree (&#x6E32;&#x67D3;&#x6811;)&#xFF0C;
+&#x5728;&#x505A; iOS&#x52A8;&#x753B;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x6211;&#x4EEC;&#x4FEE;&#x6539;&#x52A8;&#x753B;&#x7684;&#x5C5E;&#x6027;&#xFF0C;&#x5728;&#x52A8;&#x753B;&#x7684;&#x5176;&#x5B9E;&#x662F; Layer &#x7684; presentLayer &#x7684;&#x5C5E;&#x6027;&#x503C;,
+&#x800C;&#x6700;&#x7EC8;&#x5C55;&#x793A;&#x5728;&#x754C;&#x9762;&#x4E0A;&#x7684;&#x5176;&#x5B9E;&#x662F;&#x63D0;&#x4F9B; View &#x7684; modelLayer&#xFF0C;&#x9700;&#x8981;&#x6CE8;&#x610F;
 &#x53E6;&#x5916; UIWindow &#x662F;&#x4E00;&#x79CD;&#x7279;&#x6B8A;&#x7684; UIView, &#x901A;&#x5E38;&#x5728;&#x4E00;&#x4E2A;&#x7A0B;&#x5E8F;&#x4E2D;&#x53EA;&#x4F1A;&#x6709;&#x4E00;&#x4E2A; UIWindow&#xFF0C;
 &#x4F46;&#x53EF;&#x4EE5;&#x624B;&#x52A8;&#x521B;&#x5EFA;&#x591A;&#x4E2A; UIWindow&#xFF0C;&#x540C;&#x65F6;&#x52A0;&#x5230;&#x7A0B;&#x5E8F;&#x91CC;&#x9762;&#x3002;
 UIWindow &#x5728;&#x7A0B;&#x5E8F;&#x4E2D;&#x4E3B;&#x8981;&#x8D77;&#x5230;&#x4E09;&#x4E2A;&#x4F5C;&#x7528;&#xFF1A;
@@ -538,7 +554,7 @@ sizeToFit &#x548C; sizeThatFits &#x65B9;&#x6CD5;&#x90FD;&#x6CA1;&#x6709;&#x9012;
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"UI相关","level":"1.3","depth":1,"next":{"title":"Block相关","level":"1.4","depth":1,"path":"source/Block.md","ref":"source/Block.md","articles":[]},"previous":{"title":"基本概念","level":"1.2","depth":1,"path":"source/Basic.md","ref":"source/Basic.md","articles":[]},"dir":"ltr"},"config":{"plugins":[],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Jayxiang","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"iOS开发相关面试题总结","language":"zh-hans","gitbook":"*","description":"select * from learn"},"file":{"path":"source/UIKit.md","mtime":"2021-07-15T12:16:59.010Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2021-07-15T12:17:57.885Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"UI相关","level":"1.3","depth":1,"next":{"title":"Block相关","level":"1.4","depth":1,"path":"source/Block.md","ref":"source/Block.md","articles":[]},"previous":{"title":"基本概念","level":"1.2","depth":1,"path":"source/Basic.md","ref":"source/Basic.md","articles":[]},"dir":"ltr"},"config":{"plugins":[],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Jayxiang","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"iOS开发相关面试题总结","language":"zh-hans","gitbook":"*","description":"select * from learn"},"file":{"path":"source/UIKit.md","mtime":"2021-07-19T09:48:51.089Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2021-07-19T09:49:30.368Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
