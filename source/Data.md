@@ -52,7 +52,6 @@ struct Node *reverseLiset2(struct Node *head) {
     struct Node *newHead = reverseLiset2(head->next);
     head->next->next = head;
     head->next = NULL;
-    printList(head);
     return newHead;
 }
 ```
@@ -60,7 +59,7 @@ struct Node *reverseLiset2(struct Node *head) {
 ```
 树形结构下，两个节点以内都称之为二叉树，不存在大于 2 的节点，分为左子树右子树有顺序不能颠倒
 二叉树有五种表现形式：
-1.空的树(没有节点)可以理解为什么都没 像空气一样
+1.空的树(没有节点)可以理解为什么都没
 2.只有根节点。
 3.只有左子树
 4.只有右子树

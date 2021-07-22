@@ -4,6 +4,7 @@
 - [造成 tableView 卡顿的原因有哪些？](#造成-tableView-卡顿的原因有哪些？)
 - [优化 tableView 的方式](#优化-tableView-的方式)
 - [什么是离屏渲染？什么情况下会触发？该如何应对？](#什么是离屏渲染？什么情况下会触发？该如何应对？)
+- [如何检测离屏渲染](#如何检测离屏渲染)
 - [如何检查内存泄露](#如何检查内存泄露)
 - [耗电网络优化](#耗电网络优化)
 - [APP 启动时间应从哪些方面优化？](#app-启动时间应从哪些方面优化？)
@@ -72,6 +73,9 @@ GPU 优化：
 在 OpenGL 中，GPU 有 2 种渲染方式
 On-Screen Rendering：当前屏幕渲染，在当前用于显示的屏幕缓冲区进行渲染操作
 Off-Screen Rendering：离屏渲染，在当前屏幕缓冲区以外新开辟一个缓冲区进行渲染操作
+为什么需要离屏渲染：
+目的在于当使用圆角，阴影，遮罩的时候，图层属性的混合体被指定为在未预合成之前不能直接在屏幕中绘制，
+即当主屏的还没有绘制好的时候，所以就需要屏幕外渲染，最后当主屏已经绘制完成的时候，再将离屏的内容转移至主屏上。
 离屏渲染消耗性能的原因:
 需要创建新的缓冲区
 离屏渲染的整个过程，需要多次切换上下文环境，先是从当前屏幕（On-Screen）切换到离屏（Off-Screen）；
@@ -83,9 +87,14 @@ Off-Screen Rendering：离屏渲染，在当前屏幕缓冲区以外新开辟一
 阴影，layer.shadowXXX，如果设置了 layer.shadowPath 就不会产生离屏渲染
 圆角离屏渲染解决：考虑通过 CoreGraphics 绘制裁剪圆角，或者叫美工提供圆角图片
 ```
+#### 如何检测离屏渲染
+```
+1、模拟器 debug 选中 Color Offscreen - Renderd 离屏渲染的图层高亮成黄, 可能存在性能问题 
+2、真机 Instrument 选中 Core Animation 勾选 Color Offscreen-Rendered Yellow
+```
 #### 如何检查内存泄露
 ```
-系统工具：xcode 的 Instruments 的 Time profiler (程序耗时检测), 
+系统工具：Xcode 的 Instruments 的 Time profiler (程序耗时检测), 
 Core Animation(检测刷新帧率)，Leaks（内存泄漏检测）
 第三方库：MLeaksFinder
 ```

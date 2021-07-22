@@ -11,6 +11,8 @@
 - [事件响应的过程？](#事件响应的过程？)
 - [手势识别的过程？](#手势识别的过程？)
 - [解释一下 NSTimer](#解释一下-nstimer)
+- [利用 runloop 解释一下页面的渲染的过程](#利用-runloop-解释一下页面的渲染的过程)
+- [什么是异步绘制](#什么是异步绘制)
 
 #### 什么是 RunLoop
 ```
@@ -82,7 +84,7 @@ kCFRunLoopCommonModes：伪模式，不是一种真正的运行模式，
 ```
 #### RunLoop 的实现机制和内部逻辑
 ```
-对于 而言最核心的事情就是保证线程在没有消息的时候休眠，在有消息时唤醒，以提高程序性能。
+对于 RunLoop 而言最核心的事情就是保证线程在没有消息的时候休眠，在有消息时唤醒，以提高程序性能。
 这个机制是依靠系统内核来完成的(苹果操作系统核心组件 Darwin 中的 Mach)。
 RunLoop 通过 mach_msg()函数接收、发送消息。
 它的本质是调用函数 mach_msg_trap()，相当于是一个系统调用，会触发内核状态切换。
@@ -195,8 +197,33 @@ Tolerance(宽容度)，标示了当时间点到后，容许有多少最大误差
 CADisplayLink 是一个和屏幕刷新率一致的定时器(但实际实现原理更复杂，和 NSTimer 并不一样，
 其内部实际是操作了一个 Source)。如果在两次屏幕刷新之间执行了一个长任务，
 那其中就会有一帧被跳过去(和 NSTimer 相似)，造成界面卡顿的感觉。
-在快速滑动 TableView 时，即使一帧的卡顿也会 让用户有所察觉。 
+在快速滑动 TableView 时，即使一帧的卡顿也会让用户有所察觉。 
 开源的 AsyncDisplayLink 就是为了解决界面卡顿的问题，其内部也用到了 RunLoop
+```
+#### 利用 runloop 解释一下页面的渲染的过程
+```
+当我们调用 [UIView setNeedsDisplay] 时，这时会调用当前 View.layer 的 
+[view.layer setNeedsDisplay]方法。
+这等于给当前的 layer 打上了一个脏标记，而此时并没有直接进行绘制工作。
+而是会到当前的 Runloop 即将休眠，也就是 beforeWaiting 时才会进行绘制工作。
+紧接着会调用 [CALayer display]，进入到真正绘制的工作。
+CALayer 层会判断自己的 delegate 有没有实现异步绘制的代理方法 displayer:，
+这个代理方法是异步绘制的入口，如果没有实现这个方法，那么会继续进行系统绘制的流程，然后绘制结束。
+CALayer 内部会创建一个 Backing Store，用来获取图形上下文。接下来会判断这个 layer 是否有 delegate。
+如果有的话，会调用 [layer.delegate drawLayer:inContext:]，
+并且会返回给我们 [UIView DrawRect:] 的回调，让我们在系统绘制的基础之上再做一些事情。
+如果没有 delegate，那么会调用 [CALayer drawInContext:]。 
+以上两个分支，最终 CALayer 都会将位图提交到 Backing Store，最后提交给 GPU。 
+至此绘制的过程结束
+```
+#### 什么是异步绘制
+```
+异步绘制，就是可以在子线程把需要绘制的图形，提前在子线程处理好。
+将准备好的图像数据直接返给主线程使用，这样可以降低主线程的压力。
+异步绘制的过程:
+要通过系统的 [view.delegate displayLayer:] 这个入口来实现异步绘制。
+ -代理负责生成对应的 Bitmap
+ -设置该 Bitmap 为 layer.contents 属性的值。
 ```
 
 经典文章：[深入理解 RunLoop](https://blog.ibireme.com/2015/05/18/runloop/)
