@@ -70,15 +70,18 @@ swift 中结构体比较强大，类的大部分功能结构体基本都有。�
 6.创建相同属性的结构体比类更加节省内存，速度也更快，但不适合大量的运算操作
 7.类需要自己定义构造器，而结构体不需要(结构体默认生成的构造器必须包括所有成员参数，
 只有当所有参数都为可选型时，可直接不用传入参数直接简单构造) 
-另外：class 即使没有继承 NSObject 也会生成 ro_data_t，里面包含了 ivars 属性信息。如果属性/方法申明为 @objc 还会生成对应的方法列表。
-struct 无法代替 class的一些场景：1.需要使用继承调用 super。2.需要使用引用类型。3.需要使用deinit。4.需要在运行时动态转换一个实例的类型。
-不是所有struct都会保存在栈上，部分数据大的struct也会保存在堆上。
-当 class 只包含静态方法/属性时，考虑使用 enum 代替 class，因为 class 会生成更多的二进制代码。为什么用 enum 而不是 struct，因为 struct 会额外生成 init 方法。
+另外：class 即使没有继承 NSObject 也会生成 ro_data_t，里面包含了 ivars 属性信息。
+如果属性/方法申明为 @objc 还会生成对应的方法列表。
+struct 无法代替 class 的一些场景：1.需要使用继承调用 super。2.需要使用引用类型。
+3.需要使用 deinit。4.需要在运行时动态转换一个实例的类型。
+不是所有 struct 都会保存在栈上，部分数据大的 struct 也会保存在堆上。
+当 class 只包含静态方法/属性时，考虑使用 enum 代替 class，因为 class 会生成更多的二进制代码。
+为什么用 enum 而不是 struct，因为 struct 会额外生成 init 方法。
 ```
 #### Swift 和 OC 如何相互调用
 ```
 Swift 调用 OC 代码:
-需要创建一个 Target-BriBridging-Header.h 的桥文件,在乔文件导入需要调用的OC代码头文件即可
+需要创建一个 Target-BriBridging-Header.h 的桥文件, 在桥接文件导入需要调用的OC代码头文件即可
 OC 调用 Swift 代码:
 直接导入 Target-Swift.h 文件即可, Swift 如果需要被 OC 调用,需要使用 @objc 对方法或者属性进行修饰
 默认系统会提示创建
@@ -86,8 +89,11 @@ OC 调用 Swift 代码:
 #### 访问控制关键字 open, public, internal, fileprivate, private 的区别
 ```
 Swift 中有个5个级别的访问控制权限,从高到低依次是 open, public, internal, fileprivate, private
-它们遵循的基本规则: 高级别的变量不允许被定义为低级别变量的成员变量,
-比如一个 private 的 class 内部允许包含 public 的 String 值,反之低级变量可以定义在高级别变量中;
+它们遵循的基本规则: 实体不能定义在具有更低访问级别（更严格）的实体中。
+一个 public 的变量，其类型的访问级别不能是 internal，fileprivate 或是 private。
+因为无法保证变量的类型在使用变量的地方也具有访问权限。
+函数的访问级别不能高于它的参数类型和返回类型的访问级别。
+因为这样就会出现函数可以在任何地方被访问，但是它的参数类型和返回类型却不可以的情况。
 open: 具备最高访问权限,其修饰的类可以和方法,可以在任意模块中被访问和重写.
 public: 权限仅次于 open，和 open 唯一的区别是: 不允许其他模块进行继承、重写
 internal: 默认权限, 只允许在当前的模块中访问，可以继承和重写,不允许在其他模块中访问
@@ -96,14 +102,15 @@ private: 最低级别访问权限,只允许在定义的作用域内访问
 ```
 #### 关键字 Strong Weak Unowned 区别
 ```
-Swift 的内存管理机制同OC一致,都是ARC管理机制; 
-Strong,和 Weak 用法同 OC 一样
+Swift 的内存管理机制同 OC 一致,都是 ARC 管理机制; 
+Strong, 和 Weak 用法同 OC 一样
 Unowned(无主引用), 不会产生强引用，实例销毁后仍然存储着实例的内存地址
 (类似于 OC 中的 unsafe_unretained), 试图在实例销毁后访问无主引用，会产生运行时错误(野指针)
 ```
 #### 如何理解 copy-on-write
 ```
-值类型(比如:struct),在复制时,复制对象与原对象实际上在内存中指向同一个对象,当且仅当修改复制的对象时,才会在内存中创建一个新的对象
+值类型(比如: struct),在复制时,复制对象与原对象实际上在内存中指向同一个对象,
+当且仅当修改复制的对象时,才会在内存中创建一个新的对象
 为了提升性能，Struct, String、Array、Dictionary、Set 采取了 Copy On Write 的技术
 比如仅当有“写”操作时，才会真正执行拷贝操作
 对于标准库值类型的赋值操作，Swift 能确保最佳性能，所有没必要为了保证最佳性能来避免赋值
@@ -115,7 +122,6 @@ Unowned(无主引用), 不会产生强引用，实例销毁后仍然存储着实
 var title: String {
     willSet {
         print("willSet", newValue)
-
     }
     didSet {
         print("didSet", oldValue, title)
@@ -123,7 +129,7 @@ var title: String {
 }
 willSet 会传递新值，默认叫 newValue
 didSet 会传递旧值，默认叫 oldValue
-在初始化器中设置属性值不会触发 willSe 和 didSet
+在初始化器中设置属性值不会触发 willSet 和 didSet
 ```
 #### 如何将 Swift 中的协议 protocol 中的部分方法设计为可选 optional
 ```
@@ -152,7 +158,8 @@ required:是强制子类重写父类中所修饰的初始化方法
 #### 比较 Swift 和 OC 中的 protocol 有什么不同
 ```
 相同点: 两者都可以被用作代理;
-不同点: Swift 中的 protocol 还可以对接口进行抽象,可以实现面向协议,从而大大提高编程效率,Swift 中的 protocol 可以用于值类型,结构体,枚举;
+不同点: Swift 中的 protocol 还可以对接口进行抽象,可以实现面向协议,从而大大提高编程效率,
+Swift 中的 protocol 可以用于结构体, 枚举;
 ```
 #### 什么是函数重载 Swift 支不支持函数重载
 ```
@@ -258,11 +265,11 @@ struct Circle {
 #### 什么是延迟存储属性
 ```
 使用 lazy 可以定义一个延迟存储属性(Lazy Stored Property)，在第一次用到属性的时候
-才会进行初始化(类似OC中的懒加载)
-lazy 属性必须是var，不能是let:
+才会进行初始化(类似 OC 中的懒加载)
+lazy 属性必须是 var，不能是 let:
 let 必须在实例对象的初始化方法完成之前就拥有值
-如果多条线程同时第一次访问lazy属性:
-无法保证属性只被初始化1次
+如果多条线程同时第一次访问 lazy 属性:
+无法保证属性只被初始化 1 次
 class Test {
     // 延迟存储属性
     lazy var image: Image = {
