@@ -351,12 +351,14 @@
 <li><a href="#&#x7C7B;&#x65B9;&#x6CD5;&#x548C;&#x5B9E;&#x4F8B;&#x65B9;&#x6CD5;&#x6709;&#x4EC0;&#x4E48;&#x533A;&#x522B;">&#x7C7B;&#x65B9;&#x6CD5;&#x548C;&#x5B9E;&#x4F8B;&#x65B9;&#x6CD5;&#x6709;&#x4EC0;&#x4E48;&#x533A;&#x522B;</a></li>
 <li><a href="#&#x6D45;&#x62F7;&#x8D1D;&#x548C;&#x6DF1;&#x62F7;&#x8D1D;&#x7684;&#x533A;&#x522B;">&#x6D45;&#x62F7;&#x8D1D;&#x548C;&#x6DF1;&#x62F7;&#x8D1D;&#x7684;&#x533A;&#x522B;</a></li>
 <li><a href="#nscache-nsdictionary-&#x533A;&#x522B;">NSCache NSDictionary &#x533A;&#x522B;</a></li>
+<li><a href="#nsdictionary-&#x5982;&#x4F55;&#x5B9E;&#x73B0;">NSDictionary &#x5982;&#x4F55;&#x5B9E;&#x73B0;</a></li>
 <li><a href="#&#x4EC0;&#x4E48;&#x662F;-kvc-&#x548C;-kvo">&#x4EC0;&#x4E48;&#x662F; KVC &#x548C; KVO&#xFF1F;</a></li>
 <li><a href="#&#x5F00;&#x53D1;&#x4E2D;&#xFF0C;&#x4FDD;&#x5B58;&#x6570;&#x636E;&#x6709;&#x54EA;&#x51E0;&#x79CD;&#x65B9;&#x5F0F;&#xFF1F;">&#x5F00;&#x53D1;&#x4E2D;&#xFF0C;&#x4FDD;&#x5B58;&#x6570;&#x636E;&#x6709;&#x54EA;&#x51E0;&#x79CD;&#x65B9;&#x5F0F;&#xFF1F;</a></li>
 <li><a href="#&#x5173;&#x952E;&#x5B57;-conststaticextern&#x3001;uikitextern-&#x533A;&#x522B;&#x548C;&#x7528;&#x6CD5;&#x4EE5;&#x53CA;&#x4E0E;&#x5B8F;&#x7684;&#x533A;&#x522B;">&#x5173;&#x952E;&#x5B57; const/static/extern&#x3001;UIKIT_EXTERN &#x533A;&#x522B;&#x548C;&#x7528;&#x6CD5;&#x4EE5;&#x53CA;&#x4E0E;&#x5B8F;&#x7684;&#x533A;&#x522B;</a></li>
 <li><a href="#&#x5173;&#x952E;&#x5B57;&#x7EC4;&#x5408;-static-inline">&#x5173;&#x952E;&#x5B57;&#x7EC4;&#x5408; static inline</a></li>
 <li><a href="#ismemberofclass&#x3001;iskindofclass-&#x548C;-issubclassofclass-&#x8054;&#x7CFB;&#x4E0E;&#x533A;&#x522B;">isMemberOfClass&#x3001;isKindOfClass &#x548C; isSubclassOfClass &#x8054;&#x7CFB;&#x4E0E;&#x533A;&#x522B;</a></li>
 <li><a href="#&#x5C06;&#x4E00;&#x4E2A;&#x51FD;&#x6570;&#x5728;&#x4E3B;&#x7EBF;&#x7A0B;&#x6267;&#x884C;&#x7684;&#x51E0;&#x79CD;&#x65B9;&#x6CD5;">&#x5C06;&#x4E00;&#x4E2A;&#x51FD;&#x6570;&#x5728;&#x4E3B;&#x7EBF;&#x7A0B;&#x6267;&#x884C;&#x7684;&#x51E0;&#x79CD;&#x65B9;&#x6CD5;</a></li>
+<li><a href="#&#x8C03;&#x7528;&#x65B9;&#x6CD5;&#x7684;&#x4E09;&#x79CD;&#x65B9;&#x5F0F;">&#x8C03;&#x7528;&#x65B9;&#x6CD5;&#x7684;&#x4E09;&#x79CD;&#x65B9;&#x5F0F;</a></li>
 <li><a href="#initialize-&#x4E0E;-load-&#x6709;&#x4EC0;&#x4E48;&#x7528;&#x5904;&#x533A;&#x522B;">+initialize &#x4E0E; +load &#x6709;&#x4EC0;&#x4E48;&#x7528;&#x5904;&#x533A;&#x522B;</a></li>
 <li><a href="#isequalisequaltostring-&#x548C;--&#x533A;&#x522B;">isEqual,isEqualToString &#x548C; == &#x533A;&#x522B;</a></li>
 <li><a href="#&#x5206;&#x7C7B;&#x7684;&#x7406;&#x89E3;">&#x5206;&#x7C7B;&#x7684;&#x7406;&#x89E3;</a></li>
@@ -675,6 +677,20 @@ mutableCopy &#x662F;&#x6DF1;&#x62F7;&#x8D1D;&#x3002;
 2.&#x5F53;&#x5185;&#x5B58;&#x4E0D;&#x8DB3;&#x65F6; NSCache &#x4F1A;&#x81EA;&#x52A8;&#x91CA;&#x653E;&#x5185;&#x5B58;(&#x6240;&#x4EE5;&#x4ECE;&#x7F13;&#x5B58;&#x4E2D;&#x53D6;&#x6570;&#x636E;&#x7684;&#x65F6;&#x5019;&#x603B;&#x8981;&#x5224;&#x65AD;&#x662F;&#x5426;&#x4E3A;&#x7A7A;)
 3.NSCache &#x53EF;&#x4EE5;&#x6307;&#x5B9A;&#x7F13;&#x5B58;&#x7684;&#x9650;&#x989D;&#xFF0C;&#x5F53;&#x7F13;&#x5B58;&#x8D85;&#x51FA;&#x9650;&#x989D;&#x81EA;&#x52A8;&#x91CA;&#x653E;&#x5185;&#x5B58;
 4.NSCache &#x5E76;&#x4E0D;&#x4F1A; &#x201C;&#x62F7;&#x8D1D;&#x201D; &#x952E;&#xFF0C;&#x800C;&#x662F;&#x4F1A; &#x201C;&#x4FDD;&#x7559;&#x201D; &#x5B83;&#x3002;
+</code></pre><h4 id="nsdictionary-&#x5982;&#x4F55;&#x5B9E;&#x73B0;">NSDictionary &#x5982;&#x4F55;&#x5B9E;&#x73B0;</h4>
+<pre><code>NSDictionary &#x662F;&#x4F7F;&#x7528; hash &#x8868;&#x6765;&#x5B9E;&#x73B0; key &#x548C; value &#x4E4B;&#x95F4;&#x7684;&#x6620;&#x5C04;&#x548C;&#x5B58;&#x50A8;&#x7684;&#xFF0C; hash&#x51FD;&#x6570;&#x8BBE;&#x8BA1;&#x7684;&#x597D;&#x574F;&#x5F71;&#x54CD;&#x7740;&#x6570;&#x636E;&#x7684;&#x67E5;&#x627E;&#x8BBF;&#x95EE;&#x6548;&#x7387;&#x3002;&#x6570;&#x636E;&#x5728;hash&#x8868;&#x4E2D;&#x5206;&#x5E03;&#x7684;&#x8D8A;&#x5747;&#x5300;&#xFF0C;&#x5176;&#x8BBF;&#x95EE;&#x6548;&#x7387;&#x8D8A;&#x9AD8;&#x3002;&#x5185;&#x90E8;&#x4F7F;&#x7528; NSMapTable &#x5B9E;&#x73B0;&#xFF0C;NSMapTable &#x540C;&#x6837;&#x662F;&#x4E00;&#x4E2A; key&#xFF0D;value &#x7684;&#x5BB9;&#x5668;&#xFF0C;&#x800C; NSMapTable &#x662F;&#x4E00;&#x4E2A;&#x54C8;&#x5E0C;&#xFF0B;&#x94FE;&#x8868;&#x7684;&#x6570;&#x636E;&#x7ED3;&#x6784;&#xFF0C;&#x9047;&#x5230;&#x54C8;&#x5E0C;&#x51B2;&#x7A81;&#x7684;value&#xFF0C;&#x5C31;&#x662F;&#x901A;&#x8FC7;&#x94FE;&#x8868;&#x8FDE;&#x63A5;&#x8D77;&#x6765;&#x3002;
+@interface NSMapTable : NSObject {
+   NSMapTableKeyCallBacks   *keyCallBacks;
+   NSMapTableValueCallBacks *valueCallBacks;
+   NSUInteger             count;
+   NSUInteger             nBuckets;
+   struct _NSMapNode  **buckets;
+}
+NSDictionary KVC setValue &#x548C; setObject&#x7684;&#x533A;&#x522B;
+(1) setValue: ForKey: &#x7684; value &#x662F;&#x53EF;&#x4EE5;&#x4E3A; nil &#x7684;&#xFF08;&#x4F46;&#x662F;&#x5F53;value&#x4E3A;nil&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x4F1A;&#x81EA;&#x52A8;&#x8C03;&#x7528;removeObject&#xFF1A;forKey &#x65B9;&#x6CD5;&#xFF09;&#xFF1B;
+setObject: ForKey: &#x7684; value &#x5219;&#x4E0D;&#x53EF;&#x4EE5;&#x4E3A; nil&#x3002;
+(2) setValue: ForKey: &#x7684; key &#x5FC5;&#x987B;&#x662F;&#x4E0D;&#x4E3A; nil &#x7684;&#x5B57;&#x7B26;&#x4E32;&#x7C7B;&#x578B;&#xFF1B;
+setObject: ForKey: &#x7684; key &#x53EF;&#x4EE5;&#x662F;&#x4E0D;&#x4E3A; nil &#x7684;&#x6240;&#x6709;&#x7EE7;&#x627F; NSCopying &#x7684;&#x7C7B;&#x578B;&#x3002;
 </code></pre><h4 id="&#x4EC0;&#x4E48;&#x662F;-kvc-&#x548C;-kvo">&#x4EC0;&#x4E48;&#x662F; KVC &#x548C; KVO</h4>
 <pre><code>KVC &#x4E5F;&#x5C31;&#x662F; key-value-coding , &#x5373;&#x952E;&#x503C;&#x7F16;&#x7801;&#xFF0C;&#x901A;&#x5E38;&#x662F;&#x7528;&#x6765;&#x7ED9;&#x67D0;&#x4E00;&#x4E2A;&#x5BF9;&#x8C61;&#x7684;&#x5C5E;&#x6027;&#x8FDB;&#x884C;&#x8D4B;&#x503C;.
 &#x5F00;&#x53D1;&#x4E2D;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x5BF9;&#x79C1;&#x6709;&#x5C5E;&#x6027;&#x8FDB;&#x884C;&#x8D4B;&#x503C;&#x7684;, &#x4FEE;&#x6539;&#x4E00;&#x4E9B;&#x63A7;&#x4EF6;&#x7684;&#x5185;&#x90E8;&#x5C5E;&#x6027;, &#x8FD8;&#x53EF;&#x4EE5;&#x7528;&#x4E8E;&#x5B57;&#x5178;&#x8F6C;&#x6A21;&#x578B;.
@@ -798,23 +814,26 @@ NSBlockOperation *operation = [NSBlockOperation blockOperationWithBlock:^{
 [[NSThread mainThread] performSelector:@selector(method) withObject:nil];
 // RunLoop &#x65B9;&#x6CD5;
 [[NSRunLoop mainRunLoop] performSelector:@selector(method) withObject:nil];
+</code></pre><h4 id="&#x8C03;&#x7528;&#x65B9;&#x6CD5;&#x7684;&#x4E09;&#x79CD;&#x65B9;&#x5F0F;">&#x8C03;&#x7528;&#x65B9;&#x6CD5;&#x7684;&#x4E09;&#x79CD;&#x65B9;&#x5F0F;</h4>
+<pre><code>1. &#x76F4;&#x63A5;&#x8C03;&#x7528; [self xxx]
+2. performSelector:withObject:
+3. &#x4F7F;&#x7528; NSMethodSignature &amp; NSInvocation
 </code></pre><h4 id="initialize-&#x4E0E;-load-&#x6709;&#x4EC0;&#x4E48;&#x7528;&#x5904;&#x533A;&#x522B;">+initialize &#x4E0E; +load &#x6709;&#x4EC0;&#x4E48;&#x7528;&#x5904;&#x533A;&#x522B;</h4>
 <pre><code>&#x901A;&#x5E38;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;&#x6211;&#x4EEC;&#x5728;&#x5F00;&#x53D1;&#x8FC7;&#x7A0B;&#x4E2D;&#x53EF;&#x80FD;&#x4E0D;&#x5FC5;&#x5173;&#x6CE8;&#x8FD9;&#x4E24;&#x4E2A;&#x65B9;&#x6CD5;&#x3002;&#x5982;&#x679C;&#x6709;&#x9700;&#x8981;&#x5B9A;&#x5236;&#xFF0C;
 &#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x5728;&#x81EA;&#x5B9A;&#x4E49;&#x7684; NSObject &#x5B50;&#x7C7B;&#x4E2D;&#x7ED9;&#x51FA;&#x8FD9;&#x4E24;&#x4E2A;&#x65B9;&#x6CD5;&#x7684;&#x5B9E;&#x73B0;&#xFF0C;
 &#x8FD9;&#x6837;&#x5728;&#x7C7B;&#x7684;&#x52A0;&#x8F7D;&#x548C;&#x521D;&#x59CB;&#x5316;&#x8FC7;&#x7A0B;&#x4E2D;&#xFF0C;&#x81EA;&#x5B9A;&#x4E49;&#x7684;&#x65B9;&#x6CD5;&#x53EF;&#x4EE5;&#x5F97;&#x5230;&#x8C03;&#x7528;&#x3002;
 +load: &#x901A;&#x8FC7;&#x51FD;&#x6570;&#x5730;&#x5740;&#x76F4;&#x63A5;&#x8C03;&#x7528;&#xFF0C;&#x662F;&#x5728; runtime &#x52A0;&#x8F7D;&#x7C7B;&#x5206;&#x7C7B;&#x7684;&#x65F6;&#x5019;&#x8C03;&#x7528;&#xFF0C;&#x53EA;&#x4F1A;&#x8C03;&#x7528;&#x4E00;&#x6B21;
 1. &#x5F53;&#x7236;&#x7C7B;&#x548C;&#x5B50;&#x7C7B;&#x90FD;&#x5B9E;&#x73B0; load &#x51FD;&#x6570;&#x65F6;, &#x7236;&#x7C7B;&#x7684; load &#x65B9;&#x6CD5;&#x6267;&#x884C;&#x987A;&#x5E8F;&#x8981;&#x4F18;&#x5148;&#x4E8E;&#x5B50;&#x7C7B;
-2. &#x5F53;&#x5B50;&#x7C7B;&#x672A;&#x5B9E;&#x73B0; load &#x65B9;&#x6CD5;&#x65F6;, &#x4E0D;&#x4F1A;&#x8C03;&#x7528;&#x7236;&#x7C7B; load &#x65B9;&#x6CD5;
-3. &#x7C7B;&#x4E2D;&#x7684; load &#x65B9;&#x6CD5;&#x6267;&#x884C;&#x987A;&#x5E8F;&#x8981;&#x4F18;&#x5148;&#x4E8E;&#x7C7B;&#x522B;(Category)
-4. &#x5F53;&#x6709;&#x591A;&#x4E2A;&#x7C7B;&#x522B; (Category) &#x90FD;&#x5B9E;&#x73B0;&#x4E86; load &#x65B9;&#x6CD5;, &#x8FD9;&#x51E0;&#x4E2A; load &#x65B9;&#x6CD5;&#x90FD;&#x4F1A;&#x6267;&#x884C;, 
+2. &#x7C7B;&#x4E2D;&#x7684; load &#x65B9;&#x6CD5;&#x6267;&#x884C;&#x987A;&#x5E8F;&#x8981;&#x4F18;&#x5148;&#x4E8E;&#x7C7B;&#x522B;(Category)
+3. &#x5F53;&#x6709;&#x591A;&#x4E2A;&#x7C7B;&#x522B; (Category) &#x90FD;&#x5B9E;&#x73B0;&#x4E86; load &#x65B9;&#x6CD5;, &#x8FD9;&#x51E0;&#x4E2A; load &#x65B9;&#x6CD5;&#x90FD;&#x4F1A;&#x6267;&#x884C;, 
 &#x4F46;&#x6267;&#x884C;&#x987A;&#x5E8F;&#x4E0D;&#x786E;&#x5B9A;(&#x5176;&#x6267;&#x884C;&#x987A;&#x5E8F;&#x4E0E;&#x7C7B;&#x522B;&#x5728; Compile Sources &#x4E2D;&#x51FA;&#x73B0;&#x7684;&#x987A;&#x5E8F;&#x4E00;&#x81F4;)
-5. &#x5F53;&#x7136;&#x5F53;&#x6709;&#x591A;&#x4E2A;&#x4E0D;&#x540C;&#x7684;&#x7C7B;&#x7684;&#x65F6;&#x5019;, &#x6BCF;&#x4E2A;&#x7C7B; load  &#x6267;&#x884C;&#x987A;&#x5E8F;&#x4E0E;&#x5176;&#x5728; Compile Sources &#x51FA;&#x73B0;&#x7684;&#x987A;&#x5E8F;&#x4E00;&#x81F4;
+4. &#x5F53;&#x7136;&#x5F53;&#x6709;&#x591A;&#x4E2A;&#x4E0D;&#x540C;&#x7684;&#x7C7B;&#x7684;&#x65F6;&#x5019;, &#x6BCF;&#x4E2A;&#x7C7B; load  &#x6267;&#x884C;&#x987A;&#x5E8F;&#x4E0E;&#x5176;&#x5728; Compile Sources &#x51FA;&#x73B0;&#x7684;&#x987A;&#x5E8F;&#x4E00;&#x81F4;
 
 + initialize&#xFF1A;&#x4F1A;&#x5728;&#x7B2C;&#x4E00;&#x6B21;&#x63A5;&#x6536;&#x5230;&#x6D88;&#x606F;&#x65F6;&#x8C03;&#x7528;&#xFF0C;&#x4F1A;&#x901A;&#x8FC7; objc_msgSend &#x8C03;&#x7528;&#xFF0C;
 &#x6BCF;&#x4E2A;&#x7C7B;&#x53EA;&#x4F1A; initialize &#x4E00;&#x6B21;&#xFF08;&#x7236;&#x7C7B;&#x53EF;&#x80FD;&#x591A;&#x6B21;&#xFF0C;&#x4F46;&#x4E0D;&#x4EE3;&#x8868;&#x521D;&#x59CB;&#x5316;&#x591A;&#x6B21;&#xFF09;&#x3002;
 1. &#x7236;&#x7C7B;&#x7684; initialize &#x65B9;&#x6CD5;&#x4F1A;&#x6BD4;&#x5B50;&#x7C7B;&#x5148;&#x6267;&#x884C;
 2. &#x5F53;&#x5B50;&#x7C7B;&#x672A;&#x5B9E;&#x73B0; initialize &#x65B9;&#x6CD5;&#x65F6;, &#x4F1A;&#x8C03;&#x7528;&#x7236;&#x7C7B; initialize &#x65B9;&#x6CD5;( &#x53EF;&#x80FD;&#x4F1A;&#x591A;&#x6B21;&#x8C03;&#x7528;), 
-&#x5B50;&#x7C7B;&#x5B9E;&#x73B0; initialize &#x65B9;&#x6CD5;&#x65F6;, &#x4F1A;&#x8986;&#x76D6;&#x7236;&#x7C7B; initialize &#x65B9;&#x6CD5;.
+&#x5B50;&#x7C7B;&#x5B9E;&#x73B0; initialize &#x65B9;&#x6CD5;&#x65F6;, &#x7236;&#x7C7B; -&gt; &#x5B50;&#x7C7B;
 3. &#x5F53;&#x6709;&#x591A;&#x4E2A; Category &#x90FD;&#x5B9E;&#x73B0;&#x4E86; initialize &#x65B9;&#x6CD5;, &#x4F1A;&#x8986;&#x76D6;&#x7C7B;&#x4E2D;&#x7684;&#x65B9;&#x6CD5;, 
 &#x53EA;&#x6267;&#x884C;&#x4E00;&#x4E2A;(&#x4F1A;&#x6267;&#x884C; Compile Sources &#x5217;&#x8868;&#x4E2D;&#x6700;&#x540E;&#x4E00;&#x4E2A; Category &#x7684; initialize &#x65B9;&#x6CD5;)
 </code></pre><table>
@@ -987,7 +1006,7 @@ Core Foundation &#x5BF9;&#x8C61;&#x8F6C; Foundation &#x5BF9;&#x8C61;
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"基本概念","level":"1.2","depth":1,"next":{"title":"UI相关","level":"1.3","depth":1,"path":"source/UIKit.md","ref":"source/UIKit.md","articles":[]},"previous":{"title":"简介","level":"1.1","depth":1,"path":"README.md","ref":"README.md","articles":[]},"dir":"ltr"},"config":{"plugins":[],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Jayxiang","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"iOS开发相关面试题总结","language":"zh-hans","gitbook":"*","description":"select * from learn"},"file":{"path":"source/Basic.md","mtime":"2021-07-23T11:03:52.171Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2021-07-23T11:04:27.908Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"基本概念","level":"1.2","depth":1,"next":{"title":"UI相关","level":"1.3","depth":1,"path":"source/UIKit.md","ref":"source/UIKit.md","articles":[]},"previous":{"title":"简介","level":"1.1","depth":1,"path":"README.md","ref":"README.md","articles":[]},"dir":"ltr"},"config":{"plugins":[],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Jayxiang","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"iOS开发相关面试题总结","language":"zh-hans","gitbook":"*","description":"select * from learn"},"file":{"path":"source/Basic.md","mtime":"2021-08-19T12:10:58.144Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2021-08-19T12:11:36.696Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
