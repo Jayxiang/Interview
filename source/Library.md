@@ -1,6 +1,7 @@
 # iOS 面试-第三方库相关
 
 - [pod update 和 pod install 的区别](#pod-update-和-pod-install-的区别)
+- [动态库和静态库的区别](#动态库和静态库的区别)
 - [Git 常用的命令](#Git-常用的命令)
 
 #### pod update 和 pod install 的区别
@@ -10,6 +11,19 @@ pod update 用于更新特定的 pod(或所有的 pod)版本时。
 ```
 
 更详细可以参考：[pod install vs. pod update](https://blog.csdn.net/huangyimo/article/details/85130398)
+
+#### 动态库和静态库的区别
+动态库形式：.dylib 和 .framework
+静态库形式：.a 和 .framework
+
+.a 和 .framework 的区别
+.a 是单纯的二进制文件，.framework 是二进制文件+资源文件。
+其中 .a 不能直接使用，需要 .h 文件配合，而 .framework 则可以直接使用。
+.framework = .a + .h + sorrceFile(资源文件)
+
+静态库：链接时，静态库会被完整地复制到可执行文件中，被多次使用就有多份冗余拷贝
+系统动态库：链接时不复制，程序运行时由系统动态加载到内存，供程序调用，系统只加载一次，多个程序共用，节省内存
+自定义动态库（Embedded Framework）：在我们自己应用的 .app 目录里面，只能自己的 App Extension 和 APP 使用。
 
 #### Git 常用的命令
 * 1.`git init` 初始化一个 Git 仓库。

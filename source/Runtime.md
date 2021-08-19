@@ -309,6 +309,8 @@ Category 实际上是 Category_t 的结构体，在运行时，新添加的方�
 所以不同的 Category，添加了同一个方法，执行的实际上是最后一个。
 Category 在刚刚编译完的时候，和原来的类是分开的，
 只有在程序运行起来后，通过 Runtime ，Category 和原来的类才会合并到一起。
+但是如何调用原类方法：
+利用 runtime 通过遍历原类的方法列表，获取对应方法在方法列表 methods 的索引，然后调用即可。
 ```
 #### 使用 runtime Associate 方法关联的对象，需要在主对象 dealloc 的时候释放么
 ```

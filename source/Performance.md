@@ -76,15 +76,24 @@ Off-Screen Rendering：离屏渲染，在当前屏幕缓冲区以外新开辟一
 为什么需要离屏渲染：
 目的在于当使用圆角，阴影，遮罩的时候，图层属性的混合体被指定为在未预合成之前不能直接在屏幕中绘制，
 即当主屏的还没有绘制好的时候，所以就需要屏幕外渲染，最后当主屏已经绘制完成的时候，再将离屏的内容转移至主屏上。
+另外：对于 Offscreenbuffer 中存储的数据的缓存时间是 100ms，如果没有使用那么它就会丢弃。
+离屏渲染缓存空间有限，超过2.5倍屏幕像素大小的话，也会失效，且无法进行复用了。
+
 离屏渲染消耗性能的原因:
-需要创建新的缓冲区
-离屏渲染的整个过程，需要多次切换上下文环境，先是从当前屏幕（On-Screen）切换到离屏（Off-Screen）；
+1.需要创建新的缓冲区
+2.离屏渲染的整个过程，需要多次切换上下文环境，先是从当前屏幕（On-Screen）切换到离屏（Off-Screen）
 等到离屏渲染结束以后，将离屏缓冲区的渲染结果显示到屏幕上，又需要将上下文环境从离屏切换到当前屏幕
 哪些操作会触发离屏渲染:
 光栅化，layer.shouldRasterize = YES
 遮罩，layer.mask
-圆角，同时设置 layer.masksToBounds = YES、layer.cornerRadius 大于 0
-阴影，layer.shadowXXX，如果设置了 layer.shadowPath 就不会产生离屏渲染
+设置了组透明度为 YES，并且透明度不为 1 的 layer (layer.allowsGroupOpacity/ layer.opacity)
+圆角，同时设置 layer.masksToBounds = YES、layer.cornerRadius 大于 0 ，有可能触发（多个图层才会触发）
+更详细：
+a.按钮视图设置图片，并且设置圆角 cornerRadius 和裁剪 masksToBounds，会产生离屏渲染
+b.按钮视图不设置图片，设置圆角 cornerRadius 和裁剪 masksToBounds，不会产生离屏渲染
+c.图片视图不设置背景色，设置圆角 cornerRadius 和裁剪 masksToBounds，不会产生离屏渲染
+d.图片视图设置背景色，设置圆角 cornerRadius 和裁剪 masksToBounds，会产生离屏渲染
+阴影，layer.shadowXXX，如果预先设置了阴影的几何形状（layer.shadowPath）就不会产生离屏渲染
 圆角离屏渲染解决：考虑通过 CoreGraphics 绘制裁剪圆角，或者叫美工提供圆角图片
 ```
 #### 如何检测离屏渲染
@@ -141,6 +150,7 @@ APP 启动时间的优化，主要是针对冷启动进行优化
 通过添加环境变量可以打印出 APP 的启动时间分析（Edit scheme -> Run -> Arguments）
 DYLD_PRINT_STATISTICS 设置为 1
 如果需要更详细的信息，那就将 DYLD_PRINT_STATISTICS_DETAILS 设置为 1
+或者使用：Instruments - Time Profiler 进行检测
 
 dyld（dynamic link editor）：Apple 的动态链接器，可以用来装载 Mach-O 文件（可执行文件、动态库等）
 启动 APP 时，dyld 所做的事情有：
@@ -210,13 +220,13 @@ LinkMap 分析哪里占用包资源大：
 #### 如何高性能的画一个圆角
 ```
 如果能够只用 cornerRadius 解决问题，就不用优化。
-如果必须设置masksToBounds，可以参考圆角视图的数量，如果数量较少(一页只有几个)也可以
+如果必须设置 masksToBounds，可以参考圆角视图的数量，如果数量较少(一页只有几个)也可以
 考虑不用优化。
 UIImageView 的圆角通过直接截取图片实现，其它视图的圆角可以通过 Core Graphics 画出圆
 角矩形实现。
 
 四种方式：
-1.设置 CALayer 的 cornerRadius,和 masksToBounds 会触发离屏渲染
+1.设置 CALayer 的 cornerRadius,和 masksToBounds 可能会触发离屏渲染
 2.设置 CALayer 的 mask，也会触发离屏渲染
 3.通过 Core Graphics 重新绘制带圆角的视图
 又可以分为 贝塞尔曲线(UIBezierPath) + CoreGraphics

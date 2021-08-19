@@ -10,6 +10,7 @@
 - [Dispatch Semaphore 信号量](#dispatch-semaphore-信号量)
 - [NSOperationQueue 的优点](#nsoperationqueue-的优点)
 - [NSOperation 和 NSOperationQueue](#nsoperation-和-nsoperationqueue)
+- [NSOperation 重写 start 和 main 方法的区别](#nsoperation-重写-start-和-main-方法的区别)
 - [怎么用 GCD 实现多读单写](#怎么用-gcd-实现多读单写)
 
 #### 线程与进程的区别和联系?
@@ -156,7 +157,7 @@ OSSpinLock：自旋锁，不安全 iOS10 后不建议使用
 os_unfair_lock：用于取代不安全的 OSSpinLock ，从 iOS10 开始才支持
 pthread_mutex：互斥锁，等待锁的线程会处于休眠状态
 @synchronized：关键字加锁，是对 mutex 递归锁的封装，加锁代码少，性能差—- 因为里面会加入异常处理, 
-所以耗时。适用线程不多，任务量不大的多线程加锁
+所以耗时。适用线程不多，任务量不大的多线程加锁（@synchronized(nil) 不起任何作用）
 NSLock：互斥锁，是对 mutex 普通锁的封装。所有锁（包括 NSLock）的接口实际上都是
 通过 NSLocking 协议定义的，它定义了 lock 和 unlock 方法。
 你使用这些方法来获取和释放该锁。
@@ -209,6 +210,12 @@ NSOperationQueue 对于添加到队列中的操作，
 操作队列通过设置最大并发操作数(maxConcurrentOperationCount)来控制并发、串行。 
 NSOperationQueue 为我们提供了两种不同类型的队列:主队列和自定义队列。主队列运行在主线程之上，
 而自定义队列在后台执行。
+```
+#### NSOperation 重写 start 和 main 方法的区别
+```
+系统的 NSOperation 中的 start 方法中默认实现是会调用 main 方法，main 方法结束，就意味着NSOperation执行完毕。
+如果自定义的 NSOperation，通过重写 start 方法，里面创建具体的任务，并且不要调用 super 去执行 main，因为 main 函数执行完操作就结束了。属于非并发队列。
+而 start 方法就算执行完毕，它的 finish 属性也不会变，因此你可以控制这个 operation 的生命周期，在具体的异步任务完成之后手动 cancel 掉这个 operation。是并发队列。
 ```
 #### 怎么用 GCD 实现多读单写
 ```

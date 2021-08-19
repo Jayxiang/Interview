@@ -20,12 +20,14 @@
 - [类方法和实例方法有什么区别](#类方法和实例方法有什么区别)
 - [浅拷贝和深拷贝的区别](#浅拷贝和深拷贝的区别)
 - [NSCache NSDictionary 区别](#nscache-nsdictionary-区别)
+- [NSDictionary 如何实现](#nsdictionary-如何实现)
 - [什么是 KVC 和 KVO？](#什么是-kvc-和-kvo)
 - [开发中，保存数据有哪几种方式？](#开发中，保存数据有哪几种方式？)
 - [关键字 const/static/extern、UIKIT_EXTERN 区别和用法以及与宏的区别](#关键字-conststaticextern、uikitextern-区别和用法以及与宏的区别)
 - [关键字组合 static inline](#关键字组合-static-inline)
 - [isMemberOfClass、isKindOfClass 和 isSubclassOfClass 联系与区别](#ismemberofclass、iskindofclass-和-issubclassofclass-联系与区别)
 - [将一个函数在主线程执行的几种方法](#将一个函数在主线程执行的几种方法)
+- [调用方法的三种方式](#调用方法的三种方式)
 - [+initialize 与 +load 有什么用处区别](#initialize-与-load-有什么用处区别)
 - [isEqual,isEqualToString 和 == 区别](#isequalisequaltostring-和--区别)
 - [分类的理解](#分类的理解)
@@ -386,6 +388,23 @@ mutableCopy 是深拷贝。
 4.NSCache 并不会 “拷贝” 键，而是会 “保留” 它。
 ```
 
+#### NSDictionary 如何实现
+```
+NSDictionary 是使用 hash 表来实现 key 和 value 之间的映射和存储的， hash函数设计的好坏影响着数据的查找访问效率。数据在hash表中分布的越均匀，其访问效率越高。内部使用 NSMapTable 实现，NSMapTable 同样是一个 key－value 的容器，而 NSMapTable 是一个哈希＋链表的数据结构，遇到哈希冲突的value，就是通过链表连接起来。
+@interface NSMapTable : NSObject {
+   NSMapTableKeyCallBacks   *keyCallBacks;
+   NSMapTableValueCallBacks *valueCallBacks;
+   NSUInteger             count;
+   NSUInteger             nBuckets;
+   struct _NSMapNode  **buckets;
+}
+NSDictionary KVC setValue 和 setObject的区别
+(1) setValue: ForKey: 的 value 是可以为 nil 的（但是当value为nil的时候，会自动调用removeObject：forKey 方法）；
+setObject: ForKey: 的 value 则不可以为 nil。
+(2) setValue: ForKey: 的 key 必须是不为 nil 的字符串类型；
+setObject: ForKey: 的 key 可以是不为 nil 的所有继承 NSCopying 的类型。
+```
+
 #### 什么是 KVC 和 KVO
 
 ```
@@ -532,6 +551,12 @@ NSBlockOperation *operation = [NSBlockOperation blockOperationWithBlock:^{
 // RunLoop 方法
 [[NSRunLoop mainRunLoop] performSelector:@selector(method) withObject:nil];
 ```
+#### 调用方法的三种方式
+```
+1. 直接调用 [self xxx]
+2. performSelector:withObject:
+3. 使用 NSMethodSignature & NSInvocation
+```
 
 #### +initialize 与 +load 有什么用处区别
 
@@ -541,17 +566,16 @@ NSBlockOperation *operation = [NSBlockOperation blockOperationWithBlock:^{
 这样在类的加载和初始化过程中，自定义的方法可以得到调用。
 +load: 通过函数地址直接调用，是在 runtime 加载类分类的时候调用，只会调用一次
 1. 当父类和子类都实现 load 函数时, 父类的 load 方法执行顺序要优先于子类
-2. 当子类未实现 load 方法时, 不会调用父类 load 方法
-3. 类中的 load 方法执行顺序要优先于类别(Category)
-4. 当有多个类别 (Category) 都实现了 load 方法, 这几个 load 方法都会执行, 
+2. 类中的 load 方法执行顺序要优先于类别(Category)
+3. 当有多个类别 (Category) 都实现了 load 方法, 这几个 load 方法都会执行, 
 但执行顺序不确定(其执行顺序与类别在 Compile Sources 中出现的顺序一致)
-5. 当然当有多个不同的类的时候, 每个类 load  执行顺序与其在 Compile Sources 出现的顺序一致
+4. 当然当有多个不同的类的时候, 每个类 load  执行顺序与其在 Compile Sources 出现的顺序一致
 
 + initialize：会在第一次接收到消息时调用，会通过 objc_msgSend 调用，
 每个类只会 initialize 一次（父类可能多次，但不代表初始化多次）。
 1. 父类的 initialize 方法会比子类先执行
 2. 当子类未实现 initialize 方法时, 会调用父类 initialize 方法( 可能会多次调用), 
-子类实现 initialize 方法时, 会覆盖父类 initialize 方法.
+子类实现 initialize 方法时, 父类 -> 子类
 3. 当有多个 Category 都实现了 initialize 方法, 会覆盖类中的方法, 
 只执行一个(会执行 Compile Sources 列表中最后一个 Category 的 initialize 方法)
 ```

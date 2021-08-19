@@ -31,6 +31,15 @@ NSMallocBlock:
 所以，如果对 __block 的修改，实际上是在修改堆上的__block 变量。 
 即__forwarding 指针存在的意义就是，无论在任何内存位置，都可以顺利地访问同一个__block 变量。 
 ```
+```
+// 大致结构
+struct __block_impl {
+  void *isa; // 指向所属类的指针
+  int Flags; // 标志变量，在实现block的内部操作时会用到
+  int Reserved; // 保留变量
+  void *FuncPtr; // block执行时调用的函数指针
+};
+```
 #### block 变量截获
 ```
 1、局部变量截获是值截获。

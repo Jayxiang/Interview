@@ -215,13 +215,20 @@ NSTimer 的 target 对传入的参数都是强引用（即使是 weak 对象）
 ```
 #### 简述一下自动释放池(@autoreleasePool)底层怎么实现？
 ```
-说道内存管理就要说一下自动释放池了, 当你创建一个新的自动释放池时，它将被添加到栈顶，
-当一个对象收到发送 autorelease 消息时，
+说到内存管理就要说一下自动释放池了, 当你创建一个新的自动释放池时，它会创建一个 AutoreleasePoolPage，当一个对象收到发送 autorelease 消息时，
 他被添加到当前线程的处于栈顶的自动释放池中，当自动释放池被回收时，他们从栈中被删除，
 并且会给池子里所有的对象都会做一次 release 操作。
-简单说它是双向链表，每张链表头尾相接，有 parent、child 指针，
+简单说 AutoreleasePoolPage 是双向链表，每张链表头尾相接，有 parent、child 指针，
 每创建一个池子，会在首部创建一个哨兵对象,作为标记
 最外层池子的顶端会有一个 next 指针。当链表容量满了，就会在链表的顶端，并指向下一张表。
+
+单个自动释放池的执行过程就是 objc_autoreleasePoolPush() —> [object autorelease] —> objc_autoreleasePoolPop(void *)。
+
+objc_autoreleasePoolPush:
+把当前 next 位置置为 nil，即哨兵对象,然后 next 指针指向下一个可入栈位置，
+AutoreleasePool 的多层嵌套，即每次 objc_autoreleasePoolPush，实际上是不断地向栈中插入哨兵对象。
+objc_autoreleasePoolPop: 根据传入的哨兵对象找到对应位置。
+给上次 push 操作之后添加的对象依次发送 release 消息。 回退 next 指针到正确的位置。
 
 经典例子: 这段代码有什么问题? 如何修改?
 for (int i = 0; i < 1000000; i++) {

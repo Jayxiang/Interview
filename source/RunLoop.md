@@ -173,6 +173,19 @@ SpringBoard 只接收按键(锁屏 / 静音等)，触摸，加速，接近传感
 3._UIApplicationHandleEventQueue() 会把 IOHIDEvent 处理并包装成 UIEvent 进行处理或分发，
 其中包括识别 UIGesture / 处理屏幕旋转 / 发送给 UIWindow 等。
 通常事件比如 UIButton 点击、touchesBegin/Move/End/Cancel 事件都是在这个回调中完成的。
+4.UIWindow 对 UIEvent 中的每个 UITouch 实例调用 hitTest 方法寻找其 hitTestView，并在 hitTest 递归调用过程中，记录最终的 hitTestView 及其各父视图上挂载的 gestureRecognizer（记录为gestureRecognizers属性）
+--同级的多个 view 之间 hitTest 调用顺序为逆序（后 addSubView 的先调用 hitTest）
+--默认根据 pointInside 方法的返回值来决定是否递归查找其子 view
+5.将每个 UITouch 对象发给其对应的 gestureRecognizers 对象以及 hitTestView（即调用它们的 touchesBegin 方法）
+--识别成功的 gestureRecognizer 将独占相关的 touch，所有其他 gestureRecognizer 和 hitTestView 都将收到 touchsCancelled 回调，并且以后不会再收到此 touch 的事件
+
+--一个特例是：系统默认的 UIControl（UISlider, UISwitch 等）的控件的父view上的 gestureRecognizer 优先级低于 UIControl 本身
+
+--也需要配合相关 gestureRecognizer 冲突解决相关方法（如 canBePreventedByGestureRecognizer:、canPreventGestureRecognizer:等）的具体实现使用
+
+--如果 hitTestView 实例不响应 touchesBegin 等方法，则顺着 responder chain 继续找 nextResponder 来调用
+
+--若实现了 touchesBegin 等方法，则在其中调用 [super touchesBegin] 方法会将 touch 事件沿着 responder chain 向上传递
 ```
 #### 手势识别的过程？
 ```
