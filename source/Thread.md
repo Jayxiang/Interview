@@ -221,8 +221,26 @@ NSOperationQueue 为我们提供了两种不同类型的队列:主队列和自�
 ```
 多读单写: 可以多个读者同时读取数据，而在读的时候，不能取写入数据。并且，在写的过程中，不能有其他写者去写。
 即读者之间是并发的，写者与读者或其他写者是互斥的。
-可以用 dispatch_barrier_sync(栅栏函数)去实现
+1. 加读写锁（pthread_rwlock）来实现
+2. 可以用 dispatch_barrier_sync(栅栏函数)去实现
 dispatch_barrier_sync: 提交一个栅栏函数在执行中,它会等待栅栏函数执行完
 dispatch_barrier_async: 提交一个栅栏函数在异步执行中,它会立马返回,
 而 dispatch_barrier_sync 和 dispatch_barrier_async 的区别也就在于会不会阻塞当前线程
+
+简单示例：
+var queue = DispatchQueue(label: "read", attributes: .concurrent)
+
+func getValue(closure: @escaping (String?) -> Void?){
+    queue.async {
+        closure(self.dic["read"])
+        print("read")
+    }
+}
+
+func setDic(value: String) {
+    queue.async(flags: .barrier) {
+        self.dic["read"] = value
+        print("write")
+    }
+}
 ```

@@ -143,6 +143,9 @@ bucket_t 中存储的是 SEL 和 IMP 的键值对。
 查询散列表函数，其中 cache_hash(k, m)是静态内联方法，
 将传入的 key 和 mask 进行&操作返回 uint32_t 索引值。
 do-while 循环查找过程，当发生冲突 cache_next 方法将索引值减 1。
+
+SEL：方法编号或者说是方法名称
+IMP：Implementation 的缩写, 它是指向一个方法实现的指针
 ```
 #### 什么是 method swizzling?
 ```
@@ -257,19 +260,23 @@ didChangeValueForKey: ，在存取数值的前后分别调用 2 个方法：
 （3）如果 class 中没找到 foo，继续往他的 superclass rootclass 中找
 （4）一旦找到 foo 这个函数，就去执行它的实现 IMP，没有找到则进入消息转发机制
 消息转发：
-1. 所属类的动态方法解析
+1. 所属类的动态方法解析，他的意义在于动态地将一个函数添加为一个类的方法
 首先，如果沿着继承树没有搜索到相关的方法时，则就会向接受者所属的类进行一次请求，
 看是否可以动态的添加一个方法，如下：
 +(BOOL)resolveInstanceMethod:(SEL)name
-如果第一步不能处理，会进行到第二步。
-2. 调用 forwardingTargetForSelector 把任务转发给另一个对象。
-如果第二步骤也不能处理的时候，会交给第三步骤。
-3. 调用 forwardInvocation 转发给其他，在调用 forwardInvocation: 
+如果此方法返回的是 NO，会进行到第二步。
+2. 快速转发，调用 forwardingTargetForSelector 把任务转发给另一个对象。
+如果此方法返回的是 nil 或者 self 的时候，会交给第三步骤。
+3. 完全消息转发机制，调用 forwardInvocation 转发给其他，在调用 forwardInvocation: 
 之前会调用 methodSignatureForSelector:(SEL)aSelector 方法来获取这个选择器的方法签名，
 然后在 -(void)forwardInvocation:(NSInvocation *)anInvocation 方法中
-你就可以通过 anInvocation 拿到相应信息做处理
+你就可以通过 anInvocation 拿到相应信息做处理。
+第三阶段是对第二阶段的扩充，可以修改消息的target，selector，
+参数等可以实现多次转发，转发给多个对象等。
 4. 那么最后消息未能处理的时候，还会调用到
 - (void)doesNotRecognizeSelector:(SEL)aSelector 这个方法
+
+NSInvocation：是一个用来存储和转发消息的对象。它包含了一个 Objective-C 消息的所有元素：一个 target，一个 selector，参数和返回值。每个元素都可以被直接设置。
 ```
 #### 类和元类
 ```
