@@ -276,7 +276,8 @@ didChangeValueForKey: ，在存取数值的前后分别调用 2 个方法：
 4. 那么最后消息未能处理的时候，还会调用到
 - (void)doesNotRecognizeSelector:(SEL)aSelector 这个方法
 
-NSInvocation：是一个用来存储和转发消息的对象。它包含了一个 Objective-C 消息的所有元素：一个 target，一个 selector，参数和返回值。每个元素都可以被直接设置。
+NSInvocation：是一个用来存储和转发消息的对象。它包含了一个 Objective-C 消息的所有元素：
+一个 target，一个 selector，参数和返回值。每个元素都可以被直接设置。
 ```
 #### 类和元类
 ```
@@ -318,11 +319,24 @@ Category 在刚刚编译完的时候，和原来的类是分开的，
 只有在程序运行起来后，通过 Runtime ，Category 和原来的类才会合并到一起。
 但是如何调用原类方法：
 利用 runtime 通过遍历原类的方法列表，获取对应方法在方法列表 methods 的索引，然后调用即可。
+
+// 声明结构体
+struct _category_t {
+    const char *name;
+    struct _class_t *cls;
+    const struct _method_list_t *instance_methods;
+    const struct _method_list_t *class_methods;
+    const struct _protocol_list_t *protocols;
+    const struct _prop_list_t *properties;
+};
 ```
 #### 使用 runtime Associate 方法关联的对象，需要在主对象 dealloc 的时候释放么
 ```
 无论在 MRC 下还是 ARC 下均不需要，被关联的对象在生命周期内要比对象本身释放的晚很多，
 它们会在 dealloc 调用的 object_dispose()方法中释放。
+
+关联对象并不是存储在被关联对象本身内存中
+关联对象存储在全局的统一的一个 AssociationsManager，AssociationsHashMap 中
 ```
 #### Category 在编译过后，是在什么时机与原有的类合并到一起的？
 ```
@@ -332,7 +346,7 @@ Category 在刚刚编译完的时候，和原来的类是分开的，
 4. 再然后就是 read_images，这个方法会读取所有的类的相关信息。
 5. 最后是调用 reMethodizeClass:，这个方法是重新方法化的意思。
 6. 在 reMethodizeClass: 方法内部会调用 attachCategories: ，这个方法会传入 Class 和 Category ，
-会将方法列表，协议列表等与原有的类合并。最后加入到 class_rw_t 结构体中。
+会将方法列表，协议列表等与原有的类合并，插入到类原来数据的前面。最后加入到 class_rw_t 结构体中。
 ```
 #### 分类（Category）可以添加 weak 属性吗
 ```
@@ -381,6 +395,12 @@ storeWeak() 的作用是更新指针指向，创建对应的弱引用表。
 第二次 hash(obj) 从 sideTable 中的 weak_table 获取具体的 weak_entry_t。
 然后 clearDeallocating 函数根据对象地址获取所有 weak 指针地址的数组，
 然后遍历这个数组把其中的数据设为 nil，最后把这个 entry 从 weak 表中删除，最后清理对象的记录。
+
+struct SideTable {
+    spinlock_t slock;
+    RefcountMap refcnts;
+    weak_table_t weak_table; 
+}
 ```
 #### objc 中向一个 nil 对象发送消息将会发生什么
 ```

@@ -84,7 +84,8 @@ _name 只是成员变量， 没有 setter 和 getter 方法。
 }
 @end
 // 都是 son。
-self 是类的隐藏参数，指向当前调用方法的这个类的实例。而 super 是一个 Magic Keyword， 它本质是一个编译器标示符，和 self 是指向的同一个消息接受者。
+self 是类的隐藏参数，指向当前调用方法的这个类的实例。而 super 是一个 Magic Keyword，
+它本质是一个编译器标示符，和 self 是指向的同一个消息接受者。
 上面的例子不管调用 [self class] 还是 [super class]，接受消息的对象都是当前 Son ＊xxx 这个对象。
 而不同的是，super 是告诉编译器，调用 class 这个方法时，要去父类的方法，而不是本类里的。
 当使用 self 调用方法时，会从当前类的方法列表中开始找，如果没有，就从父类中再找；

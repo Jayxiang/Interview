@@ -153,11 +153,12 @@ global queue:全局队列是并发队列，由整个进程共享。
 缺点在于，自旋锁一直占用 CPU，他在未获得锁的情况下，一直运行--自旋，所以占用着 CPU，
 如果不能在很短的时间内获得锁，这无疑会使 CPU 效率降低。自旋锁不能实现递归调用。
 
-OSSpinLock：自旋锁，不安全 iOS10 后不建议使用
-os_unfair_lock：用于取代不安全的 OSSpinLock ，从 iOS10 开始才支持
+OSSpinLock：自旋锁，不安全 iOS10 后不建议使用，可能会出现优先级反转问题
+os_unfair_lock：用于取代不安全的 OSSpinLock ，从 iOS10 开始才支持，也是互斥锁
 pthread_mutex：互斥锁，等待锁的线程会处于休眠状态
-@synchronized：关键字加锁，是对 mutex 递归锁的封装，加锁代码少，性能差—- 因为里面会加入异常处理, 
-所以耗时。适用线程不多，任务量不大的多线程加锁（@synchronized(nil) 不起任何作用）
+@synchronized：关键字加锁，是对 mutex 递归锁的封装，加锁代码少，性能差
+因为里面会加入异常处理, 所以耗时。
+适用线程不多，任务量不大的多线程加锁（@synchronized(nil) 不起任何作用）
 NSLock：互斥锁，是对 mutex 普通锁的封装。所有锁（包括 NSLock）的接口实际上都是
 通过 NSLocking 协议定义的，它定义了 lock 和 unlock 方法。
 你使用这些方法来获取和释放该锁。
@@ -167,6 +168,7 @@ NSCondition：条件锁，是对 mutex 和 cond 的封装
 NSConditionLock：是对 NSCondition 的进一步封装，可以设置具体的条件值
 dispatch_semaphore：信号量实现加锁
 ```
+[不再安全的 OSSpinLock](https://blog.ibireme.com/2016/01/16/spinlock_is_unsafe_in_ios/)
 性能如下：
 ![锁的性能. png](./image/锁的性能.png)
 

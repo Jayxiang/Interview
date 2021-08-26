@@ -85,12 +85,13 @@ category 可以在不获悉，不改变原来代码的情况下往里面添加�
 #include 与 #import 都是导入头文件的关键字, 完整地包含某个文件的内容,
 后者会自动导入一次，不会重复导入, 不会引发交叉编译.
 @class 仅仅是声明一个类名，并不会包含类的完整声明, 编译效率高.
-可避免循环依赖, 且使用后带来的编译错误.
+可避免循环依赖, 和使用后带来的编译错误.
 #import<>: 用于对系统自带的头文件的引用，编译器会在系统文件目录下查找该文件。
 #import"": 用户自定义的文件用双引号引用，引用时编译器首先会在用户目录下查找，
 然后去安装目录中查找，最后在系统文件目录中查找。
 另外：iOS7 之后的新特性，可以使用 @import 关键词来代理 #import 引入系统类库。
-     使用 @import 引入系统类库，不需要到 build phases 中先添加添加系统库到项目中。
+     使用 @import 引入系统类库，不需要到 build phases 中先添加系统库到项目中。
+     他通过一个列表来存放已经编译处理过的 Modules 列表，而声明的引入会首先在这个表内查找，如果没有找到会去编译添加进来。
 ```
 
 #### @property 的本质是什么？ivar、getter、setter 是如何生成并添加到这个类中的
@@ -390,7 +391,10 @@ mutableCopy 是深拷贝。
 
 #### NSDictionary 如何实现
 ```
-NSDictionary 是使用 hash 表来实现 key 和 value 之间的映射和存储的， hash函数设计的好坏影响着数据的查找访问效率。数据在hash表中分布的越均匀，其访问效率越高。内部使用 NSMapTable 实现，NSMapTable 同样是一个 key－value 的容器，而 NSMapTable 是一个哈希＋链表的数据结构，遇到哈希冲突的value，就是通过链表连接起来。
+NSDictionary 是使用 hash 表来实现 key 和 value 之间的映射和存储的，
+hash 函数设计的好坏影响着数据的查找访问效率。数据在 hash 表中分布的越均匀，其访问效率越高。
+内部使用 NSMapTable 实现，NSMapTable 同样是一个 key－value 的容器，
+而 NSMapTable 是一个哈希＋链表的数据结构，遇到哈希冲突的 value，就是通过链表连接起来。
 @interface NSMapTable : NSObject {
    NSMapTableKeyCallBacks   *keyCallBacks;
    NSMapTableValueCallBacks *valueCallBacks;

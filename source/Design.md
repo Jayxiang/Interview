@@ -119,3 +119,4 @@
 缺点：仅适用于简单通讯场景。复杂数据传输，同步调用等方式都不太方便。 
 模块化通讯方案中，更多的是把通知方案作为以上几种方案的补充。
 ```
+参考：[有赞移动 iOS 组件化（模块化）架构设计实践](https://tech.youzan.com/you-zan-ioszu-jian-hua-jia-gou-she-ji-shi-jian/)
