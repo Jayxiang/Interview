@@ -1,6 +1,8 @@
 # iOS 面试-网络相关
 
 - [网络的几层协议](#网络的几层协议)
+- [HTTP 各个版本的区别](#http-各个版本的区别)
+- [HTTP 请求响应报文](#http-请求响应报文)
 - [GET 和 POST 区别](#get-和-post-区别)
 - [常见的状态码](#常见的状态码)
 - [HTTP 的特点](#http-的特点)
@@ -34,7 +36,93 @@ SSL记录协议（SSL Record Protocol）：它建立在可靠的传输协议（�
 SSL 握手协议（SSL Handshake Protocol）：它建立在 SSL 记录协议之上，用于在实际的数据传输开始前，通讯双方进行身份认证、协商加密算法、交换加密密钥等。
 TLS 与 SSL 在传输层与应用层之间对网络连接进行加密。SSL 协议工作在应用层与传输层之间。
 ```
+#### HTTP 各个版本的区别
+```
+HTTP/0.9 仅支持 GET 请求，不支持请求头
+HTTP/1.0 默认短连接（一次请求建议一次 TCP 连接，请求完就断开），支持 GET、POST、 HEAD 请求
+HTTP/1.1 默认长连接（一次 TCP 连接可以多次请求）；支持 PUT、DELETE、PATCH 等六种请求; 
+增加 host 头，支持虚拟主机；支持断点续传功能
+HTTP/2.0 多路复用，降低开销（一次 TCP 连接可以处理多个请求）；
+服务器主动推送（相关资源一个请求全部推送）；
+解析基于二进制，解析错误少，更高效（HTTP/1.X解析基于文本）；
+报头压缩，降低开销。
+HTTP/3 是基于 QUIC 的协议, 通过 UDP 建立;
+引入 Connection ID，使得 HTTP/3 支持连接迁移以及 NAT 的重绑定。
+一条连接，多个 stream 并发传输，真正的多路复用，有效解决队头阻塞现象。
+```
 
+#### HTTP 请求响应报文
+```
+HTTP 报文是面向文本的，报文中的每一个字段都是一些ASCII码串，各个字段的长度是不确定的。
+HTTP 请求报文：
+请求行（request line）：
+①请求方法，GET、POST、PUT、DELETE、HEAD、OPTIONS 等
+②请求对应的 URL 地址，它和报文头的 Host 属性组成完整的请求 URL。
+③协议名称及版本号，如 HTTP/1.1
+请求头部（header）：
+HTTP 的报文头，报文头包含若干个属性，格式为“属性名:属性值”，服务端据此获取客户端的信息。
+与缓存相关的规则信息，均包含在 header 中，如：
+Accept：可接受什么类型的响应
+Host: 指明了该对象所在的主机
+Connection: Keep-Alive 首部行用来表明该浏览器告诉服务器使用持续连接
+Content-Type: x-www-form-urlencoded 首部行用来表明 HTTP 会将请求参数用 key1=val1&key2=val2 的方式进行组织，并放到请求实体里面 
+User-agent: 首部行用来指明用户代理，即向服务器发送请求的浏览器类型 
+Accept-lauguage: 首部行表示用户想得到的语言或语言组合，否则，服务器应发送它的默认版本
+空行：
+最后一个请求头之后是一个空行，发送回车符和换行符，通知服务器以下不再有请求头。
+请求体：name=hello
+```
+```
+// 请求行
+POST /search HTTP/1.1  
+// 请求头
+Accept: */*  
+Referer: <a href="http://www.google.cn/">http://www.google.cn/</a>  
+Accept-Language: zh-cn  
+Accept-Encoding: gzip, deflate  
+User-Agent: Mozilla/4.0
+Host: <a href="http://www.google.cn">www.google.cn</a>  
+Connection: Keep-Alive  
+Cookie: PREF=ID=80a06da87be9ae3c:U=f7167333e2c3b714:NW=1:TM=1261551909:LM=1261551917:S=ybYcq2wpfefs4V9g;
+// 此处有空行
+
+// 请求体
+name=hello&age=18 
+```
+
+```
+相应报文：
+状态行：版本号+状态码+状态码的文字描述，如：HTTP/1.1 200 OK
+响应头：
+Connection: close(连接已经关闭); keepalive(连接保持着，在等待本次连接的后续请求); 
+Date: 指的不是对象创建或最后修改的时间，而是服务器从文件系统中检索到该对象，插入到响应报文，并发送该响应报文的时间。
+Server: 首部行指示该报文是由一台 Apache Web 服务器产生的，类似于 HTTP 请求报文里的 User-agent
+Content-Length: 首部行指示了被发送对象中的字节数 
+Content-Type: text/html，首部行指示了实体体中的对象是 HTML 文本
+空行
+响应体：返回的数据
+```
+```
+// http 协议版本  客户端响应成功
+HTTP/1.1 200 OK                             
+// 响应头
+Connection：close
+Date: Sat, 31 Dec 2005 23:59:59 GMT
+// 返回文档类型
+Content-Type: text/html;charset=ISO-8859-1  
+Content-Length: 122                         
+// 空行
+
+// 数据
+＜html＞                                    
+＜head＞
+＜title＞Wrox Homepage＜/title＞
+＜/head＞
+＜body＞
+＜!-- body goes here --＞
+＜/body＞
+＜/html＞
+```
 #### GET 和 POST 区别
 ```
 常见的请求方式：GET、POST、PUT、DELETE、HEAD、OPTIONS
@@ -52,17 +140,24 @@ GET 和 POST 本质上就是 TCP 链接，并无差别。
 在响应时，GET 产生一个 TCP 数据包;POST 产生两个 TCP 数据包:
 对于 GET 方式的请求，浏览器会把 Header 和实体主体一并发送出去，服务器响应 200(返回数据); 
 而对于 POST，浏览器先发送 Header，服务器响应 100 Continue，浏览器再发送实体主体，服务器响应 200 OK(返回数据)。
+
+HEAD：HEAD 就像 GET，只不过服务端接受到 HEAD 请求后只返回响应头，而不会发送响应内容。当我们只需要查看某个页面的状态的时候，使用HEAD是非常高效的，因为在传输的过程中省去了页面内容。
 ```
 #### 常见的状态码
 ```
+100 指示信息--表示请求已接收，继续处理。
 200 OK:请求成功，信息在返回的响应报文中
 301 MovedPermanently: 请求的对象已经被永久转移了，新的URL定义在响应报文中的Location:
 首部行中。客户软件将自动获取新的 URL。适合永久重定向。
 302 302用来做临时跳转
 400 BadRequest:一个通用差错代码，指示该请求不能被服务器理解
-404 NotFound:被请求的文件不在服务器上
+404 NotFound:请求资源不存在，不在服务器上
 505 HTTPVersionNotSupported:服务器不支持请求报文使用的HTTP协议版本
-<4 开头的状态码通常是客户端的问题，5 开头的则通常是服务端的问题>
+
+2xx：成功--表示请求已被成功接收、理解、接受。
+3xx：重定向--要完成请求必须进行更进一步的操作。
+4xx：客户端错误--请求有语法错误或请求无法实现。
+5xx：服务器端错误--服务器未能实现合法的请求。
 ```
 #### HTTP 的特点
 ```
@@ -90,12 +185,6 @@ Content-length: 根据所接收字节数是否达到 Content-length 值
 chunked(分块传输): Transfer-Encoding。当选择分块传输时，响应头中可以不包含
 Content-Length，服务器会先回复一个不带数据的报文(只有响应行和响应头和\r\n)，然后开始传输若干个数据块。
 当传输完若干个数据块后，需要再传输一个空的数据块，当客户端收到空的数据块时，则客户端知道数据接收完毕。
-
-请求报文：请求方法， HTTP 版本号
-请求头：Host: 指明了该对象所在的主机
-Connection:Keep-Alive 首部行用来表明该浏览器告诉服务器使用持续连接
-Content-Type: x-www-form-urlencoded 首部行用来表明 HTTP 会将请求参数用 key1=val1&key2=val2 的方式
-进行组织，并放到请求实体里面 User-agent:首部行用来指明用户代理，即向服务器发送请求的浏览器类型 Accept-lauguage:首部行表示用户想得到的语言或语言组合，否则，服务器应发送它的默认版本
 ```
 #### UDP 和 TCP 的区别是什么？
 ```

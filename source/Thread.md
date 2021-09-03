@@ -179,7 +179,8 @@ Dispatch Semaphore 提供了三个函数
 1.dispatch_semaphore_create:创建一个 Semaphore 并初始化信号的总量 
 2.dispatch_semaphore_signal:发送一个信号，让信号总量加 1 
 3.dispatch_semaphore_wait:可以使总信号量减 1，
-当信号总量为 0 时就会一直等待(阻塞所在线程)，否则就可以正常执行。
+当信号总量小于 0 时就会一直等待(阻塞所在线程)，否则就可以正常执行。
+尽量不要在主线程操作。
 Dispatch Semaphore 在实际开发中主要用于:
  保持线程同步，将异步执行任务转换为同步执行任务 
  保证线程安全，为线程加锁
