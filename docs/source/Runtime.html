@@ -376,6 +376,20 @@ json &#x8F6C; model
 &#x4E00;&#x4E2A; NSObject &#x5B9E;&#x4F8B;&#x5BF9;&#x8C61;&#x6210;&#x5458;&#x53D8;&#x91CF;&#x6240;&#x5360;&#x7684;&#x5927;&#x5C0F;&#xFF0C;&#x5B9E;&#x9645;&#x4E0A;&#x662F; 8 &#x5B57;&#x8282;
 &#x83B7;&#x53D6; Obj-C &#x6307;&#x9488;&#x6240;&#x6307;&#x5411;&#x7684;&#x5185;&#x5B58;&#x7684;&#x5927;&#x5C0F;&#xFF0C;&#x5B9E;&#x9645;&#x4E0A;&#x662F; 16 &#x5B57;&#x8282;
 &#x5BF9;&#x8C61;&#x5728;&#x5206;&#x914D;&#x5185;&#x5B58;&#x7A7A;&#x95F4;&#x65F6;&#xFF0C;&#x4F1A;&#x8FDB;&#x884C;&#x5185;&#x5B58;&#x5BF9;&#x9F50;&#xFF0C;&#x6240;&#x4EE5;&#x5728; iOS &#x4E2D;&#xFF0C;&#x5206;&#x914D;&#x5185;&#x5B58;&#x7A7A;&#x95F4;&#x90FD;&#x662F; 16 &#x5B57;&#x8282;&#x7684;&#x500D;&#x6570;&#x3002;
+
+sizeOf: 
+sizeof &#x662F;&#x4E00;&#x4E2A;&#x64CD;&#x4F5C;&#x7B26;&#xFF0C;&#x4E0D;&#x662F;&#x51FD;&#x6570;
+sizeof &#x8BA1;&#x7B97;&#x5185;&#x5B58;&#x5927;&#x5C0F;&#x65F6;&#xFF0C;&#x4F20;&#x5165;&#x7684;&#x4E3B;&#x8981;&#x662F;&#x5BF9;&#x8C61;&#x6216;&#x8005;&#x6570;&#x636E;&#x7C7B;&#x578B;&#xFF0C;&#x5728;&#x7F16;&#x8BD1;&#x5668;&#x7684;&#x7F16;&#x8BD1;&#x9636;&#x6BB5;&#x5927;&#x5C0F;&#x5C31;&#x5DF2;&#x7ECF;&#x786E;&#x5B9A;
+sizeof &#x8BA1;&#x7B97;&#x51FA;&#x7684;&#x7ED3;&#x679C;&#xFF0C;&#x662F;&#x8868;&#x793A;&#x5360;&#x7528;&#x7A7A;&#x95F4;&#x7684;&#x5927;&#x5C0F;
+
+class_getInstanceSize:
+runtime &#x63D0;&#x4F9B;&#x7684; api, &#x7528;&#x4E8E;&#x83B7;&#x53D6;&#x7C7B;&#x5B9E;&#x4F8B;&#x5BF9;&#x8C61;&#x6240;&#x5360;&#x5185;&#x5B58;&#x5927;&#x5C0F;&#xFF0C;
+&#x672C;&#x8D28;&#x4E5F;&#x662F;&#x8BA1;&#x7B97;&#x8BE5;&#x5B9E;&#x4F8B;&#x4E2D;&#x6240;&#x6709;&#x6210;&#x5458;&#x53D8;&#x91CF;&#x7684;&#x5185;&#x5B58;&#x5927;&#x5C0F;
+&#x662F;&#x91C7;&#x7528;8&#x5B57;&#x8282;&#x5BF9;&#x9F50;&#xFF0C;&#x53C2;&#x7167;&#x7684;&#x5BF9;&#x8C61;&#x7684;&#x5C5E;&#x6027;&#x5185;&#x5B58;&#x5927;&#x5C0F;
+
+malloc_size:
+malloc_size &#x83B7;&#x53D6;&#x7CFB;&#x7EDF;&#x5B9E;&#x9645;&#x5206;&#x914D;&#x7684;&#x5185;&#x5B58;&#x5927;&#x5C0F;
+&#x91C7;&#x7528;16&#x5B57;&#x8282;&#x5BF9;&#x9F50;&#xFF0C;&#x53C2;&#x7167;&#x7684;&#x6574;&#x4E2A;&#x5BF9;&#x8C61;&#x7684;&#x5185;&#x5B58;&#x5927;&#x5C0F;
 </code></pre><h4 id="&#x8BF4;&#x4E00;&#x4E0B;&#x5BF9;-isa-&#x6307;&#x9488;&#x7684;&#x7406;&#x89E3;">&#x8BF4;&#x4E00;&#x4E0B;&#x5BF9; isa &#x6307;&#x9488;&#x7684;&#x7406;&#x89E3;</h4>
 <pre><code>isa &#x7B49;&#x4EF7;&#x4E8E; is kind of
 &#x5B9E;&#x4F8B;&#x5BF9;&#x8C61; isa &#x6307;&#x5411;&#x7C7B;&#x5BF9;&#x8C61;
@@ -609,6 +623,26 @@ IMP&#xFF1A;&#x5C31;&#x662F;&#x6307;&#x5411;&#x6700;&#x7EC8;&#x5B9E;&#x73B0;&#x7A
  superClass: &#x6307;&#x5411;&#x7236;&#x7C7B;
  Cache: &#x65B9;&#x6CD5;&#x7684;&#x7F13;&#x5B58;&#x5217;&#x8868;
  data: &#x6570;&#x636E;&#x3002;&#x662F;&#x4E00;&#x4E2A;&#x88AB;&#x5C01;&#x88C5;&#x597D;&#x7684; class_rw_t &#x3002;
+
+struct objc_object {
+    Class _Nonnull isa  OBJC_ISA_AVAILABILITY;
+};
+
+// objc_class &#x7EE7;&#x627F;&#x4E8E; objc_object,&#x56E0;&#x6B64;
+// objc_class &#x4E2D;&#x4E5F;&#x6709; isa &#x7ED3;&#x6784;&#x4F53;
+struct objc_class : objc_object {
+    // Class ISA;
+    Class superclass;
+
+    cache_t cache;             // formerly cache pointer and vtable
+
+    class_data_bits_t bits;    // class_rw_t * plus custom rr/alloc flags
+
+    class_rw_t *data() { 
+        return bits.data();
+    }
+    ...
+};
 </code></pre><h4 id="&#x4E3A;&#x4EC0;&#x4E48;&#x8981;&#x8BBE;&#x8BA1;-metaclass">&#x4E3A;&#x4EC0;&#x4E48;&#x8981;&#x8BBE;&#x8BA1; metaclass</h4>
 <pre><code>&#x5B9E;&#x4F8B;&#x5BF9;&#x8C61;&#x5C31;&#x5E72;&#x5B58;&#x50A8;&#x5C5E;&#x6027;&#x503C;&#x7684;&#x4E8B;&#xFF0C;&#x7C7B;&#x5BF9;&#x8C61;&#x5B58;&#x50A8;&#x5B9E;&#x4F8B;&#x65B9;&#x6CD5;&#x5217;&#x8868;&#xFF0C;&#x5143;&#x7C7B;&#x5BF9;&#x8C61;&#x5B58;&#x50A8;&#x7C7B;&#x65B9;&#x6CD5;&#x5217;&#x8868;&#xFF0C;
 &#x5B8C;&#x7F8E;&#x7684;&#x7B26;&#x5408; 6 &#x5927;&#x8BBE;&#x8BA1;&#x539F;&#x5219;&#x4E2D;&#x7684;&#x5355;&#x4E00;&#x804C;&#x8D23;&#xFF0C;
@@ -768,7 +802,7 @@ objc_msgSendSuper &#x7684;&#x5DE5;&#x4F5C;&#x539F;&#x7406;&#x5E94;&#x8BE5;&#x662
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Runtime相关","level":"1.5","depth":1,"next":{"title":"RunLoop相关","level":"1.6","depth":1,"path":"source/RunLoop.md","ref":"source/RunLoop.md","articles":[]},"previous":{"title":"Block相关","level":"1.4","depth":1,"path":"source/Block.md","ref":"source/Block.md","articles":[]},"dir":"ltr"},"config":{"plugins":[],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Jayxiang","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"iOS开发相关面试题总结","language":"zh-hans","gitbook":"*","description":"select * from learn"},"file":{"path":"source/Runtime.md","mtime":"2021-09-03T13:43:59.982Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2021-09-03T13:44:36.033Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Runtime相关","level":"1.5","depth":1,"next":{"title":"RunLoop相关","level":"1.6","depth":1,"path":"source/RunLoop.md","ref":"source/RunLoop.md","articles":[]},"previous":{"title":"Block相关","level":"1.4","depth":1,"path":"source/Block.md","ref":"source/Block.md","articles":[]},"dir":"ltr"},"config":{"plugins":[],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Jayxiang","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"iOS开发相关面试题总结","language":"zh-hans","gitbook":"*","description":"select * from learn"},"file":{"path":"source/Runtime.md","mtime":"2021-09-09T12:39:09.822Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2021-09-09T12:39:52.011Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
