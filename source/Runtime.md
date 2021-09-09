@@ -48,7 +48,22 @@ json 转 model
 一个 NSObject 实例对象成员变量所占的大小，实际上是 8 字节
 获取 Obj-C 指针所指向的内存的大小，实际上是 16 字节
 对象在分配内存空间时，会进行内存对齐，所以在 iOS 中，分配内存空间都是 16 字节的倍数。
+
+sizeOf: 
+sizeof 是一个操作符，不是函数
+sizeof 计算内存大小时，传入的主要是对象或者数据类型，在编译器的编译阶段大小就已经确定
+sizeof 计算出的结果，是表示占用空间的大小
+
+class_getInstanceSize:
+runtime 提供的 api, 用于获取类实例对象所占内存大小，
+本质也是计算该实例中所有成员变量的内存大小
+是采用8字节对齐，参照的对象的属性内存大小
+
+malloc_size:
+malloc_size 获取系统实际分配的内存大小
+采用16字节对齐，参照的整个对象的内存大小
 ```
+
 #### 说一下对 isa 指针的理解
 ```
 isa 等价于 is kind of
@@ -303,6 +318,26 @@ IMP：就是指向最终实现程序的内存地址的指针。
  superClass: 指向父类
  Cache: 方法的缓存列表
  data: 数据。是一个被封装好的 class_rw_t 。
+
+struct objc_object {
+    Class _Nonnull isa  OBJC_ISA_AVAILABILITY;
+};
+
+// objc_class 继承于 objc_object,因此
+// objc_class 中也有 isa 结构体
+struct objc_class : objc_object {
+    // Class ISA;
+    Class superclass;
+
+    cache_t cache;             // formerly cache pointer and vtable
+
+    class_data_bits_t bits;    // class_rw_t * plus custom rr/alloc flags
+    
+    class_rw_t *data() { 
+        return bits.data();
+    }
+    ...
+};
 ```
 #### 为什么要设计 metaclass
 ```

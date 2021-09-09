@@ -65,8 +65,10 @@ NSOperation 基于 GCD 封装，更加面向对象，比 GCD 多了一些功能�
 异同：
 1. GCD 执行效率更高，而且由于队列中执行的是由 block 构成的任务，这是一个轻量级的数据结构，写起来更方便
 2. GCD 只支持 FIFO 的队列，而 NSOperationQueue 可以通过设置最大并发数，设置优先级，添加依赖关系等调整执行顺序
-3. NSOperationQueue 甚至可以跨队列设置依赖关系，但是 GCD 只能通过设置串行队列，或者在队列内添加 barrier(dispatch_barrier_async)任务，才能控制执行顺序
-4. NSOperationQueue 因为面向对象，所以支持 KVO，可以监测 operation 是否正在执行(isExecuted)、是否结束(isFinished)、是否取消(isCanceld)
+3. NSOperationQueue 甚至可以跨队列设置依赖关系，但是 GCD 只能通过设置串行队列，
+或者在队列内添加 barrier(dispatch_barrier_async)任务，才能控制执行顺序
+4. NSOperationQueue 因为面向对象，所以支持 KVO，
+可以监测 operation 是否正在执行(isExecuted)、是否结束(isFinished)、是否取消(isCanceld)
 
 使用：
 1.实际项目开发中，很多时候只是会用到异步操作，不会有特别复杂的线程关系管理，

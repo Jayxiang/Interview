@@ -137,9 +137,9 @@ Unowned(无主引用), 不会产生强引用，实例销毁后仍然存储着实
 ```
 #### 如何理解 copy-on-write
 ```
-值类型(比如: struct),在复制时,复制对象与原对象实际上在内存中指向同一个对象,
-当且仅当修改复制的对象时,才会在内存中创建一个新的对象
-为了提升性能，Struct, String、Array、Dictionary、Set 采取了 Copy On Write 的技术
+值类型(比如: struct), 在复制时, 复制对象与原对象实际上在内存中指向同一个对象,
+当且仅当修改复制的对象时, 才会在内存中创建一个新的对象
+为了提升性能，集合类型 Array、Dictionary、Set 采取了 Copy On Write 的技术
 比如仅当有“写”操作时，才会真正执行拷贝操作
 对于标准库值类型的赋值操作，Swift 能确保最佳性能，所有没必要为了保证最佳性能来避免赋值
 ```
@@ -393,11 +393,21 @@ convenience init(parameters) {
 ```
 #### 什么是可选链
 ```
+可选类型其根源是一个枚举型，里面有 None 和 Some 两种类型。
+其中 nil 就是 Optional.None, 非 nil 就是 Optional.Some, 然后会通过 Some(T) 包装（wrap）原始值，这也是为什么在使用 Optional 的时候要拆包（从 enum 里取出来原始值）的原因
+
+public enum Optional<Wrapped> : ExpressibleByNilLiteral {
+    case none
+    case some(Wrapped)
+    /// Creates an instance that stores the given value.
+    public init(_ some: Wrapped)
+}
+
 可选链是一个调用和查询可选属性、方法和下标的过程，它可能为 nil 。
 如果可选项包含值，属性、方法或者下标的调用成功；如果可选项是 nil ，属性、方法或者下标的调用会返回 nil 。
 多个查询可以链接在一起，如果链中任何一个节点是 nil ，那么整个链就会得体地失败。
 多个?可以链接在一起
-如果链中任何一个节点是nil，那么整个链就会调用失败
+如果链中任何一个节点是 nil，那么整个链就会调用失败
 ```
 #### 什么是运算符重载
 ```
