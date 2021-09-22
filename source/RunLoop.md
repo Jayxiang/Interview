@@ -150,15 +150,16 @@ Exit(即将退出 Loop) 时调用 _objc_autoreleasePoolPop() 来释放自动释�
 ```
 #### 子线程里面，需要加 autoreleasepool 吗
 ```
-默认主线的 runloop 是开启的，子线程的 runloop 默认是不开启的，
-也就意味着子线程中不会创建 autoreleasepool，所以需要我们自己在子线程中创建一个自动释放池。
-（子线程里面使用的类方法都是 autorelease, 就会没有池子可释放，
-也就意味着后面没有办法进行释放，造成内存泄漏。）
-在主线程中如果产生事件那么 runloop 才回去创建 autoreleasepool，
-通过这个道理我们就知道为什么子线程中不会创建自动释放池了，
-因为子线程的 runloop 默认是关闭的，所以他不会自动创建 autoreleasepool，需要我们手动添加。
+子线程默认不开启 runloop, 当产生 autorelease 对象时候，如果发现没有autoreleasepool，会自动创建一个,
+一个被自动创建出来的 autoreleasepool 会绑定到当前 pthread，
+使用这个线程的本地存储来保存 pool，并在 thread 退出/销毁时释放 pool。
 
-NSThread 和 NSOperationQueue 开辟子线程需要手动创建 autoreleasepool，
+自定义的 NSOperation 和 NSThread 需要手动创建自动释放池。
+比如： 自定义的 NSOperation 类中的 main 方法里就必须添加自动释放池。
+否则出了作用域后，自动释放对象会因为没有自动释放池去处理它，而造成内存泄露。
+但对于 blockOperation 和 invocationOperation 这种默认的Operation，
+系统已经帮我们封装好了，不需要手动创建自动释放池。
+
 GCD 开辟子线程不需要手动创建 autoreleasepool，因为 GCD 的每个队列都会自行创建 autoreleasepool。
 ```
 #### 事件响应的过程？

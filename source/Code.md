@@ -14,11 +14,16 @@ self.name = @"object"; 是通过点语法修改属性 name 的值。
     // 根据 @property 关键词，系统自动生成setter方法。
     - (void)setName:(NSString *)name{
         // 根据strong关键词
-        [name retain];  //内存计数+1
-        [_name release];    //把之前指针指向的内容内存计数-1
-        _name = name; //指向新内容
+        if (_name != name) {
+            // 把之前指针指向的内容内存计数 -1
+            [_name release];
+            // 内存计数+1
+            [name retain];  
+            // 指向新内容
+            _name = name; 
+        }
     }
-而 _name = @“object”; 只是单纯的把‘_name’指针指向‘@"object"’字符串对象所在的地址， 没有调用方法。
+而 _name = @“object”; 只是单纯的把‘_name’指针指向‘@"object"’字符串对象所在的地址，没有调用方法。
 ```
 **这段代码有什么问题吗？**
 ```

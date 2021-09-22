@@ -2,6 +2,7 @@
 
 - [block 的实质是什么？一共有几种 block？都是什么情况下生成的？](#block-的实质是什么？一共有几种-block？都是什么情况下生成的？)
 - [block 变量截获](#block-变量截获)
+- [__block 修饰符作用](#__block-修饰符作用)
 - [block 和函数指针的理解](#block-和函数指针的理解)
 - [代理、通知、block 和单例使用场景](#代理、通知、block-和单例使用场景)
 - [block 循环引用](#block-循环引用)
@@ -49,6 +50,24 @@ struct __block_impl {
 而对全局变量，静态变量是不需要添加__block 修饰符的。 
 另外，block 里访问 self 或成员变量都会去截获 self。
 因为__block 修饰的变量也是以指针形式截获的，并且生成了一个新的结构体对象:
+```
+#### __block 修饰符作用
+```
+__block 可以用于解决 block 内部无法修改 auto 变量值的问题
+__block 不能修饰全局变量、静态变量（static）
+编译器会将 __block 变量包装成一个对象
+__block 修改变量：age->__forwarding->age
+__Block_byref_age_0 结构体内部地址和外部变量 age 是同一地址
+
+如：__block int age = 10
+编译器会将 __block 变量包装成一个对象
+struct __Block_byref_age_0 {
+ void *__isa;
+ __Block_byref_age_0 *__forwarding;// age 的地址
+ int __flags;
+ int __size;
+ int age;// age 的值
+};
 ```
 #### block 和函数指针的理解
 ```

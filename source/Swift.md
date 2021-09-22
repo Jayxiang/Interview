@@ -27,6 +27,9 @@
 - [简要说明 Swift 中的初始化器](#简要说明-swift-中的初始化器)
 - [什么是可选链](#什么是可选链)
 - [什么是运算符重载](#什么是运算符重载)
+- [map、filter、reduce 用法区别](#map、filter、reduce-用法区别)
+- [Any、AnyObject、AnyClass 区别](#any、anyobject、anyclass-区别)
+- [.self/.type/.Self 区别](#.self/.type/.self-区别)
 
 #### Swift 和 OC 的区别
 ```
@@ -425,6 +428,61 @@ struct Point {
 var p1 = Point(x: 10, y: 10)
 var p2 = Point(x: 20, y: 20)
 var p3 = p1 + p2
+```
+#### map、filter、reduce 用法区别
+```
+map: 可以对数组中的每一个元素做一次处理
+
+let arr = [1, 2]
+let arr1 = arr.map{ $0+1 }
+print(arr1) //[2, 3]
+
+flatMap: 把多维数组变成一维数组; 
+把两个不同的数组合并成一个数组，这个合并的数组元素个数是前面两个数组元素个数的乘积
+
+let array = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+  
+let arr1 = array.map{ $0 }
+arr1 // [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+  
+let arr2 = array.flatMap{ $0 }
+arr2 // [1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+compactMap: 返回后的数组中不存在 nil， 同时也会把 Optional 解包
+
+let possibleNumbers = ["1", "2", "three", "///4///", "5"]
+// [1, 2, nil, nil, 5]
+let mapped: [Int?] = possibleNumbers.map { str in Int(str) }
+
+// [1, 2, 5]
+let compactMapped: [Int] = possibleNumbers.compactMap { str in Int(str) }
+
+filer：过滤，可以对数组中的元素按照某种规则进行一次过滤
+
+let arr = [1, 2, 3]
+let arr1 = arr.filter({ $0 < 2 }) // [1]
+
+reduce：计算，可以对数组的元素进行计算
+let arr = [1, 2, 3]
+let arr1 = arr.reduce(0, { $0 + $1 }) // 6
+
+```
+#### Any、AnyObject、AnyClass 区别
+```
+AnyObject：是一个成员为空的协议，任何对象都实现了这个协议。代表任何 class 类型的对象实例。
+Any：是一个空协议集合的别名，可以代表任何类型，包括基本数据类型, enum, struct, func(方法)等等
+AnyClass: 是 AnyObject.Type 的别名。
+表示任意类的元类型，任意类的类型都隐式遵守这个协议，一般我们使用不多。
+typealias AnyClass = AnyObject.Type
+```
+#### .self/.Type/.Self 区别
+```
+X.self: 是一个元类型的指针，是 X.Type 类型。如果用在类型后面取得类型本身，用在实例后面取得实例本身
+X.Self: 表示特定类型，并且只能用在协议中或者作为某个类的方法的返回值类型
+X.Type: 元类型(metaType)是指任意类型的类型，包括类类型、结构体类型、枚举类型和协议类型。
+
+type(of:) 表达式来获取该实例动态的、在运行阶段的类型
+.self 取到的是静态的元类型，声明的时候是什么类型就是什么类型。
 ```
 
 [Swift教程](https://swiftgg.gitbook.io/swift/)
