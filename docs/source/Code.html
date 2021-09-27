@@ -341,11 +341,16 @@
     // &#x6839;&#x636E; @property &#x5173;&#x952E;&#x8BCD;&#xFF0C;&#x7CFB;&#x7EDF;&#x81EA;&#x52A8;&#x751F;&#x6210;setter&#x65B9;&#x6CD5;&#x3002;
     - (void)setName:(NSString *)name{
         // &#x6839;&#x636E;strong&#x5173;&#x952E;&#x8BCD;
-        [name retain];  //&#x5185;&#x5B58;&#x8BA1;&#x6570;+1
-        [_name release];    //&#x628A;&#x4E4B;&#x524D;&#x6307;&#x9488;&#x6307;&#x5411;&#x7684;&#x5185;&#x5BB9;&#x5185;&#x5B58;&#x8BA1;&#x6570;-1
-        _name = name; //&#x6307;&#x5411;&#x65B0;&#x5185;&#x5BB9;
+        if (_name != name) {
+            // &#x628A;&#x4E4B;&#x524D;&#x6307;&#x9488;&#x6307;&#x5411;&#x7684;&#x5185;&#x5BB9;&#x5185;&#x5B58;&#x8BA1;&#x6570; -1
+            [_name release];
+            // &#x5185;&#x5B58;&#x8BA1;&#x6570;+1
+            [name retain];  
+            // &#x6307;&#x5411;&#x65B0;&#x5185;&#x5BB9;
+            _name = name; 
+        }
     }
-&#x800C; _name = @&#x201C;object&#x201D;; &#x53EA;&#x662F;&#x5355;&#x7EAF;&#x7684;&#x628A;&#x2018;_name&#x2019;&#x6307;&#x9488;&#x6307;&#x5411;&#x2018;@&quot;object&quot;&#x2019;&#x5B57;&#x7B26;&#x4E32;&#x5BF9;&#x8C61;&#x6240;&#x5728;&#x7684;&#x5730;&#x5740;&#xFF0C; &#x6CA1;&#x6709;&#x8C03;&#x7528;&#x65B9;&#x6CD5;&#x3002;
+&#x800C; _name = @&#x201C;object&#x201D;; &#x53EA;&#x662F;&#x5355;&#x7EAF;&#x7684;&#x628A;&#x2018;_name&#x2019;&#x6307;&#x9488;&#x6307;&#x5411;&#x2018;@&quot;object&quot;&#x2019;&#x5B57;&#x7B26;&#x4E32;&#x5BF9;&#x8C61;&#x6240;&#x5728;&#x7684;&#x5730;&#x5740;&#xFF0C;&#x6CA1;&#x6709;&#x8C03;&#x7528;&#x65B9;&#x6CD5;&#x3002;
 </code></pre><p><strong>&#x8FD9;&#x6BB5;&#x4EE3;&#x7801;&#x6709;&#x4EC0;&#x4E48;&#x95EE;&#x9898;&#x5417;&#xFF1F;</strong></p>
 <pre><code>-(void)setAge:(NSString *)age { 
   self.age = age; 
@@ -494,7 +499,7 @@ NSLog(@&quot;%d,%d&quot;,*(a + 1),*(ptr - 1));// 2,5
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"代码相关","level":"1.14","depth":1,"next":{"title":"Swift","level":"1.15","depth":1,"path":"source/Swift.md","ref":"source/Swift.md","articles":[]},"previous":{"title":"第三方库","level":"1.13","depth":1,"path":"source/Library.md","ref":"source/Library.md","articles":[]},"dir":"ltr"},"config":{"plugins":[],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Jayxiang","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"iOS开发相关面试题总结","language":"zh-hans","gitbook":"*","description":"select * from learn"},"file":{"path":"source/Code.md","mtime":"2021-09-09T12:39:09.818Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2021-09-09T12:39:52.011Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"代码相关","level":"1.14","depth":1,"next":{"title":"Swift","level":"1.15","depth":1,"path":"source/Swift.md","ref":"source/Swift.md","articles":[]},"previous":{"title":"第三方库","level":"1.13","depth":1,"path":"source/Library.md","ref":"source/Library.md","articles":[]},"dir":"ltr"},"config":{"plugins":[],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Jayxiang","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"iOS开发相关面试题总结","language":"zh-hans","gitbook":"*","description":"select * from learn"},"file":{"path":"source/Code.md","mtime":"2021-09-22T09:16:32.450Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2021-09-22T09:17:20.972Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
