@@ -299,7 +299,7 @@ ping 是一种常用的网络测试工具，用来测试数据包是否能到达
 基于 runloop 的检测和 fps 的方案非常相似，都需要依赖于主线程的 runloop。
 由于 runloop 会调起同步屏幕刷新的 callback，如果 loop 的间隔大于 16.67ms，fps 自然达不到60hz。
 而在一个 loop 当中存在多个阶段，可以监控每一个阶段停留了多长时间
-
+一般实时计算 kCFRunLoopBeforeSources 和 kCFRunLoopAfterWaiting 两个状态区域之间的耗时是否超过某个阀值，来断定主线程的卡顿情况
 ```
-[参考文章：质量监控-卡顿检测](http://sindrilin.com/2017/03/24/blocking_observe.html)
+[参考文章：质量监控-卡顿检测](http://sindrilin.com/2017/03/24/blocking_observe.html)  
 [iOS卡顿监测方案总结](https://juejin.cn/post/6844903944867545096)

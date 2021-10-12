@@ -353,7 +353,10 @@ Category 实际上是 Category_t 的结构体，在运行时，新添加的方�
 Category 在刚刚编译完的时候，和原来的类是分开的，
 只有在程序运行起来后，通过 Runtime ，Category 和原来的类才会合并到一起。
 但是如何调用原类方法：
-利用 runtime 通过遍历原类的方法列表，获取对应方法在方法列表 methods 的索引，然后调用即可。
+利用 runtime 通过遍历原类的方法列表，获取对应方法在方法列表 methods 的索引（分类方法在前），然后调用即可。
+获取方法列表：class_copyMethodList()
+获取 SEL：method_getName()
+获取 imp：method_getImplementation()
 
 // 声明结构体
 struct _category_t {
